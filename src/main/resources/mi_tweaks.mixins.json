@@ -21,6 +21,7 @@
     ],
     "client": [
         "client.HideEfficiencyBarClientMixin",
+        "client.HideEfficiencyInModularMultiblockClientMixin",
         "client.HideEfficiencyInMultiblockClientMixin",
         "client.MachineScreenIncludeCableTierInTitleMixin"
     ],
