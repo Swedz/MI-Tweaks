@@ -13,8 +13,8 @@ public final class WaterPumpEnvironmentGui
 	
 	public static final class Server implements GuiComponent.Server<Boolean>
 	{
-		public final Parameters params;
-		public final Supplier<Boolean>                  validEnvironmentSupplier;
+		public final Parameters        params;
+		public final Supplier<Boolean> validEnvironmentSupplier;
 		
 		public Server(Parameters params, Supplier<Boolean> validEnvironmentSupplier)
 		{

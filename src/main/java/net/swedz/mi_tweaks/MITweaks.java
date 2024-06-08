@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 @Mod(MITweaks.ID)
 public final class MITweaks
 {
-	public static final String ID = "mi_tweaks";
+	public static final String ID   = "mi_tweaks";
 	public static final String NAME = "MI Tweaks";
 	
 	public static ResourceLocation id(String path)
