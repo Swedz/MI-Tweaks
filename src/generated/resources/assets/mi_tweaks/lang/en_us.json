@@ -1,0 +1,9 @@
+{
+  "text.mi_tweaks.machine_menu_voltage_prefix": "(%s) ",
+  "text.mi_tweaks.machine_voltage_recipes": "Allows machines to run %s recipes",
+  "text.mi_tweaks.machine_voltage_runs_at": "Runs recipes at %s",
+  "text.mi_tweaks.recipe_requires_coil": "Requires coil: %s",
+  "text.mi_tweaks.recipe_requires_voltage": "Requires voltage: %s",
+  "text.mi_tweaks.water_pump_environment_1": "Invalid Pump Environment",
+  "text.mi_tweaks.water_pump_environment_2": "Must be in Ocean or River biome."
+}
