@@ -11,6 +11,7 @@
         "constantefficiency.ConstantEfficiencyCrafterComponentMixin",
         "constantefficiency.ConstantEfficiencyEBFMixin",
         "constantefficiency.ConstantEfficiencyModularCrafterComponentBehaviorMixin",
+        "constantefficiency.ConstantEfficiencyModularCrafterComponentMixin",
         "constantefficiency.ConstantEfficiencyPreventUpgradeInsertionMixin",
         "constantefficiency.ConstantEfficiencyPreventUpgradeSlotMixin",
         "machinecabletier.CasingComponentCableTierGetterMixin",
