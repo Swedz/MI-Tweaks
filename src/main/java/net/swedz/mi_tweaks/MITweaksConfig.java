@@ -27,17 +27,23 @@ public final class MITweaksConfig
 			)
 			.defineEnum("machine_efficiency_hack", MachineEfficiencyHack.DISABLED);
 	
+	private static final ModConfigSpec.BooleanValue HIDE_MACHINE_EFFICIENCY = BUILDER
+			.comment("Whether efficiency bar and multiblock efficiency data should be hidden or not")
+			.define("hide_machine_efficiency", false);
+	
 	public static final ModConfigSpec SPEC = BUILDER.build();
 	
 	public static boolean               requireWaterBiomeForPump;
 	public static boolean               displayMachineVoltage;
 	public static MachineEfficiencyHack machineEfficiencyHack;
+	public static boolean               hideMachineEfficiency;
 	
 	public static void loadConfig()
 	{
 		requireWaterBiomeForPump = REQUIRE_WATER_BIOME_FOR_PUMP.get();
 		displayMachineVoltage = DISPLAY_MACHINE_VOLTAGE.get();
 		machineEfficiencyHack = MACHINE_EFFICIENCY_HACK.get();
+		hideMachineEfficiency = HIDE_MACHINE_EFFICIENCY.get();
 	}
 	
 	@SubscribeEvent
@@ -48,21 +54,19 @@ public final class MITweaksConfig
 	
 	public enum MachineEfficiencyHack
 	{
-		DISABLED(false, false, false, false),
-		ALWAYS_MAX(true, false, false, false),
-		USE_VOLTAGE(true, true, true, true);
+		DISABLED(false, false, false),
+		ALWAYS_MAX(true, false, false),
+		USE_VOLTAGE(true, true, true);
 		
 		private final boolean forceMaxEfficiency;
 		private final boolean useVoltageForEfficiency;
 		private final boolean preventsUpgrades;
-		private final boolean hideEfficiency;
 		
-		MachineEfficiencyHack(boolean forceMaxEfficiency, boolean useVoltageForEfficiency, boolean preventsUpgrades, boolean hideEfficiency)
+		MachineEfficiencyHack(boolean forceMaxEfficiency, boolean useVoltageForEfficiency, boolean preventsUpgrades)
 		{
 			this.forceMaxEfficiency = forceMaxEfficiency;
 			this.useVoltageForEfficiency = useVoltageForEfficiency;
 			this.preventsUpgrades = preventsUpgrades;
-			this.hideEfficiency = hideEfficiency;
 		}
 		
 		public boolean forceMaxEfficiency()
@@ -78,11 +82,6 @@ public final class MITweaksConfig
 		public boolean preventsUpgrades()
 		{
 			return preventsUpgrades;
-		}
-		
-		public boolean hideEfficiency()
-		{
-			return hideEfficiency;
 		}
 	}
 }

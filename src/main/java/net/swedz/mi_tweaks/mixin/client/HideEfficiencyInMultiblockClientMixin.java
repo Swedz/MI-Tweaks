@@ -9,7 +9,10 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(CraftingMultiblockGuiClient.class)
+@Mixin(
+		value = CraftingMultiblockGuiClient.class,
+		remap = false
+)
 public class HideEfficiencyInMultiblockClientMixin
 {
 	@Shadow
@@ -20,12 +23,11 @@ public class HideEfficiencyInMultiblockClientMixin
 	
 	@Inject(
 			method = "readCurrentData",
-			at = @At("RETURN"),
-			remap = false
+			at = @At("RETURN")
 	)
 	private void readCurrentData(FriendlyByteBuf buf, CallbackInfo callback)
 	{
-		if(MITweaksConfig.machineEfficiencyHack.hideEfficiency())
+		if(MITweaksConfig.hideMachineEfficiency)
 		{
 			efficiencyTicks = 0;
 			maxEfficiencyTicks = 0;
