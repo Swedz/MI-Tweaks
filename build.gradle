@@ -131,6 +131,9 @@ publishing {
     publications {
         register('mavenJava', MavenPublication) {
             from components.java
+            groupId = project.group
+            artifactId = "mi-tweaks"
+            version = project.version
         }
     }
     repositories {
