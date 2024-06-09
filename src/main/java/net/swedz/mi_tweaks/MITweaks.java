@@ -33,7 +33,7 @@ public final class MITweaks
 	{
 		this.loadConfig();
 		
-		MIHooks.register(this, new MITweaksMIHookRegistry(), new MITweaksMIHookListener());
+		MIHooks.register(ID, new MITweaksMIHookRegistry(), new MITweaksMIHookListener());
 		
 		bus.addListener(GatherDataEvent.class, (event) ->
 				event.getGenerator().addProvider(event.includeClient(), new LanguageDatagenProvider(event)));
