@@ -58,7 +58,7 @@ public final class MITweaksMIHookEfficiency implements MIHookEfficiency
 	}
 	
 	@Override
-	public void onResetRecipe(EfficiencyMIHookContext context, long eu)
+	public void onTickEnd(EfficiencyMIHookContext context, long eu)
 	{
 		if(MITweaksConfig.machineEfficiencyHack.forceMaxEfficiency() && eu == 0)
 		{
