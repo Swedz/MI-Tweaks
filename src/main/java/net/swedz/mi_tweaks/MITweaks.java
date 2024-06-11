@@ -9,6 +9,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.swedz.mi_tweaks.compat.mi.MITweaksMIHookEfficiency;
 import net.swedz.mi_tweaks.compat.mi.MITweaksMIHookListener;
 import net.swedz.mi_tweaks.datagen.client.LanguageDatagenProvider;
 import net.swedz.tesseract.neoforge.compat.mi.hook.MIHookRegistry;
@@ -33,7 +34,8 @@ public final class MITweaks
 	{
 		this.loadConfig();
 		
-		MIHooks.register(ID, MIHookRegistry.NONE, new MITweaksMIHookListener());
+		MIHooks.registerListener(ID, MIHookRegistry.NONE, new MITweaksMIHookListener());
+		MIHooks.registerEfficiencyListener(ID, new MITweaksMIHookEfficiency());
 		
 		bus.addListener(GatherDataEvent.class, (event) ->
 				event.getGenerator().addProvider(event.includeClient(), new LanguageDatagenProvider(event)));
