@@ -31,12 +31,17 @@ public final class MITweaksConfig
 			.comment("Whether efficiency bar and multiblock efficiency data should be hidden or not")
 			.define("hide_machine_efficiency", false);
 	
+	private static final ModConfigSpec.BooleanValue LOCK_EFFICIENCY_WITH_REDSTONE = BUILDER
+			.comment("Whether efficiency should be locked when a redstone module locks a machine, rather than just the crafting operation")
+			.define("lock_efficiency_with_redstone", false);
+	
 	public static final ModConfigSpec SPEC = BUILDER.build();
 	
 	public static boolean               requireWaterBiomeForPump;
 	public static boolean               displayMachineVoltage;
 	public static MachineEfficiencyHack machineEfficiencyHack;
 	public static boolean               hideMachineEfficiency;
+	public static boolean               lockEfficiencyWithRedstone;
 	
 	public static void loadConfig()
 	{
@@ -44,6 +49,7 @@ public final class MITweaksConfig
 		displayMachineVoltage = DISPLAY_MACHINE_VOLTAGE.get();
 		machineEfficiencyHack = MACHINE_EFFICIENCY_HACK.get();
 		hideMachineEfficiency = HIDE_MACHINE_EFFICIENCY.get();
+		lockEfficiencyWithRedstone = LOCK_EFFICIENCY_WITH_REDSTONE.get();
 	}
 	
 	@SubscribeEvent

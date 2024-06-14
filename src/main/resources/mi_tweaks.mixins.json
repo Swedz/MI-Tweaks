@@ -12,7 +12,8 @@
         "machinecabletier.CasingComponentCableTierGetterMixin",
         "machinecabletier.ElectricCraftingMultiblockCableTierGetterMixin",
         "machinecabletier.ElectricCraftingSingleblockCableTierGetterMixin",
-        "machinecabletier.EnergyHatchCableTierGetterMixin"
+        "machinecabletier.EnergyHatchCableTierGetterMixin",
+        "RedstoneLocksEfficiencyCrafterComponentMixin"
     ],
     "client": [
         "client.HideEfficiencyBarClientMixin",

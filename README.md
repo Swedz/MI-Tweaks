@@ -20,3 +20,4 @@ Not only can you change the behavior of efficiency, but there is also a config o
 
 ## Other Tweaks
 - Water Pumps require ocean/river biome
+- Lock efficiency of crafting machines with redstone control module
