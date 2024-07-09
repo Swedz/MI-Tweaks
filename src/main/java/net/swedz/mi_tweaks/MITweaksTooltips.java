@@ -5,11 +5,11 @@ import aztech.modern_industrialization.api.energy.CableTier;
 import aztech.modern_industrialization.machines.MachineBlock;
 import aztech.modern_industrialization.machines.blockentities.hatches.EnergyHatch;
 import aztech.modern_industrialization.machines.components.CasingComponent;
+import com.google.common.collect.Lists;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.swedz.mi_tweaks.api.CableTierHolder;
 import net.swedz.mi_tweaks.constantefficiency.ConstantEfficiencyHelper;
-import org.apache.commons.compress.utils.Lists;
 
 import java.util.List;
 import java.util.Optional;
