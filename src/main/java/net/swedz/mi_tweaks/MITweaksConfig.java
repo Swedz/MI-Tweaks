@@ -12,7 +12,7 @@ public final class MITweaksConfig
 	
 	private static final ModConfigSpec.BooleanValue REQUIRE_WATER_BIOME_FOR_PUMP = BUILDER
 			.comment("Whether water pumps require a water biome (river or ocean) to operate")
-			.define("require_water_biome_for_pump", true);
+			.define("require_water_biome_for_pump", false);
 	
 	private static final ModConfigSpec.BooleanValue DISPLAY_MACHINE_VOLTAGE = BUILDER
 			.comment("Whether the voltage of a machine should be displayed. This includes displaying voltage of hatches and hulls")
