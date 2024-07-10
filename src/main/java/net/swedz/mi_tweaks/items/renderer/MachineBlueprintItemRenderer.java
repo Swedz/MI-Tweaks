@@ -44,7 +44,7 @@ public final class MachineBlueprintItemRenderer extends BlockEntityWithoutLevelR
 		
 		if(displayContext == ItemDisplayContext.GUI)
 		{
-			Optional<Block> machineBlock = MachineBlueprintItem.getBlock(stack);
+			Optional<Block> machineBlock = MachineBlueprintItem.getMachineBlock(stack);
 			if(machineBlock.isPresent())
 			{
 				poseStack.pushPose();

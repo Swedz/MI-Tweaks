@@ -34,7 +34,7 @@ public final class MachineBlueprintItem extends Item
 		});
 	}
 	
-	public static Optional<Block> getBlock(ItemStack stack)
+	public static Optional<Block> getMachineBlock(ItemStack stack)
 	{
 		CompoundTag tag = stack.getOrCreateTag();
 		if(tag.contains("machine"))

@@ -35,6 +35,10 @@ public final class MITweaksConfig
 			.comment("Whether efficiency should be locked when a redstone module locks a machine, rather than just the crafting operation")
 			.define("lock_efficiency_with_redstone", false);
 	
+	private static final ModConfigSpec.BooleanValue WRENCHES_RENDER_MULTIBLOCK_SHAPES = BUILDER
+			.comment("Whether wrenches should render multiblock shapes in world. If false, then only blueprints will be able to render multiblock shapes in world")
+			.define("wrenches_render_multiblock_shapes", true);
+	
 	public static final ModConfigSpec SPEC = BUILDER.build();
 	
 	public static boolean               requireWaterBiomeForPump;
@@ -42,6 +46,7 @@ public final class MITweaksConfig
 	public static MachineEfficiencyHack machineEfficiencyHack;
 	public static boolean               hideMachineEfficiency;
 	public static boolean               lockEfficiencyWithRedstone;
+	public static boolean               wrenchesRenderMultiblockShapes;
 	
 	public static void loadConfig()
 	{
@@ -50,6 +55,7 @@ public final class MITweaksConfig
 		machineEfficiencyHack = MACHINE_EFFICIENCY_HACK.get();
 		hideMachineEfficiency = HIDE_MACHINE_EFFICIENCY.get();
 		lockEfficiencyWithRedstone = LOCK_EFFICIENCY_WITH_REDSTONE.get();
+		wrenchesRenderMultiblockShapes = WRENCHES_RENDER_MULTIBLOCK_SHAPES.get();
 	}
 	
 	@SubscribeEvent

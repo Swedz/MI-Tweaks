@@ -19,7 +19,8 @@
         "client.HideEfficiencyBarClientMixin",
         "client.HideEfficiencyInModularMultiblockClientMixin",
         "client.HideEfficiencyInMultiblockClientMixin",
-        "client.MachineScreenIncludeCableTierInTitleMixin"
+        "client.MachineScreenIncludeCableTierInTitleMixin",
+        "client.MultiblockRendersWithBlueprintClientMixin"
     ],
     "injectors": {
         "defaultRequire": 1
