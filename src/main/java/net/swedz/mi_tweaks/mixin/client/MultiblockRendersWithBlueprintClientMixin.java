@@ -1,5 +1,6 @@
 package net.swedz.mi_tweaks.mixin.client;
 
+import aztech.modern_industrialization.machines.multiblocks.HatchType;
 import aztech.modern_industrialization.machines.multiblocks.MultiblockMachineBER;
 import aztech.modern_industrialization.machines.multiblocks.MultiblockMachineBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -23,6 +24,12 @@ public class MultiblockRendersWithBlueprintClientMixin
 {
 	@Shadow
 	private static boolean isHoldingWrench()
+	{
+		throw new UnsupportedOperationException();
+	}
+	
+	@Shadow
+	private static HatchType getHeldHatchType()
 	{
 		throw new UnsupportedOperationException();
 	}
@@ -56,5 +63,26 @@ public class MultiblockRendersWithBlueprintClientMixin
 			}
 		}
 		return false;
+	}
+	
+	@Redirect(
+			method = "render(Laztech/modern_industrialization/machines/multiblocks/MultiblockMachineBlockEntity;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
+			at = @At(
+					value = "INVOKE",
+					target = "Laztech/modern_industrialization/machines/multiblocks/MultiblockMachineBER;getHeldHatchType()Laztech/modern_industrialization/machines/multiblocks/HatchType;"
+			)
+	)
+	private HatchType getHeldHatchType(MultiblockMachineBlockEntity be, float tickDelta, PoseStack matrices, MultiBufferSource vcp, int light, int overlay)
+	{
+		if(MITweaksConfig.machineBlueprintsRequiredForRenderingHatches)
+		{
+			Player player = Minecraft.getInstance().player;
+			// TODO account for blueprint mode
+			return MachineBlueprintItem.hasBlueprint(player.getInventory(), be.getBlockState().getBlock()) ? getHeldHatchType() : null;
+		}
+		else
+		{
+			return getHeldHatchType();
+		}
 	}
 }

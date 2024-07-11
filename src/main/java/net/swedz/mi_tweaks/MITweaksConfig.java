@@ -64,13 +64,19 @@ public final class MITweaksConfig
 			)
 			.defineListAllowEmpty("machine_blueprints.machines", Lists.newArrayList(), MITweaksConfig::validateMachineId);
 	
+	// TODO implement this
 	private static final ModConfigSpec.BooleanValue MACHINE_BLUEPRINTS_REQUIRED_FOR_PLACING = BUILDER
 			.comment("Whether machine blueprints are required to place a machine")
 			.define("machine_blueprints.required_for_placing", false);
 	
+	// TODO implement this
 	private static final ModConfigSpec.BooleanValue MACHINE_BLUEPRINTS_REQUIRED_FOR_CRAFTING = BUILDER
 			.comment("Whether machine blueprints are required to craft a machine (NOTE: This will only prevent players from crafting machines in crafting grids themselves)")
 			.define("machine_blueprints.required_for_crafting", false);
+	
+	private static final ModConfigSpec.BooleanValue MACHINE_BLUEPRINTS_REQUIRED_FOR_RENDERING_HATCHES = BUILDER
+			.comment("Whether machine blueprints are required to render hatch positions for held hatches")
+			.define("machine_blueprints.required_for_rendering_hatches", false);
 	
 	private static Stream<Block> getMatchingMachineBlocks(String regex)
 	{
@@ -98,6 +104,7 @@ public final class MITweaksConfig
 	public static Set<Block>            machineBlueprintsMachines;
 	public static boolean               machineBlueprintsRequiredForPlacing;
 	public static boolean               machineBlueprintsRequiredForCrafting;
+	public static boolean               machineBlueprintsRequiredForRenderingHatches;
 	
 	public static void loadConfig()
 	{
@@ -113,6 +120,7 @@ public final class MITweaksConfig
 				.collect(Collectors.toUnmodifiableSet());
 		machineBlueprintsRequiredForPlacing = MACHINE_BLUEPRINTS_REQUIRED_FOR_PLACING.get();
 		machineBlueprintsRequiredForCrafting = MACHINE_BLUEPRINTS_REQUIRED_FOR_CRAFTING.get();
+		machineBlueprintsRequiredForRenderingHatches = MACHINE_BLUEPRINTS_REQUIRED_FOR_RENDERING_HATCHES.get();
 	}
 	
 	@SubscribeEvent

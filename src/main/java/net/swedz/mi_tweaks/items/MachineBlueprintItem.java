@@ -5,14 +5,17 @@ import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
+import net.swedz.mi_tweaks.MITweaksItems;
 import net.swedz.mi_tweaks.items.renderer.MachineBlueprintItemRenderer;
 
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 public final class MachineBlueprintItem extends Item
 {
@@ -41,15 +44,25 @@ public final class MachineBlueprintItem extends Item
 		{
 			String machineId = tag.getString("machine");
 			Optional<Block> machineBlockOptional = BuiltInRegistries.BLOCK.getOptional(new ResourceLocation(machineId));
-			if(machineBlockOptional.isPresent())
+			if(machineBlockOptional.isPresent() && machineBlockOptional.get() instanceof MachineBlock)
 			{
-				Block machineBlock = machineBlockOptional.get();
-				if(machineBlock instanceof MachineBlock)
-				{
-					return Optional.of(machineBlock);
-				}
+				return machineBlockOptional;
 			}
 		}
 		return Optional.empty();
+	}
+	
+	public static boolean hasBlueprint(Inventory playerInventory, Block machineBlock)
+	{
+		return Stream.concat(playerInventory.items.stream(), playerInventory.offhand.stream())
+				.anyMatch((stack) ->
+				{
+					if(stack.getItem().equals(MITweaksItems.MACHINE_BLUEPRINT.asItem()))
+					{
+						Optional<Block> machineBlockOptional = getMachineBlock(stack);
+						return machineBlockOptional.isPresent() && machineBlockOptional.get().equals(machineBlock);
+					}
+					return false;
+				});
 	}
 }
