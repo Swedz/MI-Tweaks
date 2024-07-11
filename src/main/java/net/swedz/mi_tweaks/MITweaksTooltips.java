@@ -41,7 +41,7 @@ public final class MITweaksTooltips
 					{
 						lines.add(DEFAULT_PARSER.parse(MITweaksText.MACHINE_VOLTAGE_RECIPES.text(Component.translatable(tier.shortEnglishKey()))));
 					}
-					if(MITweaksConfig.machineEfficiencyHack.useVoltageForEfficiency())
+					if(MITweaksConfig.efficiencyHackMode.useVoltageForEfficiency())
 					{
 						lines.add(DEFAULT_PARSER.parse(MITweaksText.MACHINE_VOLTAGE_RUNS_AT.text(EU_PER_TICK_PARSER.parse(ConstantEfficiencyHelper.getRecipeEu(tier)))));
 					}

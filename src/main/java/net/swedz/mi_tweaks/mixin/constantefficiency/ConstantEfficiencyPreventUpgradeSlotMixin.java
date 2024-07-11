@@ -21,7 +21,7 @@ public class ConstantEfficiencyPreventUpgradeSlotMixin
 	)
 	private void withUpgrades(UpgradeComponent upgradeComponent, CallbackInfoReturnable<SlotPanel.Server> callback)
 	{
-		if(MITweaksConfig.machineEfficiencyHack.preventsUpgrades())
+		if(MITweaksConfig.efficiencyHackMode.preventsUpgrades())
 		{
 			callback.setReturnValue((SlotPanel.Server) (Object) this);
 		}

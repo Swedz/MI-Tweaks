@@ -15,7 +15,7 @@ public final class ConstantEfficiencyHelper
 	
 	public static long getActualMaxRecipeEu(Object blockEntity, CrafterComponent.Behavior behavior)
 	{
-		if(MITweaksConfig.machineEfficiencyHack.useVoltageForEfficiency() && blockEntity instanceof CableTierHolder machine)
+		if(MITweaksConfig.efficiencyHackMode.useVoltageForEfficiency() && blockEntity instanceof CableTierHolder machine)
 		{
 			return ConstantEfficiencyHelper.getRecipeEu(machine.getCableTier());
 		}
@@ -24,7 +24,7 @@ public final class ConstantEfficiencyHelper
 	
 	public static long getActualMaxRecipeEu(Object blockEntity, ModularCrafterAccessBehavior behavior)
 	{
-		if(MITweaksConfig.machineEfficiencyHack.useVoltageForEfficiency() && blockEntity instanceof CableTierHolder machine)
+		if(MITweaksConfig.efficiencyHackMode.useVoltageForEfficiency() && blockEntity instanceof CableTierHolder machine)
 		{
 			return ConstantEfficiencyHelper.getRecipeEu(machine.getCableTier());
 		}
