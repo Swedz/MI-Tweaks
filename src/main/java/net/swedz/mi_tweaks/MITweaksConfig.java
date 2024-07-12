@@ -1,5 +1,6 @@
 package net.swedz.mi_tweaks;
 
+import aztech.modern_industrialization.machines.MachineBlock;
 import com.google.common.collect.Lists;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Block;
@@ -9,9 +10,7 @@ import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Mod.EventBusSubscriber(modid = MITweaks.ID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -107,6 +106,7 @@ public final class MITweaksConfig
 		Pattern pattern = Pattern.compile(regex);
 		return BuiltInRegistries.BLOCK.stream()
 				.filter((block) ->
+						block instanceof MachineBlock &&
 						pattern.matcher(BuiltInRegistries.BLOCK.getKey(block).toString()).matches());
 	}
 	
@@ -122,7 +122,7 @@ public final class MITweaksConfig
 	public static boolean                      wrenchesRenderMultiblockShapes;
 	public static MachineEfficiencyHack        efficiencyHack;
 	public static boolean                      hideMachineEfficiency;
-	public static Set<Block>                   machineBlueprintsMachines;
+	public static List<Block>                  machineBlueprintsMachines;
 	public static MachineBlueprintRequiredMode machineBlueprintsRequiredTooltip;
 	public static MachineBlueprintRequiredMode machineBlueprintsRequiredForPlacing;
 	public static MachineBlueprintRequiredMode machineBlueprintsRequiredForRenderingHatches;
@@ -137,7 +137,7 @@ public final class MITweaksConfig
 		hideMachineEfficiency = HIDE_MACHINE_EFFICIENCY.get();
 		machineBlueprintsMachines = MACHINE_BLUEPRINTS_MACHINES.get().stream()
 				.flatMap(MITweaksConfig::getMatchingMachineBlocks)
-				.collect(Collectors.toUnmodifiableSet());
+				.toList();
 		machineBlueprintsRequiredTooltip = MACHINE_BLUEPRINTS_REQUIRED_TOOLTIP.get();
 		machineBlueprintsRequiredForPlacing = MACHINE_BLUEPRINTS_REQUIRED_FOR_PLACING.get();
 		machineBlueprintsRequiredForRenderingHatches = MACHINE_BLUEPRINTS_REQUIRED_FOR_RENDERING_HATCHES.get();

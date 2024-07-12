@@ -39,3 +39,10 @@ type = "required"
 versionRange = "${modern_industrialization_version_range}"
 ordering = "AFTER"
 side = "BOTH"
+
+[[dependencies.${ mod_id }]]
+modId = "emi"
+type = "optional"
+versionRange = "${emi_version_range}"
+ordering = "AFTER"
+side = "BOTH"
