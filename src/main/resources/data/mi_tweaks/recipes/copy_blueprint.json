@@ -1,0 +1,15 @@
+{
+    "type": "mi_tweaks:copy_blueprint",
+    "ingredients": [
+        {
+            "item": "mi_tweaks:machine_blueprint"
+        },
+        {
+            "item": "minecraft:paper"
+        }
+    ],
+    "result": {
+        "item": "mi_tweaks:machine_blueprint",
+        "count": 1
+    }
+}

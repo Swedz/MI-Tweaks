@@ -38,6 +38,7 @@ public final class MITweaks
 		MIHooks.registerEfficiencyListener(ID, new MITweaksMIHookEfficiency());
 		
 		MITweaksItems.init(bus);
+		MITweaksOtherRegistries.init(bus);
 		
 		bus.addListener(GatherDataEvent.class, (event) ->
 				event.getGenerator().addProvider(event.includeClient(), new LanguageDatagenProvider(event)));

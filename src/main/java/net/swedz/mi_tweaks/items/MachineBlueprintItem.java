@@ -39,8 +39,28 @@ public final class MachineBlueprintItem extends Item
 		});
 	}
 	
+	public static void setMachineBlock(ItemStack stack, Block machineBlock)
+	{
+		if(!stack.is(MITweaksItems.MACHINE_BLUEPRINT.asItem()))
+		{
+			throw new IllegalArgumentException("Cannot set machine block value of a non-blueprint item");
+		}
+		if(!(machineBlock instanceof MachineBlock))
+		{
+			throw new IllegalArgumentException("Cannot set machine block value to a non-machine block");
+		}
+		
+		CompoundTag tag = stack.getOrCreateTag();
+		tag.putString("machine", BuiltInRegistries.BLOCK.getKey(machineBlock).toString());
+	}
+	
 	public static Optional<Block> getMachineBlock(ItemStack stack)
 	{
+		if(!stack.is(MITweaksItems.MACHINE_BLUEPRINT.asItem()))
+		{
+			throw new IllegalArgumentException("Cannot get machine block value of a non-blueprint item");
+		}
+		
 		CompoundTag tag = stack.getOrCreateTag();
 		if(tag.contains("machine"))
 		{
