@@ -49,6 +49,10 @@ public final class MachineBlueprintItem extends Item
 		{
 			throw new IllegalArgumentException("Cannot set machine block value to a non-machine block");
 		}
+		if(!MITweaksConfig.machineBlueprintsMachines.contains(machineBlock))
+		{
+			throw new IllegalArgumentException("Cannot set machine block value to a machine block that is not included in the config");
+		}
 		
 		CompoundTag tag = stack.getOrCreateTag();
 		tag.putString("machine", BuiltInRegistries.BLOCK.getKey(machineBlock).toString());
@@ -66,7 +70,8 @@ public final class MachineBlueprintItem extends Item
 		{
 			String machineId = tag.getString("machine");
 			Optional<Block> machineBlockOptional = BuiltInRegistries.BLOCK.getOptional(new ResourceLocation(machineId));
-			if(machineBlockOptional.isPresent() && machineBlockOptional.get() instanceof MachineBlock)
+			if(machineBlockOptional.isPresent() && machineBlockOptional.get() instanceof MachineBlock machineBlock &&
+			   MITweaksConfig.machineBlueprintsMachines.contains(machineBlock))
 			{
 				return machineBlockOptional;
 			}
