@@ -1,5 +1,6 @@
 {
   "item.mi_tweaks.machine_blueprint": "Machine Blueprint",
+  "itemGroup.mi_tweaks.mi_tweaks": "MI Tweaks",
   "text.mi_tweaks.machine_blueprint_missing_inventory": "You do not have the blueprints for this machine",
   "text.mi_tweaks.machine_blueprint_missing_learn": "You have not learned the blueprints for this machine",
   "text.mi_tweaks.machine_menu_voltage_prefix": "(%s) ",

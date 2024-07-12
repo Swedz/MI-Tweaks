@@ -26,5 +26,7 @@ public final class LanguageDatagenProvider extends LanguageProvider
 		{
 			this.add(text.getTranslationKey(), text.englishText());
 		}
+		
+		this.add("itemGroup.%s.%s".formatted(MITweaks.ID, MITweaks.ID), MITweaks.NAME);
 	}
 }

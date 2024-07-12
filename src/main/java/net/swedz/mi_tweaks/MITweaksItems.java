@@ -35,7 +35,7 @@ public final class MITweaksItems
 		Registry.init(bus);
 	}
 	
-	public static final ItemHolder<MachineBlueprintItem> MACHINE_BLUEPRINT = create("machine_blueprint", "Machine Blueprint", MachineBlueprintItem::new, new SortOrder(0)).withModel(CommonModelBuilders::generated).register();
+	public static final ItemHolder<MachineBlueprintItem> MACHINE_BLUEPRINT = create("machine_blueprint", "Machine Blueprint", MachineBlueprintItem::new, MITweaksSortOrder.BLUEPRINTS).withModel(CommonModelBuilders::generated).register();
 	
 	public static Set<ItemHolder> values()
 	{
