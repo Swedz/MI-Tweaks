@@ -22,6 +22,8 @@ public final class LanguageDatagenProvider extends LanguageProvider
 			this.add(item.asItem(), item.identifier().englishName());
 		}
 		
+		this.add(MITweaksItems.MACHINE_BLUEPRINT.asItem().getDescriptionId() + ".blank", "Blank Machine Blueprint");
+		
 		for(MITweaksText text : MITweaksText.values())
 		{
 			this.add(text.getTranslationKey(), text.englishText());
