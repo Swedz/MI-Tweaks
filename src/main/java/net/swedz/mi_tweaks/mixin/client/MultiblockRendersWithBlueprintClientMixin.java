@@ -74,15 +74,12 @@ public class MultiblockRendersWithBlueprintClientMixin
 	)
 	private HatchType getHeldHatchType(MultiblockMachineBlockEntity be, float tickDelta, PoseStack matrices, MultiBufferSource vcp, int light, int overlay)
 	{
-		if(MITweaksConfig.machineBlueprintsRequiredForRenderingHatches)
-		{
-			Player player = Minecraft.getInstance().player;
-			// TODO account for blueprint mode
-			return MachineBlueprintItem.hasBlueprint(player.getInventory(), be.getBlockState().getBlock()) ? getHeldHatchType() : null;
-		}
-		else
+		if(MITweaksConfig.machineBlueprintsRequiredForRenderingHatches.isDisabled())
 		{
 			return getHeldHatchType();
 		}
+		
+		Player player = Minecraft.getInstance().player;
+		return MachineBlueprintItem.hasBlueprint(player, be.getBlockState().getBlock(), MITweaksConfig.machineBlueprintsRequiredForRenderingHatches) ? getHeldHatchType() : null;
 	}
 }

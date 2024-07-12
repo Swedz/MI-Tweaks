@@ -23,7 +23,7 @@ public final class MITweaksMIHookEfficiency implements MIHookEfficiency
 	@Override
 	public void onGetRecipeMaxEu(EfficiencyMIHookContext context)
 	{
-		if(MITweaksConfig.efficiencyHackMode.useVoltageForEfficiency() &&
+		if(MITweaksConfig.efficiencyHack.useVoltageForEfficiency() &&
 		   context.getMachineBlockEntity() instanceof CableTierHolder machine)
 		{
 			context.setMaxRecipeEu(ConstantEfficiencyHelper.getRecipeEu(machine.getCableTier()));
@@ -33,7 +33,7 @@ public final class MITweaksMIHookEfficiency implements MIHookEfficiency
 	@Override
 	public void onDecreaseEfficiencyTicks(EfficiencyMIHookContext context)
 	{
-		if(MITweaksConfig.efficiencyHackMode.forceMaxEfficiency())
+		if(MITweaksConfig.efficiencyHack.forceMaxEfficiency())
 		{
 			context.setCancelled(true);
 		}
@@ -42,7 +42,7 @@ public final class MITweaksMIHookEfficiency implements MIHookEfficiency
 	@Override
 	public void onIncreaseEfficiencyTicks(EfficiencyMIHookContext context)
 	{
-		if(MITweaksConfig.efficiencyHackMode.forceMaxEfficiency())
+		if(MITweaksConfig.efficiencyHack.forceMaxEfficiency())
 		{
 			context.setCancelled(true);
 		}
@@ -51,7 +51,7 @@ public final class MITweaksMIHookEfficiency implements MIHookEfficiency
 	@Override
 	public void onTickStart(EfficiencyMIHookContext context)
 	{
-		if(MITweaksConfig.efficiencyHackMode.forceMaxEfficiency())
+		if(MITweaksConfig.efficiencyHack.forceMaxEfficiency())
 		{
 			context.setEfficiencyTicks(context.hasActiveRecipe() ? context.getMaxEfficiencyTicks() : 0);
 		}
@@ -60,7 +60,7 @@ public final class MITweaksMIHookEfficiency implements MIHookEfficiency
 	@Override
 	public void onTickEnd(EfficiencyMIHookContext context, long eu)
 	{
-		if(MITweaksConfig.efficiencyHackMode.forceMaxEfficiency() && eu == 0)
+		if(MITweaksConfig.efficiencyHack.forceMaxEfficiency() && eu == 0)
 		{
 			context.setEfficiencyTicks(0);
 		}
@@ -69,7 +69,7 @@ public final class MITweaksMIHookEfficiency implements MIHookEfficiency
 	@Override
 	public void onReadNbt(EfficiencyMIHookContext context)
 	{
-		if(MITweaksConfig.efficiencyHackMode.forceMaxEfficiency())
+		if(MITweaksConfig.efficiencyHack.forceMaxEfficiency())
 		{
 			context.setEfficiencyTicks(context.hasActiveRecipe() ? context.getMaxEfficiencyTicks() : 0);
 		}

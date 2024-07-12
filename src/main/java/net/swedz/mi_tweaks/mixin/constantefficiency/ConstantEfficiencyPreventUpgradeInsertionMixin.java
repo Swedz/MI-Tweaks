@@ -24,7 +24,7 @@ public class ConstantEfficiencyPreventUpgradeInsertionMixin
 	)
 	private void onUse(MachineBlockEntity be, Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> callback)
 	{
-		if(MITweaksConfig.efficiencyHackMode.preventsUpgrades())
+		if(MITweaksConfig.efficiencyHack.preventsUpgrades())
 		{
 			callback.setReturnValue(InteractionResult.PASS);
 		}
