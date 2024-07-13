@@ -185,8 +185,8 @@ public final class MITweaksConfig
 	public enum MachineBlueprintRequiredMode
 	{
 		DISABLED(null),
-		INVENTORY(MITweaksText.MACHINE_BLUEPRINT_MISSING_INVENTORY),
-		LEARN(MITweaksText.MACHINE_BLUEPRINT_MISSING_LEARN);
+		INVENTORY(MITweaksText.BLUEPRINT_MISSING_INVENTORY),
+		LEARN(MITweaksText.BLUEPRINT_MISSING_LEARN);
 		
 		private final MITweaksText tooltip;
 		

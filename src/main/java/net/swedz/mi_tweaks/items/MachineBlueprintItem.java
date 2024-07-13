@@ -10,15 +10,21 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.swedz.mi_tweaks.MITweaksConfig;
 import net.swedz.mi_tweaks.MITweaksItems;
+import net.swedz.mi_tweaks.MITweaksText;
 import net.swedz.mi_tweaks.items.renderer.MachineBlueprintItemRenderer;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
+
+import static aztech.modern_industrialization.MITooltips.*;
 
 public final class MachineBlueprintItem extends Item
 {
@@ -51,6 +57,13 @@ public final class MachineBlueprintItem extends Item
 				return new MachineBlueprintItemRenderer();
 			}
 		});
+	}
+	
+	@Override
+	public void appendHoverText(ItemStack stack, Level level, List<Component> tooltipComponents, TooltipFlag isAdvanced)
+	{
+		getMachineBlock(stack).ifPresent((machineBlock) ->
+				tooltipComponents.add(MITweaksText.BLUEPRINT_MACHINE.text(ITEM_PARSER.parse(machineBlock.asItem()))));
 	}
 	
 	public static void setMachineBlock(ItemStack stack, Block machineBlock)

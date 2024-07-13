@@ -5,8 +5,9 @@ import net.minecraft.network.chat.MutableComponent;
 
 public enum MITweaksText
 {
-	MACHINE_BLUEPRINT_MISSING_INVENTORY("You do not have the blueprints for this machine"),
-	MACHINE_BLUEPRINT_MISSING_LEARN("You have not learned the blueprints for this machine"),
+	BLUEPRINT_MACHINE("%s"), // TODO
+	BLUEPRINT_MISSING_INVENTORY("You do not have the blueprints for this machine"),
+	BLUEPRINT_MISSING_LEARN("You have not learned the blueprints for this machine"),
 	MACHINE_MENU_VOLTAGE_PREFIX("(%s) "),
 	MACHINE_VOLTAGE_RECIPES("Allows machines to run %s recipes"),
 	MACHINE_VOLTAGE_RUNS_AT("Runs recipes at %s"),
