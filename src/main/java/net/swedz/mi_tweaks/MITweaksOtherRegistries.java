@@ -8,9 +8,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import net.swedz.mi_tweaks.blueprintrequirement.CopyBlueprintRecipe;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
+import net.swedz.mi_tweaks.blueprint.BlueprintsLearned;
+import net.swedz.mi_tweaks.blueprint.CopyBlueprintRecipe;
 import net.swedz.mi_tweaks.items.MachineBlueprintItem;
 import net.swedz.tesseract.neoforge.registry.holder.ItemHolder;
 
@@ -19,11 +22,11 @@ import java.util.function.Supplier;
 
 public final class MITweaksOtherRegistries
 {
-	public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(Registries.RECIPE_SERIALIZER, MITweaks.ID);
+	private static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(Registries.RECIPE_SERIALIZER, MITweaks.ID);
 	
 	public static final DeferredHolder<RecipeSerializer<?>, SimpleCraftingRecipeSerializer<CopyBlueprintRecipe>> COPY_BLUEPRINT_SERIALIZER = RECIPE_SERIALIZERS.register("copy_blueprint", () -> new SimpleCraftingRecipeSerializer<>(CopyBlueprintRecipe::new));
 	
-	public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MITweaks.ID);
+	private static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MITweaks.ID);
 	
 	public static final Supplier<CreativeModeTab> CREATIVE_TAB = CREATIVE_MODE_TABS.register(MITweaks.ID, () -> CreativeModeTab.builder()
 			.title(Component.translatable("itemGroup.%s.%s".formatted(MITweaks.ID, MITweaks.ID)))
@@ -53,9 +56,19 @@ public final class MITweaksOtherRegistries
 			})
 			.build());
 	
+	private static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPES = DeferredRegister.create(NeoForgeRegistries.Keys.ATTACHMENT_TYPES, MITweaks.ID);
+	
+	public static final Supplier<AttachmentType<BlueprintsLearned>> BLUEPRINTS_LEARNED = ATTACHMENT_TYPES.register(
+			"blueprints_learned",
+			() -> AttachmentType.serializable(BlueprintsLearned::new)
+					.copyOnDeath()
+					.build()
+	);
+	
 	public static void init(IEventBus bus)
 	{
 		RECIPE_SERIALIZERS.register(bus);
 		CREATIVE_MODE_TABS.register(bus);
+		ATTACHMENT_TYPES.register(bus);
 	}
 }

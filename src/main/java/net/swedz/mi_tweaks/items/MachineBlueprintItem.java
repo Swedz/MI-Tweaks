@@ -1,11 +1,16 @@
 package net.swedz.mi_tweaks.items;
 
 import aztech.modern_industrialization.machines.MachineBlock;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -16,8 +21,11 @@ import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.swedz.mi_tweaks.MITweaksConfig;
 import net.swedz.mi_tweaks.MITweaksItems;
+import net.swedz.mi_tweaks.MITweaksOtherRegistries;
 import net.swedz.mi_tweaks.MITweaksText;
+import net.swedz.mi_tweaks.blueprint.BlueprintsLearned;
 import net.swedz.mi_tweaks.items.renderer.MachineBlueprintItemRenderer;
+import net.swedz.mi_tweaks.packets.UpdateBlueprintsLearnedPacket;
 
 import java.util.List;
 import java.util.Optional;
@@ -62,8 +70,42 @@ public final class MachineBlueprintItem extends Item
 	@Override
 	public void appendHoverText(ItemStack stack, Level level, List<Component> tooltipComponents, TooltipFlag isAdvanced)
 	{
+		Player player = Minecraft.getInstance().player;
+		
 		getMachineBlock(stack).ifPresent((machineBlock) ->
-				tooltipComponents.add(MITweaksText.BLUEPRINT_MACHINE.text(ITEM_PARSER.parse(machineBlock.asItem()))));
+		{
+			tooltipComponents.add(MITweaksText.BLUEPRINT_MACHINE.text(ITEM_PARSER.parse(machineBlock.asItem())));
+			
+			if(player != null &&
+			   MITweaksConfig.machineBlueprintsLearning &&
+			   !hasBlueprintLearned(player, machineBlock))
+			{
+				tooltipComponents.add(MITweaksText.BLUEPRINT_LEARN.text(Component.keybind("key.use")).withStyle(DEFAULT_STYLE));
+			}
+		});
+	}
+	
+	@Override
+	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand)
+	{
+		ItemStack stack = player.getItemInHand(usedHand);
+		Optional<Block> machineBlockOptional = getMachineBlock(stack);
+		if(machineBlockOptional.isPresent())
+		{
+			Block machineBlock = machineBlockOptional.get();
+			BlueprintsLearned blueprintsLearned = player.getData(MITweaksOtherRegistries.BLUEPRINTS_LEARNED);
+			if(!blueprintsLearned.hasLearned(machineBlock))
+			{
+				if(!level.isClientSide)
+				{
+					blueprintsLearned.learn(machineBlock);
+					new UpdateBlueprintsLearnedPacket(blueprintsLearned).sendToClient((ServerPlayer) player);
+					player.displayClientMessage(MITweaksText.BLUEPRINT_LEARNED.text(ITEM_PARSER.parse(machineBlock.asItem())).withStyle(ChatFormatting.GREEN), true);
+				}
+				return InteractionResultHolder.consume(stack);
+			}
+		}
+		return InteractionResultHolder.pass(stack);
 	}
 	
 	public static void setMachineBlock(ItemStack stack, Block machineBlock)
@@ -123,8 +165,8 @@ public final class MachineBlueprintItem extends Item
 	
 	private static boolean hasBlueprintLearned(Player player, Block machineBlock)
 	{
-		// TODO setup the learning system
-		return false;
+		BlueprintsLearned blueprintsLearned = player.getData(MITweaksOtherRegistries.BLUEPRINTS_LEARNED);
+		return blueprintsLearned.hasLearned(machineBlock);
 	}
 	
 	public static boolean hasBlueprint(Player player, Block machineBlock, MITweaksConfig.MachineBlueprintRequiredMode requiredMode)
@@ -132,8 +174,10 @@ public final class MachineBlueprintItem extends Item
 		return switch (requiredMode)
 				{
 					case DISABLED -> true;
-					case LEARN -> hasBlueprintLearned(player, machineBlock);
 					case INVENTORY -> hasBlueprintInInventory(player, machineBlock);
+					case LEARN -> hasBlueprintLearned(player, machineBlock);
+					case INVENTORY_OR_LEARN -> hasBlueprintLearned(player, machineBlock) ||
+											   hasBlueprintInInventory(player, machineBlock);
 				};
 	}
 }

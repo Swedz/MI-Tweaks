@@ -58,11 +58,12 @@ public final class MITweaksTooltips
 	public static final TooltipAttachment MACHINE_BLUEPRINT_MISSING = MITooltips.TooltipAttachment.of(
 			(itemStack, item) ->
 			{
-				if(MITweaksConfig.machineBlueprintsRequiredTooltip.isEnabled() &&
+				Player player = Minecraft.getInstance().player;
+				if(player != null &&
+				   MITweaksConfig.machineBlueprintsRequiredTooltip.isEnabled() &&
 				   item instanceof BlockItem blockItem && blockItem.getBlock() instanceof MachineBlock machineBlock &&
 				   MITweaksConfig.machineBlueprintsMachines.contains(machineBlock))
 				{
-					Player player = Minecraft.getInstance().player;
 					return MachineBlueprintItem.hasBlueprint(player, machineBlock, MITweaksConfig.machineBlueprintsRequiredTooltip) ?
 							Optional.empty() :
 							Optional.of(MITweaksConfig.machineBlueprintsRequiredTooltip.tooltip().text().withStyle(ChatFormatting.RED));

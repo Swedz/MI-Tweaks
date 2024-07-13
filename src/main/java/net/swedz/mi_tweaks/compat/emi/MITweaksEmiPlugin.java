@@ -6,7 +6,7 @@ import dev.emi.emi.api.EmiPlugin;
 import dev.emi.emi.api.EmiRegistry;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.swedz.mi_tweaks.blueprintrequirement.CopyBlueprintRecipe;
+import net.swedz.mi_tweaks.blueprint.CopyBlueprintRecipe;
 import net.swedz.mi_tweaks.compat.emi.recipe.EmiCopyBlueprintRecipe;
 
 @EmiEntrypoint

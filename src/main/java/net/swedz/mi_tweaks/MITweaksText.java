@@ -6,6 +6,8 @@ import net.minecraft.network.chat.MutableComponent;
 public enum MITweaksText
 {
 	BLUEPRINT_MACHINE("%s"),
+	BLUEPRINT_LEARN("Press %s to learn this blueprint"),
+	BLUEPRINT_LEARNED("You have learned the blueprints for %s"),
 	BLUEPRINT_MISSING_INVENTORY("You do not have the blueprints for this machine"),
 	BLUEPRINT_MISSING_LEARN("You have not learned the blueprints for this machine"),
 	MACHINE_MENU_VOLTAGE_PREFIX("(%s) "),

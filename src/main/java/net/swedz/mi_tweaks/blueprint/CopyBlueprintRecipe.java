@@ -1,4 +1,4 @@
-package net.swedz.mi_tweaks.blueprintrequirement;
+package net.swedz.mi_tweaks.blueprint;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;

@@ -9,6 +9,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
 import net.swedz.mi_tweaks.compat.mi.MITweaksMIHookEfficiency;
 import net.swedz.mi_tweaks.compat.mi.MITweaksMIHookListener;
 import net.swedz.mi_tweaks.datagen.client.LanguageDatagenProvider;
@@ -39,6 +40,8 @@ public final class MITweaks
 		
 		MITweaksItems.init(bus);
 		MITweaksOtherRegistries.init(bus);
+		
+		bus.addListener(RegisterPayloadHandlerEvent.class, MITweaksPackets::init);
 		
 		bus.addListener(GatherDataEvent.class, (event) ->
 				event.getGenerator().addProvider(event.includeClient(), new LanguageDatagenProvider(event)));

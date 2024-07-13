@@ -3,6 +3,7 @@ package net.swedz.mi_tweaks;
 import aztech.modern_industrialization.machines.MachineBlock;
 import com.google.common.collect.Lists;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
@@ -24,6 +25,7 @@ public final class MITweaksConfig
 	private static final ModConfigSpec.BooleanValue                            WRENCHES_RENDER_MULTIBLOCK_SHAPES;
 	private static final ModConfigSpec.EnumValue<MachineEfficiencyHack>        EFFICIENCY_HACK;
 	private static final ModConfigSpec.BooleanValue                            HIDE_MACHINE_EFFICIENCY;
+	private static final ModConfigSpec.BooleanValue                            MACHINE_BLUEPRINTS_LEARNING;
 	private static final ModConfigSpec.ConfigValue<List<? extends String>>     MACHINE_BLUEPRINTS_MACHINES;
 	private static final ModConfigSpec.EnumValue<MachineBlueprintRequiredMode> MACHINE_BLUEPRINTS_REQUIRED_TOOLTIP;
 	private static final ModConfigSpec.EnumValue<MachineBlueprintRequiredMode> MACHINE_BLUEPRINTS_REQUIRED_FOR_PLACING;
@@ -70,6 +72,9 @@ public final class MITweaksConfig
 		
 		{
 			BUILDER.push("machine_blueprints");
+			MACHINE_BLUEPRINTS_LEARNING = BUILDER
+					.comment("Whether the learning system for blueprints is enabled or not. If true, then blueprints can be right-clicked to become learned")
+					.define("learning", false);
 			MACHINE_BLUEPRINTS_MACHINES = BUILDER
 					.comment(
 							"The list of machine ids (accepts regex) that require blueprints to place",
@@ -122,7 +127,8 @@ public final class MITweaksConfig
 	public static boolean                      wrenchesRenderMultiblockShapes;
 	public static MachineEfficiencyHack        efficiencyHack;
 	public static boolean                      hideMachineEfficiency;
-	public static List<Block>                  machineBlueprintsMachines;
+	public static boolean                      machineBlueprintsLearning;
+	public static MachineBlueprintMachines     machineBlueprintsMachines;
 	public static MachineBlueprintRequiredMode machineBlueprintsRequiredTooltip;
 	public static MachineBlueprintRequiredMode machineBlueprintsRequiredForPlacing;
 	public static MachineBlueprintRequiredMode machineBlueprintsRequiredForRenderingHatches;
@@ -135,9 +141,8 @@ public final class MITweaksConfig
 		wrenchesRenderMultiblockShapes = WRENCHES_RENDER_MULTIBLOCK_SHAPES.get();
 		efficiencyHack = EFFICIENCY_HACK.get();
 		hideMachineEfficiency = HIDE_MACHINE_EFFICIENCY.get();
-		machineBlueprintsMachines = MACHINE_BLUEPRINTS_MACHINES.get().stream()
-				.flatMap(MITweaksConfig::getMatchingMachineBlocks)
-				.toList();
+		machineBlueprintsLearning = MACHINE_BLUEPRINTS_LEARNING.get();
+		machineBlueprintsMachines = new MachineBlueprintMachines(MACHINE_BLUEPRINTS_MACHINES.get());
 		machineBlueprintsRequiredTooltip = MACHINE_BLUEPRINTS_REQUIRED_TOOLTIP.get();
 		machineBlueprintsRequiredForPlacing = MACHINE_BLUEPRINTS_REQUIRED_FOR_PLACING.get();
 		machineBlueprintsRequiredForRenderingHatches = MACHINE_BLUEPRINTS_REQUIRED_FOR_RENDERING_HATCHES.get();
@@ -182,11 +187,49 @@ public final class MITweaksConfig
 		}
 	}
 	
+	public static final class MachineBlueprintMachines
+	{
+		private final List<ResourceLocation> machineIds;
+		private final List<Block>            machineBlocks;
+		
+		private MachineBlueprintMachines(List<? extends String> config)
+		{
+			this.machineIds = config.stream()
+					.flatMap(MITweaksConfig::getMatchingMachineBlocks)
+					.map(BuiltInRegistries.BLOCK::getKey)
+					.toList();
+			this.machineBlocks = machineIds.stream()
+					.map(BuiltInRegistries.BLOCK::get)
+					.toList();
+		}
+		
+		public int size()
+		{
+			return machineIds.size();
+		}
+		
+		public boolean contains(Block machineBlock)
+		{
+			return machineIds.contains(BuiltInRegistries.BLOCK.getKey(machineBlock));
+		}
+		
+		public Block get(int index)
+		{
+			return BuiltInRegistries.BLOCK.get(machineIds.get(index));
+		}
+		
+		public Stream<Block> stream()
+		{
+			return machineBlocks.stream();
+		}
+	}
+	
 	public enum MachineBlueprintRequiredMode
 	{
 		DISABLED(null),
 		INVENTORY(MITweaksText.BLUEPRINT_MISSING_INVENTORY),
-		LEARN(MITweaksText.BLUEPRINT_MISSING_LEARN);
+		LEARN(MITweaksText.BLUEPRINT_MISSING_LEARN),
+		INVENTORY_OR_LEARN(MITweaksText.BLUEPRINT_MISSING_INVENTORY);
 		
 		private final MITweaksText tooltip;
 		
