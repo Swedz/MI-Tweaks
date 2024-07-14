@@ -1,23 +1,32 @@
 package net.swedz.mi_tweaks.items;
 
 import aztech.modern_industrialization.machines.MachineBlock;
+import aztech.modern_industrialization.machines.multiblocks.MultiblockMachineBlockEntity;
+import aztech.modern_industrialization.machines.multiblocks.ShapeMatcher;
+import aztech.modern_industrialization.machines.multiblocks.SimpleMember;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.swedz.mi_tweaks.MITweaksConfig;
 import net.swedz.mi_tweaks.MITweaksItems;
@@ -27,6 +36,8 @@ import net.swedz.mi_tweaks.blueprint.BlueprintsLearned;
 import net.swedz.mi_tweaks.items.renderer.MachineBlueprintItemRenderer;
 import net.swedz.mi_tweaks.packets.UpdateBlueprintsLearnedPacket;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -85,14 +96,73 @@ public final class MachineBlueprintItem extends Item
 		});
 	}
 	
-	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand)
+	private static Optional<ItemStack> getItemStackMatchingFromInventory(SimpleMember member, Player player)
 	{
-		ItemStack stack = player.getItemInHand(usedHand);
+		if(player.isCreative())
+		{
+			return Optional.of(member.getPreviewState().getBlock().asItem().getDefaultInstance());
+		}
+		for(ItemStack item : player.getInventory().items)
+		{
+			if(item.getItem() instanceof BlockItem blockItem &&
+			   member.matchesState(blockItem.getBlock().defaultBlockState()))
+			{
+				return Optional.of(item);
+			}
+		}
+		return Optional.empty();
+	}
+	
+	@Override
+	public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context)
+	{
+		Player player = context.getPlayer();
+		InteractionHand usedHand = context.getHand();
+		Level level = context.getLevel();
 		Optional<Block> machineBlockOptional = getMachineBlock(stack);
 		if(machineBlockOptional.isPresent())
 		{
 			Block machineBlock = machineBlockOptional.get();
+			
+			BlockHitResult blockHitResult = getPlayerPOVHitResult(level, player, ClipContext.Fluid.NONE);
+			if(blockHitResult.getType() == HitResult.Type.BLOCK &&
+			   level.getBlockState(blockHitResult.getBlockPos()).is(machineBlock) &&
+			   level.getBlockEntity(blockHitResult.getBlockPos()) instanceof MultiblockMachineBlockEntity multiblockMachine &&
+			   !multiblockMachine.isShapeValid())
+			{
+				ShapeMatcher matcher = new ShapeMatcher(
+						level,
+						multiblockMachine.getBlockPos(),
+						multiblockMachine.getOrientation().facingDirection,
+						multiblockMachine.getActiveShape()
+				);
+				List<BlockPos> sortedPositions = new ArrayList<>(matcher.getPositions());
+				Collections.sort(sortedPositions);
+				for(BlockPos pos : sortedPositions)
+				{
+					SimpleMember member = matcher.getSimpleMember(pos);
+					if(!matcher.matches(pos, level, null) &&
+					   level.getBlockState(pos).isAir())
+					{
+						Optional<ItemStack> memberStackOptional = getItemStackMatchingFromInventory(member, player);
+						if(memberStackOptional.isPresent())
+						{
+							if(!level.isClientSide)
+							{
+								ItemStack memberStack = memberStackOptional.get();
+								level.setBlock(pos, ((BlockItem) memberStack.getItem()).getBlock().defaultBlockState(), 1 | 2);
+								if(!player.getAbilities().instabuild)
+								{
+									memberStack.shrink(1);
+								}
+								player.swing(usedHand, true);
+							}
+							return InteractionResult.CONSUME;
+						}
+					}
+				}
+			}
+			
 			BlueprintsLearned blueprintsLearned = player.getData(MITweaksOtherRegistries.BLUEPRINTS_LEARNED);
 			if(!blueprintsLearned.hasLearned(machineBlock))
 			{
@@ -102,10 +172,10 @@ public final class MachineBlueprintItem extends Item
 					new UpdateBlueprintsLearnedPacket(blueprintsLearned).sendToClient((ServerPlayer) player);
 					player.displayClientMessage(MITweaksText.BLUEPRINT_LEARNED.text(ITEM_PARSER.parse(machineBlock.asItem())).withStyle(ChatFormatting.GREEN), true);
 				}
-				return InteractionResultHolder.consume(stack);
+				return InteractionResult.CONSUME;
 			}
 		}
-		return InteractionResultHolder.pass(stack);
+		return InteractionResult.PASS;
 	}
 	
 	public static void setMachineBlock(ItemStack stack, Block machineBlock)
