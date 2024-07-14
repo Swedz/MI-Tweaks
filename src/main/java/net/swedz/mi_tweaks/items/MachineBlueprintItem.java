@@ -171,6 +171,7 @@ public final class MachineBlueprintItem extends Item
 					blueprintsLearned.learn(machineBlock);
 					new UpdateBlueprintsLearnedPacket(blueprintsLearned).sendToClient((ServerPlayer) player);
 					player.displayClientMessage(MITweaksText.BLUEPRINT_LEARNED.text(ITEM_PARSER.parse(machineBlock.asItem())).withStyle(ChatFormatting.GREEN), true);
+					player.swing(usedHand, true);
 				}
 				return InteractionResult.CONSUME;
 			}
