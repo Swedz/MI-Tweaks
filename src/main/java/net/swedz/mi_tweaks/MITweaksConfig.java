@@ -86,7 +86,8 @@ public final class MITweaksConfig
 						"This section's options use the following values:",
 						"DISABLED = Machine blueprints are not required at all",
 						"INVENTORY = The machine blueprint must be in the inventory of the player",
-						"LEARN = Once a machine blueprint is in the inventory of the player, it becomes 'learned' and is not required in the inventory"
+						"LEARN = Once a machine blueprint is in the inventory of the player, it becomes 'learned' and is not required in the inventory",
+						"INVENTORY_OR_LEARN = The blueprint must be in the inventory of the player or it needs to have been learned"
 				);
 				BUILDER.push("required");
 				MACHINE_BLUEPRINTS_REQUIRED_TOOLTIP = BUILDER
