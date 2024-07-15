@@ -28,3 +28,4 @@ A machine blueprint can be used to view the shape of multiblocks for the machine
 ## Other Tweaks
 - Water Pumps require ocean/river biome
 - Lock efficiency of crafting machines with redstone control module
+- Disable wrenches from rendering multiblock shapes (this is only logical when machine blueprints have been properly implemented)
