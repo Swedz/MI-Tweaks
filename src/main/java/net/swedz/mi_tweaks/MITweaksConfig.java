@@ -227,16 +227,18 @@ public final class MITweaksConfig
 	
 	public enum MachineBlueprintRequiredMode
 	{
-		DISABLED(null),
-		INVENTORY(MITweaksText.BLUEPRINT_MISSING_INVENTORY),
-		LEARN(MITweaksText.BLUEPRINT_MISSING_LEARN),
-		INVENTORY_OR_LEARN(MITweaksText.BLUEPRINT_MISSING_INVENTORY);
+		DISABLED(null, false),
+		INVENTORY(MITweaksText.BLUEPRINT_MISSING_INVENTORY, false),
+		LEARN(MITweaksText.BLUEPRINT_MISSING_LEARN, true),
+		INVENTORY_OR_LEARN(MITweaksText.BLUEPRINT_MISSING_INVENTORY, true);
 		
 		private final MITweaksText tooltip;
+		private final boolean      learning;
 		
-		MachineBlueprintRequiredMode(MITweaksText tooltip)
+		MachineBlueprintRequiredMode(MITweaksText tooltip, boolean learning)
 		{
 			this.tooltip = tooltip;
+			this.learning = learning;
 		}
 		
 		public boolean isDisabled()
@@ -247,6 +249,11 @@ public final class MITweaksConfig
 		public boolean isEnabled()
 		{
 			return !this.isDisabled();
+		}
+		
+		public boolean isLearning()
+		{
+			return learning;
 		}
 		
 		public MITweaksText tooltip()

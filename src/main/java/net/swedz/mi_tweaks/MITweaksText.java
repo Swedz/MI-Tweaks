@@ -10,6 +10,7 @@ public enum MITweaksText
 	BLUEPRINT_LEARNED("You have learned the blueprints for %s"),
 	BLUEPRINT_MISSING_INVENTORY("You do not have the blueprints for this machine"),
 	BLUEPRINT_MISSING_LEARN("You have not learned the blueprints for this machine"),
+	LEARNING_DISABLED_BUT_REQUIRING_LEARNING("WARNING: Your config is set to require learning for some machine blueprint requirement options but you do not have learning enabled. Be sure to enable learning or else you may be unable to use machines."),
 	MACHINE_MENU_VOLTAGE_PREFIX("(%s) "),
 	MACHINE_VOLTAGE_RECIPES("Allows machines to run %s recipes"),
 	MACHINE_VOLTAGE_RUNS_AT("Runs recipes at %s"),
