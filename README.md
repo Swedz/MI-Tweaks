@@ -1,8 +1,34 @@
 # MI Tweaks
 This mod is an addon for [Modern Industrialization](https://github.com/AztechMC/Modern-Industrialization) that adds some configurable tweaks to existing mechanics. This addon is designed specifically for modpack creators to further customize the MI experience in their pack. All tweaks are disabled by default.
 
+For any questions, please ask in the `#mi-tweaks` channel on [my discord](https://discord.gg/vNaqDzSNaB).
+
 ## Extra Recipe Conditions
-There are some extra recipe conditions added to allow for further customization of progression. For any information regarding these new recipe conditions, see the documentation [here](https://github.com/Swedz/MI-Tweaks/blob/master/docs/RECIPE_CONDITIONS.md).
+There are some extra recipe conditions added to allow for further customization of progression.
+
+Recipe process conditions can be included in any recipe type that is a `MachineRecipeType`. Recipe conditions can be added to a recipe's json in an array with the key `conditions`.
+
+### EBF Coil
+This process condition allows you to define a coil required for the recipe. This is distinct from MI's builtin method of doing this which uses EU/t cost, as it allows you to arbitrarily require a different tier than the EU/t cost.
+
+```json
+{
+    "type": "mi_tweaks:ebf_coil",
+    "coil": "modern_industrialization:kanthal_coil"
+}
+```
+
+### Voltage
+This process condition makes it so that the machine must have a certain hull (or higher) provided to it in order to run the recipe.
+
+When using this recipe condition, it is recommended to enable `display_machine_voltage` in the config.
+
+```json
+{
+    "type": "mi_tweaks:voltage",
+    "voltage": "hv"
+}
+```
 
 ## Voltage Integration
 MI does not have much of a focus on voltage tiers of machines. By default, the voltage of a machine purely allows it to accept power from higher tiers of cables. MI Tweaks provides multiple options to change this (voltage recipe condition & voltage based machine speed).
