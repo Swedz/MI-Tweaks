@@ -16,7 +16,6 @@ public final class MITweaksClient
 	@SubscribeEvent
 	private static void init(FMLConstructModEvent __)
 	{
-		// Warn if learning is disabled but one of the modes uses learning
 		NeoForge.EVENT_BUS.addListener(ClientPlayerNetworkEvent.LoggingIn.class, (e) ->
 		{
 			if(!MITweaksConfig.machineBlueprintsLearning &&
