@@ -14,18 +14,21 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.client.model.data.ModelData;
-import net.swedz.mi_tweaks.MITweaks;
-import net.swedz.mi_tweaks.items.MachineBlueprintItem;
 
 import java.util.Optional;
+import java.util.function.Function;
 
-public final class MachineBlueprintItemRenderer extends BlockEntityWithoutLevelRenderer
+public final class BlockOverlayingItemRenderer extends BlockEntityWithoutLevelRenderer
 {
-	public static final ResourceLocation MODEL_LOCATION = MITweaks.id("item/machine_blueprint_raw");
+	private final ResourceLocation                     itemModelLocation;
+	private final Function<ItemStack, Optional<Block>> blockFromItemStackGetter;
 	
-	public MachineBlueprintItemRenderer()
+	public BlockOverlayingItemRenderer(ResourceLocation itemModelLocation, Function<ItemStack, Optional<Block>> blockFromItemStackGetter)
 	{
 		super(null, null);
+		
+		this.itemModelLocation = itemModelLocation;
+		this.blockFromItemStackGetter = blockFromItemStackGetter;
 	}
 	
 	@Override
@@ -39,13 +42,13 @@ public final class MachineBlueprintItemRenderer extends BlockEntityWithoutLevelR
 		poseStack.pushPose();
 		
 		poseStack.translate(0.5, 0.5, 0.5);
-		BakedModel model = renderer.getItemModelShaper().getModelManager().getModel(MODEL_LOCATION);
+		BakedModel model = renderer.getItemModelShaper().getModelManager().getModel(itemModelLocation);
 		renderer.render(stack, displayContext, isLeftHand(displayContext), poseStack, buffer, packedLight, packedOverlay, model);
 		
 		if(displayContext == ItemDisplayContext.GUI)
 		{
-			Optional<Block> machineBlock = MachineBlueprintItem.getMachineBlock(stack);
-			if(machineBlock.isPresent())
+			Optional<Block> blockOptional = blockFromItemStackGetter.apply(stack);
+			if(blockOptional.isPresent())
 			{
 				poseStack.pushPose();
 				poseStack.popPose();
@@ -54,7 +57,7 @@ public final class MachineBlueprintItemRenderer extends BlockEntityWithoutLevelR
 				poseStack.scale(0.4f, 0.4f, 0.4f);
 				poseStack.rotateAround(Axis.XP.rotationDegrees(30), 0.5f, 0.5f, 0.5f);
 				poseStack.rotateAround(Axis.YP.rotationDegrees(225), 0.5f, 0.5f, 0.5f);
-				BlockState blockState = machineBlock.get().defaultBlockState();
+				BlockState blockState = blockOptional.get().defaultBlockState();
 				BlockRenderDispatcher blockRenderer = Minecraft.getInstance().getBlockRenderer();
 				blockRenderer.renderSingleBlock(blockState, poseStack, buffer, packedLight, packedOverlay, ModelData.EMPTY, null);
 			}

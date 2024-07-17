@@ -28,12 +28,13 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
+import net.swedz.mi_tweaks.MITweaks;
 import net.swedz.mi_tweaks.MITweaksConfig;
 import net.swedz.mi_tweaks.MITweaksItems;
 import net.swedz.mi_tweaks.MITweaksOtherRegistries;
 import net.swedz.mi_tweaks.MITweaksText;
 import net.swedz.mi_tweaks.blueprint.BlueprintsLearned;
-import net.swedz.mi_tweaks.items.renderer.MachineBlueprintItemRenderer;
+import net.swedz.mi_tweaks.items.renderer.BlockOverlayingItemRenderer;
 import net.swedz.mi_tweaks.packets.UpdateBlueprintsLearnedPacket;
 
 import java.util.ArrayList;
@@ -47,6 +48,8 @@ import static aztech.modern_industrialization.MITooltips.*;
 
 public final class MachineBlueprintItem extends Item
 {
+	public static final ResourceLocation RAW_ITEM_MODEL_LOCATION = MITweaks.id("item/machine_blueprint_raw");
+	
 	public MachineBlueprintItem(Properties properties)
 	{
 		super(properties.stacksTo(1));
@@ -73,7 +76,7 @@ public final class MachineBlueprintItem extends Item
 			@Override
 			public BlockEntityWithoutLevelRenderer getCustomRenderer()
 			{
-				return new MachineBlueprintItemRenderer();
+				return new BlockOverlayingItemRenderer(RAW_ITEM_MODEL_LOCATION, MachineBlueprintItem::getMachineBlock);
 			}
 		});
 	}

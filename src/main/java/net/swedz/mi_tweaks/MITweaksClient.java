@@ -8,7 +8,7 @@ import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.common.NeoForge;
-import net.swedz.mi_tweaks.items.renderer.MachineBlueprintItemRenderer;
+import net.swedz.mi_tweaks.items.MachineBlueprintItem;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = MITweaks.ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public final class MITweaksClient
@@ -31,6 +31,6 @@ public final class MITweaksClient
 	@SubscribeEvent
 	private static void onModifyBakingResult(ModelEvent.RegisterAdditional event)
 	{
-		event.register(MachineBlueprintItemRenderer.MODEL_LOCATION);
+		event.register(MachineBlueprintItem.RAW_ITEM_MODEL_LOCATION);
 	}
 }
