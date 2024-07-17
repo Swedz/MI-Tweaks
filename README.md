@@ -45,7 +45,7 @@ MI Tweaks provides some configuration options for altering how efficiency in ele
 Not only can you change the behavior of efficiency, but there is also a config option for hiding the efficiency bar and information in machine UIs.
 
 ## Machine Blueprints
-For the modpack creators who want to seamlessly implement a requirement to making machines other than the items themselves (for example, a research system of sorts), MI Tweaks provides Machine Blueprints.
+For the modpack creators who want to seamlessly implement a requirement to making machines other than the items themselves (for example, a research system of sorts), MI Tweaks provides Machine Blueprints. MI Tweaks does not provide any method of obtaining blueprints in survival mode, so it is left entirely up to modpack creators to implement.
 
 A machine blueprint can be used to view the shape of multiblocks for the machine it is for when held similarly to how a wrench works by default. Additionally, blueprints can be used to build multiblocks. By right clicking a multiblock controller with its respective blueprint, it will take the blocks from your inventory and place them for you.
 
