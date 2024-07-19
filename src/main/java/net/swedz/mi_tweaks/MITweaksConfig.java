@@ -125,7 +125,7 @@ public final class MITweaksConfig
 	public static MachineEfficiencyHackOption  efficiencyHack;
 	public static boolean                      hideMachineEfficiency;
 	public static boolean                      machineBlueprintsLearning;
-	public static MachineBlueprintMachines     machineBlueprintsMachines;
+	public static MachineList                  machineBlueprintsMachines;
 	public static MachineBlueprintRequiredMode machineBlueprintsRequiredTooltip;
 	public static MachineBlueprintRequiredMode machineBlueprintsRequiredForPlacing;
 	public static MachineBlueprintRequiredMode machineBlueprintsRequiredForRenderingHatches;
@@ -139,7 +139,7 @@ public final class MITweaksConfig
 		efficiencyHack = EFFICIENCY_HACK.get();
 		hideMachineEfficiency = HIDE_MACHINE_EFFICIENCY.get();
 		machineBlueprintsLearning = MACHINE_BLUEPRINTS_LEARNING.get();
-		machineBlueprintsMachines = new MachineBlueprintMachines(MACHINE_BLUEPRINTS_MACHINES.get());
+		machineBlueprintsMachines = new MachineList(MACHINE_BLUEPRINTS_MACHINES.get());
 		machineBlueprintsRequiredTooltip = MACHINE_BLUEPRINTS_REQUIRED_TOOLTIP.get();
 		machineBlueprintsRequiredForPlacing = MACHINE_BLUEPRINTS_REQUIRED_FOR_PLACING.get();
 		machineBlueprintsRequiredForRenderingHatches = MACHINE_BLUEPRINTS_REQUIRED_FOR_RENDERING_HATCHES.get();
@@ -151,12 +151,12 @@ public final class MITweaksConfig
 		loadConfig();
 	}
 	
-	public static final class MachineBlueprintMachines
+	public static final class MachineList
 	{
 		private final List<ResourceLocation> machineIds;
 		private final List<Block>            machineBlocks;
 		
-		private MachineBlueprintMachines(List<? extends String> config)
+		private MachineList(List<? extends String> config)
 		{
 			this.machineIds = config.stream()
 					.flatMap(MITweaksConfig::getMatchingMachineBlocks)
@@ -170,6 +170,11 @@ public final class MITweaksConfig
 		public int size()
 		{
 			return machineIds.size();
+		}
+		
+		public boolean isEmpty()
+		{
+			return machineIds.isEmpty();
 		}
 		
 		public boolean contains(Block machineBlock)
