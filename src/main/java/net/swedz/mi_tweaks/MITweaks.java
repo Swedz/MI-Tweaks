@@ -51,7 +51,7 @@ public final class MITweaks
 	{
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, MITweaksConfig.SPEC);
 		
-		CommentedFileConfig configData = CommentedFileConfig.builder(FMLPaths.CONFIGDIR.get().resolve("extended_industrialization-common.toml"))
+		CommentedFileConfig configData = CommentedFileConfig.builder(FMLPaths.CONFIGDIR.get().resolve("%s-common.toml".formatted(ID)))
 				.preserveInsertionOrder()
 				.autoreload()
 				.writingMode(WritingMode.REPLACE)

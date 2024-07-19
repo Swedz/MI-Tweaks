@@ -6,14 +6,15 @@
     "mixins": [
         "EBFReiCategoriesIncludeCoilProcessConditionMixin",
         "MakeWaterPumpsRequireWaterBiomeMixin",
+        "RedstoneLocksEfficiencyCrafterComponentMixin",
         "accessor.AbstractCraftingMultiblockBlockEntityAccessor",
+        "constantefficiency.ConstantEfficiencyAlwaysBaseUpgradeMixin",
         "constantefficiency.ConstantEfficiencyPreventUpgradeInsertionMixin",
         "constantefficiency.ConstantEfficiencyPreventUpgradeSlotMixin",
         "machinecabletier.CasingComponentCableTierGetterMixin",
         "machinecabletier.ElectricCraftingMultiblockCableTierGetterMixin",
         "machinecabletier.ElectricCraftingSingleblockCableTierGetterMixin",
-        "machinecabletier.EnergyHatchCableTierGetterMixin",
-        "RedstoneLocksEfficiencyCrafterComponentMixin"
+        "machinecabletier.EnergyHatchCableTierGetterMixin"
     ],
     "client": [
         "client.HideEfficiencyBarClientMixin",

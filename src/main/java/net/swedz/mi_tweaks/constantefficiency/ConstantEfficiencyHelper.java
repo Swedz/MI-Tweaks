@@ -4,6 +4,7 @@ import aztech.modern_industrialization.api.energy.CableTier;
 import aztech.modern_industrialization.machines.components.CrafterComponent;
 import net.swedz.mi_tweaks.MITweaksConfig;
 import net.swedz.mi_tweaks.api.CableTierHolder;
+import net.swedz.mi_tweaks.constantefficiency.hack.MachineEfficiencyHackOption;
 import net.swedz.tesseract.neoforge.compat.mi.component.craft.ModularCrafterAccessBehavior;
 
 public final class ConstantEfficiencyHelper
@@ -15,7 +16,7 @@ public final class ConstantEfficiencyHelper
 	
 	public static long getActualMaxRecipeEu(Object blockEntity, CrafterComponent.Behavior behavior)
 	{
-		if(MITweaksConfig.efficiencyHack.useVoltageForEfficiency() && blockEntity instanceof CableTierHolder machine)
+		if(MITweaksConfig.efficiencyHack == MachineEfficiencyHackOption.USE_VOLTAGE && blockEntity instanceof CableTierHolder machine)
 		{
 			return ConstantEfficiencyHelper.getRecipeEu(machine.getCableTier());
 		}
@@ -24,7 +25,7 @@ public final class ConstantEfficiencyHelper
 	
 	public static long getActualMaxRecipeEu(Object blockEntity, ModularCrafterAccessBehavior behavior)
 	{
-		if(MITweaksConfig.efficiencyHack.useVoltageForEfficiency() && blockEntity instanceof CableTierHolder machine)
+		if(MITweaksConfig.efficiencyHack == MachineEfficiencyHackOption.USE_VOLTAGE && blockEntity instanceof CableTierHolder machine)
 		{
 			return ConstantEfficiencyHelper.getRecipeEu(machine.getCableTier());
 		}

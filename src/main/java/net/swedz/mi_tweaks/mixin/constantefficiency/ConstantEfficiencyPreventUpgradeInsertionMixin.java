@@ -5,7 +5,8 @@ import aztech.modern_industrialization.machines.components.UpgradeComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.swedz.mi_tweaks.MITweaksConfig;
+import net.swedz.mi_tweaks.compat.mi.MITweaksMIHookEfficiency;
+import net.swedz.tesseract.neoforge.compat.mi.hook.context.machine.MachineMIHookContext;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -24,7 +25,7 @@ public class ConstantEfficiencyPreventUpgradeInsertionMixin
 	)
 	private void onUse(MachineBlockEntity be, Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> callback)
 	{
-		if(MITweaksConfig.efficiencyHack.preventsUpgrades())
+		if(MITweaksMIHookEfficiency.HACK.preventsUpgrades(new MachineMIHookContext(be)))
 		{
 			callback.setReturnValue(InteractionResult.PASS);
 		}
