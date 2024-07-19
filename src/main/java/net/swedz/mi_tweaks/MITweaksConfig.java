@@ -82,7 +82,7 @@ public final class MITweaksConfig
 							"The list of machine ids (accepts regex) that require blueprints to place",
 							"This is only used if any type of machine blueprint requirement is enabled"
 					)
-					.defineListAllowEmpty("machines", Lists.newArrayList(), MITweaksConfig::validateMachineId);
+					.defineListAllowEmpty("machines", Lists.newArrayList(), (e) -> e instanceof String);
 			{
 				BUILDER.comment(
 						"This section's options use the following values:",
@@ -116,12 +116,6 @@ public final class MITweaksConfig
 				.filter((block) ->
 						block instanceof MachineBlock &&
 						pattern.matcher(BuiltInRegistries.BLOCK.getKey(block).toString()).matches());
-	}
-	
-	private static boolean validateMachineId(Object element)
-	{
-		return element instanceof String regex &&
-			   getMatchingMachineBlocks(regex).findAny().isPresent();
 	}
 	
 	public static boolean                      requireWaterBiomeForPump;
