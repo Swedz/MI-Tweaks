@@ -2,6 +2,8 @@ package net.swedz.mi_tweaks.mixin.constantefficiency;
 
 import aztech.modern_industrialization.compat.viewer.usage.MachineCategory;
 import aztech.modern_industrialization.machines.init.MachineTier;
+import net.swedz.mi_tweaks.MITweaksConfig;
+import net.swedz.mi_tweaks.constantefficiency.hack.MachineEfficiencyHackOption;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -22,6 +24,6 @@ public class ConstantEfficiencyAlwaysBaseUpgradeMixin
 	)
 	private int upgradeEuRequired(MachineTier tier)
 	{
-		return tier.getBaseEu();
+		return MITweaksConfig.efficiencyHack == MachineEfficiencyHackOption.ALWAYS_BASE ? tier.getBaseEu() : tier.getMaxEu();
 	}
 }
