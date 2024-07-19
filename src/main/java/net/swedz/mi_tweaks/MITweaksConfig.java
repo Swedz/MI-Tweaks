@@ -24,6 +24,7 @@ public final class MITweaksConfig
 	private static final ModConfigSpec.BooleanValue                            DISPLAY_MACHINE_VOLTAGE;
 	private static final ModConfigSpec.BooleanValue                            LOCK_EFFICIENCY_WITH_REDSTONE;
 	private static final ModConfigSpec.BooleanValue                            WRENCHES_RENDER_MULTIBLOCK_SHAPES;
+	private static final ModConfigSpec.BooleanValue                            DISPLAY_ENERGY_CONSUMPTION_ON_ENERGY_BAR;
 	private static final ModConfigSpec.EnumValue<MachineEfficiencyHackOption>  EFFICIENCY_HACK;
 	private static final ModConfigSpec.BooleanValue                            HIDE_MACHINE_EFFICIENCY;
 	private static final ModConfigSpec.BooleanValue                            MACHINE_BLUEPRINTS_LEARNING;
@@ -52,6 +53,9 @@ public final class MITweaksConfig
 			WRENCHES_RENDER_MULTIBLOCK_SHAPES = BUILDER
 					.comment("Whether wrenches should render multiblock shapes in world. If false, then only blueprints will be able to render multiblock shapes in world")
 					.define("wrenches_render_multiblock_shapes", true);
+			DISPLAY_ENERGY_CONSUMPTION_ON_ENERGY_BAR = BUILDER
+					.comment("Whether the tooltip on the energy bar should display the current energy consumption of the machine")
+					.define("display_energy_consumption_on_energy_bar", false);
 			BUILDER.pop();
 		}
 		
@@ -122,6 +126,7 @@ public final class MITweaksConfig
 	public static boolean                      displayMachineVoltage;
 	public static boolean                      lockEfficiencyWithRedstone;
 	public static boolean                      wrenchesRenderMultiblockShapes;
+	public static boolean                      displayEnergyConsumptionOnEnergyBar;
 	public static MachineEfficiencyHackOption  efficiencyHack;
 	public static boolean                      hideMachineEfficiency;
 	public static boolean                      machineBlueprintsLearning;
@@ -136,6 +141,7 @@ public final class MITweaksConfig
 		displayMachineVoltage = DISPLAY_MACHINE_VOLTAGE.get();
 		lockEfficiencyWithRedstone = LOCK_EFFICIENCY_WITH_REDSTONE.get();
 		wrenchesRenderMultiblockShapes = WRENCHES_RENDER_MULTIBLOCK_SHAPES.get();
+		displayEnergyConsumptionOnEnergyBar = DISPLAY_ENERGY_CONSUMPTION_ON_ENERGY_BAR.get();
 		efficiencyHack = EFFICIENCY_HACK.get();
 		hideMachineEfficiency = HIDE_MACHINE_EFFICIENCY.get();
 		machineBlueprintsLearning = MACHINE_BLUEPRINTS_LEARNING.get();

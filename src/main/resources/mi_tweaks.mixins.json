@@ -16,11 +16,13 @@
         "machinecabletier.EnergyHatchCableTierGetterMixin"
     ],
     "client": [
+        "client.DisplayEnergyConsumptionOnEnergyBarClientMixin",
         "client.HideEfficiencyBarClientMixin",
         "client.HideEfficiencyInModularMultiblockClientMixin",
         "client.HideEfficiencyInMultiblockClientMixin",
         "client.MachineScreenIncludeCableTierInTitleMixin",
-        "client.MultiblockRendersWithBlueprintClientMixin"
+        "client.MultiblockRendersWithBlueprintClientMixin",
+        "client.accessor.RecipeEfficiencyBarClientAccessor"
     ],
     "injectors": {
         "defaultRequire": 1
