@@ -8,7 +8,6 @@
         "MakeWaterPumpsRequireWaterBiomeMixin",
         "RedstoneLocksEfficiencyCrafterComponentMixin",
         "accessor.AbstractCraftingMultiblockBlockEntityAccessor",
-        "constantefficiency.ConstantEfficiencyAlwaysBaseUpgradeMixin",
         "constantefficiency.ConstantEfficiencyPreventUpgradeInsertionMixin",
         "constantefficiency.ConstantEfficiencyPreventUpgradeSlotMixin",
         "machinecabletier.CasingComponentCableTierGetterMixin",
