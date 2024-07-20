@@ -51,10 +51,13 @@ public final class EmiCopyBlueprintRecipe extends EmiPatternCraftingRecipe
 	
 	private static EmiStack generateBlueprintItem(Random random)
 	{
-		int index = random.nextInt(MITweaksConfig.machineBlueprintsMachines.size());
-		Block machineBlock = MITweaksConfig.machineBlueprintsMachines.get(index);
 		ItemStack blueprintItem = MITweaksItems.MACHINE_BLUEPRINT.asItem().getDefaultInstance();
-		MachineBlueprintItem.setMachineBlock(blueprintItem, machineBlock);
+		if(!MITweaksConfig.machineBlueprintsMachines.isEmpty())
+		{
+			int index = random.nextInt(MITweaksConfig.machineBlueprintsMachines.size());
+			Block machineBlock = MITweaksConfig.machineBlueprintsMachines.get(index);
+			MachineBlueprintItem.setMachineBlock(blueprintItem, machineBlock);
+		}
 		return EmiStack.of(blueprintItem);
 	}
 }
