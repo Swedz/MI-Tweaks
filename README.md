@@ -1,5 +1,5 @@
 # MI Tweaks
-This mod is an addon for [Modern Industrialization](https://github.com/AztechMC/Modern-Industrialization) that adds some configurable tweaks to existing mechanics. This addon is designed specifically for modpack creators to further customize the MI experience in their pack. All tweaks are disabled by default.
+This mod is an addon for [Modern Industrialization](https://modrinth.com/mod/modern-industrialization) that adds some configurable tweaks to existing mechanics. This addon is designed specifically for modpack creators to further customize the MI experience in their pack. All tweaks are disabled by default.
 
 For any questions, please ask in the `#mi-tweaks` channel on [my discord](https://discord.gg/vNaqDzSNaB).
 
