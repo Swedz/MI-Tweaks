@@ -55,3 +55,4 @@ The `machine_blueprints` config section provides quite a few options to customiz
 - Water Pumps require ocean/river biome
 - Lock efficiency of crafting machines with redstone control module
 - Disable wrenches from rendering multiblock shapes (this is only logical when machine blueprints have been properly implemented)
+- Include current energy consumption in the energy bar tooltip (this is only logical when machine efficiency is hidden)
