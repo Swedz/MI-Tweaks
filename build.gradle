@@ -65,6 +65,14 @@ dependencies {
     implementation "net.swedz:tesseract-neoforge:${tesseract_version}"
 }
 
+tasks.named('jar') {
+    enabled = false
+}
+
+tasks.named('jarJar') {
+    archiveClassifier.set('')
+}
+
 task sourceJar(type: Jar) {
     archiveClassifier.set("sources")
     from sourceSets.main.allJava
@@ -75,7 +83,7 @@ publishing {
         register('mavenJava', MavenPublication) {
             artifactId = project.artifact_name
 
-            artifact("$buildDir/libs/${project.artifact_name}-${project.version}-all.jar") {
+            artifact("$buildDir/libs/${project.artifact_name}-${project.version}.jar") {
                 builtBy build
             }
 
