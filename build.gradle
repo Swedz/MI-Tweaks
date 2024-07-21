@@ -71,11 +71,13 @@ tasks.named('jar') {
 
 tasks.named('jarJar') {
     archiveClassifier.set('')
+    from "LICENSE"
 }
 
 task sourceJar(type: Jar) {
     archiveClassifier.set("sources")
     from sourceSets.main.allJava
+    from "LICENSE"
 }
 
 publishing {
