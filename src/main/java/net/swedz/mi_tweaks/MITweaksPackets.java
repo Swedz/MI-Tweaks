@@ -1,56 +1,64 @@
 package net.swedz.mi_tweaks;
 
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
-import net.neoforged.neoforge.network.registration.IPayloadRegistrar;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.swedz.mi_tweaks.packets.BasePacket;
 import net.swedz.mi_tweaks.packets.UpdateBlueprintsLearnedPacket;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public final class MITweaksPackets
 {
 	public static final class Registry
 	{
-		private static final Map<Class<? extends BasePacket>, ResourceLocation> PACKET_IDS = new HashMap<>();
-		private static final List<Registration<?>>                              PACKETS    = new ArrayList<>();
+		private static final Set<PacketRegistration<BasePacket>>                                    PACKET_REGISTRATIONS = Sets.newHashSet();
+		private static final Map<Class<? extends BasePacket>, CustomPacketPayload.Type<BasePacket>> PACKET_TYPES         = Maps.newHashMap();
 		
-		private record Registration<P extends BasePacket>(
-				ResourceLocation resourceLocation, Class<P> clazz,
-				FriendlyByteBuf.Reader<P> packetConstructor
+		private record PacketRegistration<P extends BasePacket>(
+				CustomPacketPayload.Type<P> packetType,
+				Class<P> packetClass,
+				StreamCodec<? super RegistryFriendlyByteBuf, P> packetCodec
 		)
 		{
 		}
 		
-		public static ResourceLocation getId(BasePacket packet)
+		private static void init(RegisterPayloadHandlersEvent event)
 		{
-			return PACKET_IDS.get(packet.getClass());
+			PayloadRegistrar registrar = event.registrar(MITweaks.ID);
+			
+			for(PacketRegistration<BasePacket> packetRegistration : Registry.PACKET_REGISTRATIONS)
+			{
+				registrar.playBidirectional(packetRegistration.packetType(), packetRegistration.packetCodec(), (packet, context) ->
+						packet.handle(new BasePacket.Context(packetRegistration.packetClass(), context)));
+			}
 		}
+		
+		public static CustomPacketPayload.Type<BasePacket> getType(Class<? extends BasePacket> packetClass)
+		{
+			return PACKET_TYPES.get(packetClass);
+		}
+	}
+	
+	public static void init(RegisterPayloadHandlersEvent event)
+	{
+		Registry.init(event);
 	}
 	
 	static
 	{
-		register("update_blueprints_learned", UpdateBlueprintsLearnedPacket.class, UpdateBlueprintsLearnedPacket::new);
+		register("update_blueprints_learned", UpdateBlueprintsLearnedPacket.class, UpdateBlueprintsLearnedPacket.STREAM_CODEC);
 	}
 	
-	public static void init(RegisterPayloadHandlerEvent event)
+	private static <P extends BasePacket> void register(String path, Class<P> packetClass, StreamCodec<? super RegistryFriendlyByteBuf, P> packetCodec)
 	{
-		IPayloadRegistrar registrar = event.registrar(MITweaks.ID);
-		
-		for(Registry.Registration<?> registration : Registry.PACKETS)
-		{
-			registrar.play(registration.resourceLocation, registration.packetConstructor, (packet, context) ->
-					context.workHandler().execute(packet::handle));
-		}
-	}
-	
-	private static <P extends BasePacket> void register(String path, Class<P> clazz, FriendlyByteBuf.Reader<P> packetConstructor)
-	{
-		Registry.PACKET_IDS.put(clazz, MITweaks.id(path));
-		Registry.PACKETS.add(new Registry.Registration<>(MITweaks.id(path), clazz, packetConstructor));
+		CustomPacketPayload.Type type = new CustomPacketPayload.Type<>(MITweaks.id(path));
+		Registry.PACKET_REGISTRATIONS.add(new Registry.PacketRegistration<>(type, packetClass, packetCodec));
+		Registry.PACKET_TYPES.put(packetClass, type);
 	}
 }

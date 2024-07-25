@@ -23,8 +23,8 @@ public final class MITweaksMIHookListener implements MIHookListener
 	@Override
 	public void machineProcessConditions(MachineProcessConditionsMIHookContext hook)
 	{
-		MachineProcessConditions.register(MITweaks.id("voltage"), VoltageProcessCondition.CODEC);
-		MachineProcessConditions.register(MITweaks.id("ebf_coil"), EBFCoilProcessCondition.CODEC);
+		hook.register(MITweaks.id("voltage"), VoltageProcessCondition.CODEC, VoltageProcessCondition.STREAM_CODEC);
+		hook.register(MITweaks.id("ebf_coil"), EBFCoilProcessCondition.CODEC, EBFCoilProcessCondition.STREAM_CODEC);
 	}
 	
 	@Override

@@ -3,14 +3,14 @@ package net.swedz.mi_tweaks;
 import net.minecraft.ChatFormatting;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.swedz.mi_tweaks.items.MachineBlueprintItem;
 
-@Mod.EventBusSubscriber(value = Dist.CLIENT, modid = MITweaks.ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(value = Dist.CLIENT, modid = MITweaks.ID, bus = EventBusSubscriber.Bus.MOD)
 public final class MITweaksClient
 {
 	@SubscribeEvent

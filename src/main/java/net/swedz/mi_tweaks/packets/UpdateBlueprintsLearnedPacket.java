@@ -1,52 +1,36 @@
 package net.swedz.mi_tweaks.packets;
 
-import com.google.common.collect.Sets;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.swedz.mi_tweaks.MITweaksOtherRegistries;
 import net.swedz.mi_tweaks.blueprint.BlueprintsLearned;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public record UpdateBlueprintsLearnedPacket(Set<ResourceLocation> machineIds) implements BasePacket
 {
+	public static final StreamCodec<ByteBuf, UpdateBlueprintsLearnedPacket> STREAM_CODEC = StreamCodec.composite(
+			ByteBufCodecs.collection(HashSet::new, ResourceLocation.STREAM_CODEC),
+			UpdateBlueprintsLearnedPacket::machineIds,
+			UpdateBlueprintsLearnedPacket::new
+	);
+	
 	public UpdateBlueprintsLearnedPacket(BlueprintsLearned blueprintsLearned)
 	{
 		this(blueprintsLearned.get());
 	}
 	
-	public UpdateBlueprintsLearnedPacket(FriendlyByteBuf buf)
+	@Override
+	public void handle(Context context)
 	{
-		this(Sets.newHashSet());
+		context.assertOnClient();
 		
-		int count = buf.readInt();
-		for(int i = 0; i < count; i++)
-		{
-			machineIds.add(buf.readResourceLocation());
-		}
-	}
-	
-	@Override
-	public void write(FriendlyByteBuf buf)
-	{
-		buf.writeInt(machineIds.size());
-		for(ResourceLocation machineId : machineIds)
-		{
-			buf.writeResourceLocation(machineId);
-		}
-	}
-	
-	@Override
-	public void handle()
-	{
 		Player player = Minecraft.getInstance().player;
-		
-		if(player == null)
-		{
-			throw new IllegalArgumentException("Cannot handle packet on server: " + this.getClass());
-		}
 		
 		BlueprintsLearned blueprintsLearned = player.getData(MITweaksOtherRegistries.BLUEPRINTS_LEARNED);
 		blueprintsLearned.mergeFrom(machineIds);

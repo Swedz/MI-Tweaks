@@ -7,11 +7,9 @@ import aztech.modern_industrialization.machines.multiblocks.SimpleMember;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -28,6 +26,7 @@ import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.swedz.mi_tweaks.MITweaks;
 import net.swedz.mi_tweaks.MITweaksConfig;
+import net.swedz.mi_tweaks.MITweaksDataComponents;
 import net.swedz.mi_tweaks.MITweaksItems;
 import net.swedz.mi_tweaks.MITweaksOtherRegistries;
 import net.swedz.mi_tweaks.MITweaksText;
@@ -46,7 +45,7 @@ import static aztech.modern_industrialization.MITooltips.*;
 
 public final class MachineBlueprintItem extends Item
 {
-	public static final ResourceLocation RAW_ITEM_MODEL_LOCATION = MITweaks.id("item/machine_blueprint_raw");
+	public static final ModelResourceLocation RAW_ITEM_MODEL_LOCATION = ModelResourceLocation.standalone(MITweaks.id("item/machine_blueprint_raw"));
 	
 	public MachineBlueprintItem(Properties properties)
 	{
@@ -80,7 +79,7 @@ public final class MachineBlueprintItem extends Item
 	}
 	
 	@Override
-	public void appendHoverText(ItemStack stack, Level level, List<Component> tooltipComponents, TooltipFlag isAdvanced)
+	public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag isAdvanced)
 	{
 		Player player = Minecraft.getInstance().player;
 		
@@ -209,8 +208,7 @@ public final class MachineBlueprintItem extends Item
 			throw new IllegalArgumentException("Cannot set machine block value to a machine block that is not included in the config");
 		}
 		
-		CompoundTag tag = stack.getOrCreateTag();
-		tag.putString("machine", BuiltInRegistries.BLOCK.getKey(machineBlock).toString());
+		stack.set(MITweaksDataComponents.MACHINE_BLOCK, machineBlock);
 	}
 	
 	public static Optional<Block> getMachineBlock(ItemStack stack)
@@ -220,15 +218,12 @@ public final class MachineBlueprintItem extends Item
 			throw new IllegalArgumentException("Cannot get machine block value of a non-blueprint item");
 		}
 		
-		CompoundTag tag = stack.getOrCreateTag();
-		if(tag.contains("machine"))
+		if(stack.has(MITweaksDataComponents.MACHINE_BLOCK))
 		{
-			String machineId = tag.getString("machine");
-			Optional<Block> machineBlockOptional = BuiltInRegistries.BLOCK.getOptional(new ResourceLocation(machineId));
-			if(machineBlockOptional.isPresent() && machineBlockOptional.get() instanceof MachineBlock machineBlock &&
-			   MITweaksConfig.machineBlueprintsMachines.contains(machineBlock))
+			Block machine = stack.get(MITweaksDataComponents.MACHINE_BLOCK);
+			if(machine instanceof MachineBlock machineBlock && MITweaksConfig.machineBlueprintsMachines.contains(machineBlock))
 			{
-				return machineBlockOptional;
+				return Optional.of(machine);
 			}
 		}
 		return Optional.empty();

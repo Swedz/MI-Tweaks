@@ -1,6 +1,7 @@
 package net.swedz.mi_tweaks.blueprint;
 
 import com.google.common.collect.Sets;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
@@ -8,7 +9,6 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.util.INBTSerializable;
-import org.jetbrains.annotations.ApiStatus;
 
 import java.util.Collections;
 import java.util.Set;
@@ -42,14 +42,13 @@ public final class BlueprintsLearned implements INBTSerializable<ListTag>
 		return machinesLearned.contains(this.getId(machineBlock));
 	}
 	
-	@ApiStatus.Internal
 	public void mergeFrom(Set<ResourceLocation> machineIds)
 	{
 		machinesLearned = machineIds;
 	}
 	
 	@Override
-	public ListTag serializeNBT()
+	public ListTag serializeNBT(HolderLookup.Provider registries)
 	{
 		ListTag list = new ListTag();
 		for(ResourceLocation machineId : machinesLearned)
@@ -60,14 +59,14 @@ public final class BlueprintsLearned implements INBTSerializable<ListTag>
 	}
 	
 	@Override
-	public void deserializeNBT(ListTag list)
+	public void deserializeNBT(HolderLookup.Provider registries, ListTag list)
 	{
 		Set<ResourceLocation> machinesLearned = Sets.newHashSet();
 		for(Tag tag : list)
 		{
 			if(tag instanceof StringTag stringTag)
 			{
-				machinesLearned.add(new ResourceLocation(stringTag.getAsString()));
+				machinesLearned.add(ResourceLocation.parse(stringTag.getAsString()));
 			}
 		}
 		this.machinesLearned = machinesLearned;

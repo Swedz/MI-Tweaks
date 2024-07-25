@@ -4,13 +4,13 @@ import aztech.modern_industrialization.api.energy.CableTier;
 import aztech.modern_industrialization.machines.gui.ClientComponentRenderer;
 import aztech.modern_industrialization.machines.gui.GuiComponentClient;
 import aztech.modern_industrialization.machines.gui.MachineScreen;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 
 public class ExposeCableTierGuiClient implements GuiComponentClient
 {
 	private CableTier cableTier;
 	
-	public ExposeCableTierGuiClient(FriendlyByteBuf buf)
+	public ExposeCableTierGuiClient(RegistryFriendlyByteBuf buf)
 	{
 		this.readCurrentData(buf);
 	}
@@ -21,7 +21,7 @@ public class ExposeCableTierGuiClient implements GuiComponentClient
 	}
 	
 	@Override
-	public void readCurrentData(FriendlyByteBuf buf)
+	public void readCurrentData(RegistryFriendlyByteBuf buf)
 	{
 		cableTier = CableTier.getTier(new String(buf.readByteArray()));
 	}

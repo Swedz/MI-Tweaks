@@ -6,7 +6,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.swedz.mi_tweaks.constantefficiency.hack.MachineEfficiencyHackOption;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-@Mod.EventBusSubscriber(modid = MITweaks.ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = MITweaks.ID, bus = EventBusSubscriber.Bus.MOD)
 public final class MITweaksConfig
 {
 	private static final ModConfigSpec.Builder BUILDER;

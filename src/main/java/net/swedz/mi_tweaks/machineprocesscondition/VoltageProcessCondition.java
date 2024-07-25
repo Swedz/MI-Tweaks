@@ -3,9 +3,12 @@ package net.swedz.mi_tweaks.machineprocesscondition;
 import aztech.modern_industrialization.api.energy.CableTier;
 import aztech.modern_industrialization.machines.recipe.MachineRecipe;
 import aztech.modern_industrialization.machines.recipe.condition.MachineProcessCondition;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.StringRepresentable;
 import net.swedz.mi_tweaks.MITweaksText;
 import net.swedz.mi_tweaks.api.CableTierHolder;
@@ -14,12 +17,17 @@ import java.util.List;
 
 public record VoltageProcessCondition(CableTier tier) implements MachineProcessCondition
 {
-	public static final Codec<VoltageProcessCondition> CODEC = RecordCodecBuilder.create(
+	public static final MapCodec<VoltageProcessCondition>                             CODEC        = RecordCodecBuilder.mapCodec(
 			(g) -> g.group(
 					StringRepresentable.fromValues(() -> CableTier.allTiers().stream().map(WrappedCableTier::new).toList().toArray(new WrappedCableTier[0]))
 							.fieldOf("voltage")
 							.forGetter((c) -> new WrappedCableTier(c.tier()))
 			).apply(g, (wrappedTier) -> new VoltageProcessCondition(wrappedTier.tier()))
+	);
+	public static final StreamCodec<RegistryFriendlyByteBuf, VoltageProcessCondition> STREAM_CODEC = StreamCodec.composite(
+			ByteBufCodecs.STRING_UTF8.map(CableTier::getTier, (tier) -> tier.name),
+			VoltageProcessCondition::tier,
+			VoltageProcessCondition::new
 	);
 	
 	@Override
@@ -39,9 +47,15 @@ public record VoltageProcessCondition(CableTier tier) implements MachineProcessC
 	}
 	
 	@Override
-	public Codec<? extends MachineProcessCondition> codec(boolean syncToClient)
+	public MapCodec<? extends MachineProcessCondition> codec()
 	{
 		return CODEC;
+	}
+	
+	@Override
+	public StreamCodec<? super RegistryFriendlyByteBuf, ? extends MachineProcessCondition> streamCodec()
+	{
+		return STREAM_CODEC;
 	}
 	
 	private record WrappedCableTier(CableTier tier) implements StringRepresentable

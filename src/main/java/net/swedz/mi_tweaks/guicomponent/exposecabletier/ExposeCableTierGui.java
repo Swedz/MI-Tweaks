@@ -2,7 +2,7 @@ package net.swedz.mi_tweaks.guicomponent.exposecabletier;
 
 import aztech.modern_industrialization.api.energy.CableTier;
 import aztech.modern_industrialization.machines.gui.GuiComponent;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.swedz.mi_tweaks.MITweaks;
 import net.swedz.mi_tweaks.api.CableTierHolder;
@@ -33,13 +33,13 @@ public class ExposeCableTierGui
 		}
 		
 		@Override
-		public void writeInitialData(FriendlyByteBuf buf)
+		public void writeInitialData(RegistryFriendlyByteBuf buf)
 		{
 			this.writeCurrentData(buf);
 		}
 		
 		@Override
-		public void writeCurrentData(FriendlyByteBuf buf)
+		public void writeCurrentData(RegistryFriendlyByteBuf buf)
 		{
 			buf.writeByteArray(cableTierHolder.getCableTier().name.getBytes());
 		}

@@ -1,11 +1,11 @@
 package net.swedz.mi_tweaks.blueprint;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
@@ -20,14 +20,14 @@ public final class CopyBlueprintRecipe extends CustomRecipe
 	}
 	
 	@Override
-	public boolean matches(CraftingContainer container, Level level)
+	public boolean matches(CraftingInput craftingInput, Level level)
 	{
 		ItemStack blueprint = ItemStack.EMPTY;
 		ItemStack paper = ItemStack.EMPTY;
 		
-		for(int i = 0; i < container.getContainerSize(); i++)
+		for(int i = 0; i < craftingInput.size(); i++)
 		{
-			ItemStack itemstack = container.getItem(i);
+			ItemStack itemstack = craftingInput.getItem(i);
 			if(!itemstack.isEmpty())
 			{
 				if(itemstack.is(MITweaksItems.MACHINE_BLUEPRINT.asItem()))
@@ -52,13 +52,13 @@ public final class CopyBlueprintRecipe extends CustomRecipe
 	}
 	
 	@Override
-	public ItemStack assemble(CraftingContainer container, RegistryAccess pRegistryAccess)
+	public ItemStack assemble(CraftingInput craftingInput, HolderLookup.Provider registries)
 	{
 		ItemStack blueprint = ItemStack.EMPTY;
 		
-		for(int i = 0; i < container.getContainerSize(); i++)
+		for(int i = 0; i < craftingInput.size(); i++)
 		{
-			ItemStack itemstack = container.getItem(i);
+			ItemStack itemstack = craftingInput.getItem(i);
 			if(!itemstack.isEmpty() && itemstack.is(MITweaksItems.MACHINE_BLUEPRINT.asItem()))
 			{
 				blueprint = itemstack;
@@ -83,13 +83,13 @@ public final class CopyBlueprintRecipe extends CustomRecipe
 	}
 	
 	@Override
-	public NonNullList<ItemStack> getRemainingItems(CraftingContainer container)
+	public NonNullList<ItemStack> getRemainingItems(CraftingInput craftingInput)
 	{
-		NonNullList<ItemStack> remaining = NonNullList.withSize(container.getContainerSize(), ItemStack.EMPTY);
+		NonNullList<ItemStack> remaining = NonNullList.withSize(craftingInput.size(), ItemStack.EMPTY);
 		
 		for(int i = 0; i < remaining.size(); ++i)
 		{
-			ItemStack itemstack = container.getItem(i);
+			ItemStack itemstack = craftingInput.getItem(i);
 			if(itemstack.getItem() == MITweaksItems.MACHINE_BLUEPRINT.asItem())
 			{
 				remaining.set(i, itemstack.copy());

@@ -7,7 +7,7 @@ import aztech.modern_industrialization.util.RenderHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.util.FormattedCharSequence;
 import net.swedz.mi_tweaks.MITweaksText;
 
@@ -19,14 +19,14 @@ public final class WaterPumpEnvironmentGuiClient implements GuiComponentClient
 	
 	private boolean validEnvironment;
 	
-	public WaterPumpEnvironmentGuiClient(FriendlyByteBuf buf)
+	public WaterPumpEnvironmentGuiClient(RegistryFriendlyByteBuf buf)
 	{
 		this.params = new WaterPumpEnvironmentGui.Parameters(buf.readInt(), buf.readInt());
 		this.readCurrentData(buf);
 	}
 	
 	@Override
-	public void readCurrentData(FriendlyByteBuf buf)
+	public void readCurrentData(RegistryFriendlyByteBuf buf)
 	{
 		validEnvironment = buf.readBoolean();
 	}

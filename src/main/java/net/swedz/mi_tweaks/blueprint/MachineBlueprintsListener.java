@@ -3,11 +3,11 @@ package net.swedz.mi_tweaks.blueprint;
 import aztech.modern_industrialization.machines.MachineBlock;
 import net.minecraft.ChatFormatting;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.UseItemOnBlockEvent;
 import net.swedz.mi_tweaks.MITweaks;
@@ -16,7 +16,7 @@ import net.swedz.mi_tweaks.MITweaksOtherRegistries;
 import net.swedz.mi_tweaks.items.MachineBlueprintItem;
 import net.swedz.mi_tweaks.packets.UpdateBlueprintsLearnedPacket;
 
-@Mod.EventBusSubscriber(modid = MITweaks.ID)
+@EventBusSubscriber(modid = MITweaks.ID)
 public final class MachineBlueprintsListener
 {
 	@SubscribeEvent
@@ -30,7 +30,7 @@ public final class MachineBlueprintsListener
 	@SubscribeEvent
 	private static void onUseItemOnBlock(UseItemOnBlockEvent event)
 	{
-		Player player = event.getEntity();
+		Player player = event.getPlayer();
 		if(player != null &&
 		   MITweaksConfig.machineBlueprintsRequiredForPlacing.isEnabled() &&
 		   event.getUsePhase() == UseItemOnBlockEvent.UsePhase.ITEM_BEFORE_BLOCK &&
@@ -39,7 +39,7 @@ public final class MachineBlueprintsListener
 		   MITweaksConfig.machineBlueprintsMachines.contains(machineBlock) &&
 		   !MachineBlueprintItem.hasBlueprint(player, machineBlock, MITweaksConfig.machineBlueprintsRequiredForPlacing))
 		{
-			event.cancelWithResult(InteractionResult.CONSUME);
+			event.cancelWithResult(ItemInteractionResult.CONSUME);
 			player.displayClientMessage(MITweaksConfig.machineBlueprintsRequiredForPlacing.tooltip().text().withStyle(ChatFormatting.RED), true);
 		}
 	}
