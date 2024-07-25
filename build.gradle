@@ -118,11 +118,6 @@ neoForge {
         }
     }
 
-    /*validateAccessTransformers = true
-    accessTransformers = [
-            "../src/main/resources/${mod_id}.accesstransformer.cfg"
-    ]*/
-
     runs {
         configureEach {
             mods = [neoForge.mods."${mod_id}"]
