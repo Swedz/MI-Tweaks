@@ -1,7 +1,6 @@
 package net.swedz.mi_tweaks.compat.mi;
 
 import aztech.modern_industrialization.machines.GuiComponentsClient;
-import aztech.modern_industrialization.machines.recipe.condition.MachineProcessConditions;
 import net.swedz.mi_tweaks.MITweaks;
 import net.swedz.mi_tweaks.MITweaksTooltips;
 import net.swedz.mi_tweaks.guicomponent.exposecabletier.ExposeCableTierGui;
