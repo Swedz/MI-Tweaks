@@ -25,6 +25,8 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.swedz.mi_tweaks.MITweaks;
 import net.swedz.mi_tweaks.MITweaksConfig;
@@ -82,19 +84,30 @@ public final class MachineBlueprintItem extends Item
 	@Override
 	public void appendHoverText(ItemStack stack, Level level, List<Component> tooltipComponents, TooltipFlag isAdvanced)
 	{
-		Player player = Minecraft.getInstance().player;
-		
-		getMachineBlock(stack).ifPresent((machineBlock) ->
+		if(FMLEnvironment.dist == Dist.CLIENT)
 		{
-			tooltipComponents.add(MITweaksText.BLUEPRINT_MACHINE.text(ITEM_PARSER.parse(machineBlock.asItem())));
+			Client.appendHoverText(stack, level, tooltipComponents, isAdvanced);
+		}
+	}
+	
+	private static final class Client
+	{
+		private static void appendHoverText(ItemStack stack, Level level, List<Component> tooltipComponents, TooltipFlag isAdvanced)
+		{
+			Player player = Minecraft.getInstance().player;
 			
-			if(player != null &&
-			   MITweaksConfig.machineBlueprintsLearning &&
-			   !hasBlueprintLearned(player, machineBlock))
+			getMachineBlock(stack).ifPresent((machineBlock) ->
 			{
-				tooltipComponents.add(MITweaksText.BLUEPRINT_LEARN.text(Component.keybind("key.use")).withStyle(DEFAULT_STYLE));
-			}
-		});
+				tooltipComponents.add(MITweaksText.BLUEPRINT_MACHINE.text(ITEM_PARSER.parse(machineBlock.asItem())));
+				
+				if(player != null &&
+				   MITweaksConfig.machineBlueprintsLearning &&
+				   !hasBlueprintLearned(player, machineBlock))
+				{
+					tooltipComponents.add(MITweaksText.BLUEPRINT_LEARN.text(Component.keybind("key.use")).withStyle(DEFAULT_STYLE));
+				}
+			});
+		}
 	}
 	
 	private static Optional<ItemStack> getItemStackMatchingFromInventory(SimpleMember member, Player player)

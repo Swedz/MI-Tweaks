@@ -5,6 +5,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.swedz.mi_tweaks.MITweaksOtherRegistries;
 import net.swedz.mi_tweaks.blueprint.BlueprintsLearned;
 
@@ -41,14 +43,19 @@ public record UpdateBlueprintsLearnedPacket(Set<ResourceLocation> machineIds) im
 	@Override
 	public void handle()
 	{
-		Player player = Minecraft.getInstance().player;
-		
-		if(player == null)
+		if(FMLEnvironment.dist == Dist.CLIENT)
 		{
-			throw new IllegalArgumentException("Cannot handle packet on server: " + this.getClass());
+			new Client().handle();
 		}
-		
-		BlueprintsLearned blueprintsLearned = player.getData(MITweaksOtherRegistries.BLUEPRINTS_LEARNED);
-		blueprintsLearned.mergeFrom(machineIds);
+	}
+	
+	private final class Client
+	{
+		private void handle()
+		{
+			Player player = Minecraft.getInstance().player;
+			BlueprintsLearned blueprintsLearned = player.getData(MITweaksOtherRegistries.BLUEPRINTS_LEARNED);
+			blueprintsLearned.mergeFrom(machineIds);
+		}
 	}
 }
