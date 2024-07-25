@@ -5,9 +5,7 @@ import com.google.common.collect.Lists;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.swedz.mi_tweaks.constantefficiency.hack.MachineEfficiencyHackOption;
 
@@ -149,12 +147,6 @@ public final class MITweaksConfig
 		machineBlueprintsRequiredTooltip = MACHINE_BLUEPRINTS_REQUIRED_TOOLTIP.get();
 		machineBlueprintsRequiredForPlacing = MACHINE_BLUEPRINTS_REQUIRED_FOR_PLACING.get();
 		machineBlueprintsRequiredForRenderingHatches = MACHINE_BLUEPRINTS_REQUIRED_FOR_RENDERING_HATCHES.get();
-	}
-	
-	@SubscribeEvent
-	static void onConfigLoad(ModConfigEvent event)
-	{
-		loadConfig();
 	}
 	
 	public static final class MachineList

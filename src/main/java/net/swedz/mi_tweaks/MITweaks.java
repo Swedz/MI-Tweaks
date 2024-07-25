@@ -5,6 +5,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.swedz.mi_tweaks.compat.mi.MITweaksMIHookEfficiency;
@@ -31,6 +32,8 @@ public final class MITweaks
 	public MITweaks(IEventBus bus, ModContainer container)
 	{
 		container.registerConfig(ModConfig.Type.STARTUP, MITweaksConfig.SPEC);
+		MITweaksConfig.loadConfig();
+		bus.addListener(FMLCommonSetupEvent.class, (event) -> MITweaksConfig.loadConfig());
 		
 		MIHooks.registerListener(ID, MIHookRegistry.NONE, new MITweaksMIHookListener());
 		MIHooks.registerEfficiencyListener(ID, new MITweaksMIHookEfficiency());
