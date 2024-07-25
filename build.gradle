@@ -70,14 +70,9 @@ dependencies {
     implementation "net.swedz:tesseract-neoforge:${tesseract_version}"
 }
 
-/*tasks.named('jar') {
-    enabled = false
-}
-
-tasks.named('jarJar') {
-    archiveClassifier.set('')
+tasks.named('jar') {
     from "LICENSE"
-}*/
+}
 
 task sourceJar(type: Jar) {
     archiveClassifier.set("sources")
