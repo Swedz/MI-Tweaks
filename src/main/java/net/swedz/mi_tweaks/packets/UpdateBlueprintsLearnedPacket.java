@@ -1,14 +1,12 @@
 package net.swedz.mi_tweaks.packets;
 
 import com.google.common.collect.Sets;
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.fml.loading.FMLEnvironment;
 import net.swedz.mi_tweaks.MITweaksOtherRegistries;
 import net.swedz.mi_tweaks.blueprint.BlueprintsLearned;
+import net.swedz.mi_tweaks.proxy.CommonProxy;
 
 import java.util.Set;
 
@@ -43,17 +41,9 @@ public record UpdateBlueprintsLearnedPacket(Set<ResourceLocation> machineIds) im
 	@Override
 	public void handle()
 	{
-		if(FMLEnvironment.dist == Dist.CLIENT)
+		if(CommonProxy.INSTANCE.isClient())
 		{
-			new Client().handle();
-		}
-	}
-	
-	private final class Client
-	{
-		private void handle()
-		{
-			Player player = Minecraft.getInstance().player;
+			Player player = CommonProxy.INSTANCE.getClientPlayer();
 			BlueprintsLearned blueprintsLearned = player.getData(MITweaksOtherRegistries.BLUEPRINTS_LEARNED);
 			blueprintsLearned.mergeFrom(machineIds);
 		}

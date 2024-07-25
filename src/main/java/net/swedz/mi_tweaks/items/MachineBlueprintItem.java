@@ -5,7 +5,6 @@ import aztech.modern_industrialization.machines.multiblocks.MultiblockMachineBlo
 import aztech.modern_industrialization.machines.multiblocks.ShapeMatcher;
 import aztech.modern_industrialization.machines.multiblocks.SimpleMember;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -25,8 +24,6 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.swedz.mi_tweaks.MITweaks;
 import net.swedz.mi_tweaks.MITweaksConfig;
@@ -36,6 +33,7 @@ import net.swedz.mi_tweaks.MITweaksText;
 import net.swedz.mi_tweaks.blueprint.BlueprintsLearned;
 import net.swedz.mi_tweaks.items.renderer.BlockOverlayingItemRenderer;
 import net.swedz.mi_tweaks.packets.UpdateBlueprintsLearnedPacket;
+import net.swedz.mi_tweaks.proxy.CommonProxy;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -84,17 +82,9 @@ public final class MachineBlueprintItem extends Item
 	@Override
 	public void appendHoverText(ItemStack stack, Level level, List<Component> tooltipComponents, TooltipFlag isAdvanced)
 	{
-		if(FMLEnvironment.dist == Dist.CLIENT)
+		if(CommonProxy.INSTANCE.isClient())
 		{
-			Client.appendHoverText(stack, level, tooltipComponents, isAdvanced);
-		}
-	}
-	
-	private static final class Client
-	{
-		private static void appendHoverText(ItemStack stack, Level level, List<Component> tooltipComponents, TooltipFlag isAdvanced)
-		{
-			Player player = Minecraft.getInstance().player;
+			Player player = CommonProxy.INSTANCE.getClientPlayer();
 			
 			getMachineBlock(stack).ifPresent((machineBlock) ->
 			{
