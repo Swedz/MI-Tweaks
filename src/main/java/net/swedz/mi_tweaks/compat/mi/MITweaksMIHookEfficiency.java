@@ -1,14 +1,11 @@
 package net.swedz.mi_tweaks.compat.mi;
 
 import net.swedz.mi_tweaks.MITweaksConfig;
-import net.swedz.mi_tweaks.constantefficiency.hack.MachineEfficiencyHack;
 import net.swedz.tesseract.neoforge.compat.mi.hook.MIHookEfficiency;
 import net.swedz.tesseract.neoforge.compat.mi.hook.context.machine.EfficiencyMIHookContext;
 
 public final class MITweaksMIHookEfficiency implements MIHookEfficiency
 {
-	public static final MachineEfficiencyHack HACK = MITweaksConfig.efficiencyHack.createInstance();
-	
 	@Override
 	public int getPriority()
 	{
@@ -24,13 +21,13 @@ public final class MITweaksMIHookEfficiency implements MIHookEfficiency
 	@Override
 	public void onGetRecipeMaxEu(EfficiencyMIHookContext context)
 	{
-		context.setMaxRecipeEu(HACK.getMaxRecipeEu(context));
+		context.setMaxRecipeEu(MITweaksConfig.efficiencyHack.instance().getMaxRecipeEu(context));
 	}
 	
 	@Override
 	public void onDecreaseEfficiencyTicks(EfficiencyMIHookContext context)
 	{
-		if(HACK.constantEfficiency(context))
+		if(MITweaksConfig.efficiencyHack.instance().constantEfficiency(context))
 		{
 			context.setCancelled(true);
 		}
@@ -39,7 +36,7 @@ public final class MITweaksMIHookEfficiency implements MIHookEfficiency
 	@Override
 	public void onIncreaseEfficiencyTicks(EfficiencyMIHookContext context)
 	{
-		if(HACK.constantEfficiency(context))
+		if(MITweaksConfig.efficiencyHack.instance().constantEfficiency(context))
 		{
 			context.setCancelled(true);
 		}
@@ -48,16 +45,16 @@ public final class MITweaksMIHookEfficiency implements MIHookEfficiency
 	@Override
 	public void onTickStart(EfficiencyMIHookContext context)
 	{
-		if(HACK.constantEfficiency(context))
+		if(MITweaksConfig.efficiencyHack.instance().constantEfficiency(context))
 		{
-			context.setEfficiencyTicks(context.hasActiveRecipe() ? HACK.getEfficiencyTicks(context) : 0);
+			context.setEfficiencyTicks(context.hasActiveRecipe() ? MITweaksConfig.efficiencyHack.instance().getEfficiencyTicks(context) : 0);
 		}
 	}
 	
 	@Override
 	public void onTickEnd(EfficiencyMIHookContext context, long eu)
 	{
-		if(HACK.constantEfficiency(context) && eu == 0)
+		if(MITweaksConfig.efficiencyHack.instance().constantEfficiency(context) && eu == 0)
 		{
 			context.setEfficiencyTicks(0);
 		}
@@ -66,9 +63,9 @@ public final class MITweaksMIHookEfficiency implements MIHookEfficiency
 	@Override
 	public void onReadNbt(EfficiencyMIHookContext context)
 	{
-		if(HACK.constantEfficiency(context))
+		if(MITweaksConfig.efficiencyHack.instance().constantEfficiency(context))
 		{
-			context.setEfficiencyTicks(context.hasActiveRecipe() ? HACK.getEfficiencyTicks(context) : 0);
+			context.setEfficiencyTicks(context.hasActiveRecipe() ? MITweaksConfig.efficiencyHack.instance().getEfficiencyTicks(context) : 0);
 		}
 	}
 }
