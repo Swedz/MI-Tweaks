@@ -1,7 +1,7 @@
 package net.swedz.mi_tweaks.mixin.client;
 
 import aztech.modern_industrialization.MIText;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import net.swedz.mi_tweaks.MITweaksConfig;
 import net.swedz.tesseract.neoforge.compat.mi.guicomponent.modularmultiblock.ModularMultiblockGuiClient;
@@ -27,7 +27,7 @@ public class HideEfficiencyInModularMultiblockClientMixin
 			method = "readCurrentData",
 			at = @At("RETURN")
 	)
-	private void readCurrentData(FriendlyByteBuf buf, CallbackInfo callback)
+	private void readCurrentData(RegistryFriendlyByteBuf buf, CallbackInfo callback)
 	{
 		if(MITweaksConfig.hideMachineEfficiency)
 		{
