@@ -3,7 +3,7 @@ package net.swedz.mi_tweaks.mixin.constantefficiency;
 import aztech.modern_industrialization.machines.MachineBlockEntity;
 import aztech.modern_industrialization.machines.components.UpgradeComponent;
 import aztech.modern_industrialization.machines.guicomponents.SlotPanel;
-import net.swedz.mi_tweaks.compat.mi.MITweaksMIHookEfficiency;
+import net.swedz.mi_tweaks.MITweaksConfig;
 import net.swedz.tesseract.neoforge.compat.mi.hook.context.machine.MachineMIHookContext;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -29,7 +29,7 @@ public class ConstantEfficiencyPreventUpgradeSlotMixin
 	)
 	private void withUpgrades(UpgradeComponent upgradeComponent, CallbackInfoReturnable<SlotPanel.Server> callback)
 	{
-		if(MITweaksMIHookEfficiency.HACK.preventsUpgrades(new MachineMIHookContext(machine)))
+		if(MITweaksConfig.efficiencyHack.instance().preventsUpgrades(new MachineMIHookContext(machine)))
 		{
 			callback.setReturnValue((SlotPanel.Server) (Object) this);
 		}

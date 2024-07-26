@@ -8,9 +8,11 @@ import net.swedz.mi_tweaks.guicomponent.exposecabletier.ExposeCableTierGuiClient
 import net.swedz.mi_tweaks.machineprocesscondition.EBFCoilProcessCondition;
 import net.swedz.mi_tweaks.machineprocesscondition.VoltageProcessCondition;
 import net.swedz.tesseract.neoforge.compat.mi.hook.MIHookListener;
+import net.swedz.tesseract.neoforge.compat.mi.hook.TesseractMIHookEntrypoint;
 import net.swedz.tesseract.neoforge.compat.mi.hook.context.listener.ClientGuiComponentsMIHookContext;
 import net.swedz.tesseract.neoforge.compat.mi.hook.context.listener.MachineProcessConditionsMIHookContext;
 
+@TesseractMIHookEntrypoint
 public final class MITweaksMIHookListener implements MIHookListener
 {
 	@Override

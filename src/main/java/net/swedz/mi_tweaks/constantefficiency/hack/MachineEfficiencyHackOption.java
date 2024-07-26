@@ -9,15 +9,15 @@ public enum MachineEfficiencyHackOption
 	ALWAYS_MAX(AlwaysMaxMachineEfficiencyHack::new),
 	USE_VOLTAGE(UseVoltageMachineEfficiencyHack::new);
 	
-	private final Supplier<MachineEfficiencyHack> creator;
+	private final MachineEfficiencyHack instance;
 	
 	MachineEfficiencyHackOption(Supplier<MachineEfficiencyHack> creator)
 	{
-		this.creator = creator;
+		this.instance = creator.get();
 	}
 	
-	public MachineEfficiencyHack createInstance()
+	public MachineEfficiencyHack instance()
 	{
-		return creator.get();
+		return instance;
 	}
 }

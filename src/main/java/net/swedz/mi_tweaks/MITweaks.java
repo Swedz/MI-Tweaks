@@ -8,11 +8,7 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
-import net.swedz.mi_tweaks.compat.mi.MITweaksMIHookEfficiency;
-import net.swedz.mi_tweaks.compat.mi.MITweaksMIHookListener;
 import net.swedz.mi_tweaks.datagen.client.LanguageDatagenProvider;
-import net.swedz.tesseract.neoforge.compat.mi.hook.MIHookRegistry;
-import net.swedz.tesseract.neoforge.compat.mi.hook.MIHooks;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,9 +30,6 @@ public final class MITweaks
 		container.registerConfig(ModConfig.Type.STARTUP, MITweaksConfig.SPEC);
 		MITweaksConfig.loadConfig();
 		bus.addListener(FMLCommonSetupEvent.class, (event) -> MITweaksConfig.loadConfig());
-		
-		MIHooks.registerListener(ID, MIHookRegistry.NONE, new MITweaksMIHookListener());
-		MIHooks.registerEfficiencyListener(ID, new MITweaksMIHookEfficiency());
 		
 		MITweaksDataComponents.init(bus);
 		MITweaksItems.init(bus);
