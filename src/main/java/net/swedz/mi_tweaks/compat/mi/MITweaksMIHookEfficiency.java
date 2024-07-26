@@ -2,8 +2,10 @@ package net.swedz.mi_tweaks.compat.mi;
 
 import net.swedz.mi_tweaks.MITweaksConfig;
 import net.swedz.tesseract.neoforge.compat.mi.hook.MIHookEfficiency;
+import net.swedz.tesseract.neoforge.compat.mi.hook.TesseractMIHookEntrypoint;
 import net.swedz.tesseract.neoforge.compat.mi.hook.context.machine.EfficiencyMIHookContext;
 
+@TesseractMIHookEntrypoint
 public final class MITweaksMIHookEfficiency implements MIHookEfficiency
 {
 	@Override
