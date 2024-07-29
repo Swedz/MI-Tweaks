@@ -6,7 +6,6 @@ import aztech.modern_industrialization.machines.multiblocks.ShapeMatcher;
 import aztech.modern_industrialization.machines.multiblocks.SimpleMember;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -23,7 +22,6 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.swedz.mi_tweaks.MITweaks;
 import net.swedz.mi_tweaks.MITweaksConfig;
 import net.swedz.mi_tweaks.MITweaksDataComponents;
@@ -31,14 +29,12 @@ import net.swedz.mi_tweaks.MITweaksItems;
 import net.swedz.mi_tweaks.MITweaksOtherRegistries;
 import net.swedz.mi_tweaks.MITweaksText;
 import net.swedz.mi_tweaks.blueprint.BlueprintsLearned;
-import net.swedz.mi_tweaks.items.renderer.BlockOverlayingItemRenderer;
 import net.swedz.mi_tweaks.packets.UpdateBlueprintsLearnedPacket;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 import static aztech.modern_industrialization.MITooltips.*;
@@ -63,19 +59,6 @@ public final class MachineBlueprintItem extends Item
 		{
 			return Component.translatable(this.getDescriptionId() + ".blank");
 		}
-	}
-	
-	@Override
-	public void initializeClient(Consumer<IClientItemExtensions> consumer)
-	{
-		consumer.accept(new IClientItemExtensions()
-		{
-			@Override
-			public BlockEntityWithoutLevelRenderer getCustomRenderer()
-			{
-				return new BlockOverlayingItemRenderer(RAW_ITEM_MODEL_LOCATION, MachineBlueprintItem::getMachineBlock);
-			}
-		});
 	}
 	
 	@Override
