@@ -116,7 +116,7 @@ if (System.getenv("CURSEFORGE_API_KEY")) {
             id = project.curseforge_project
             releaseType = "release" // TODO
             changelogType = "markdown"
-            delegate.changelog = System.getenv("TESSERACT_CHANGELOG")
+            delegate.changelog = System.getenv("MITWEAKS_CHANGELOG")
 
             addGameVersion project.minecraft_version
             addGameVersion "NeoForge"
@@ -148,7 +148,7 @@ if (System.getenv("MODRINTH_API_KEY")) {
         versionNumber = project.mod_version
         versionName = "${project.mod_name} ${version}"
         versionType = "release" // TODO
-        delegate.changelog = System.getenv("TESSERACT_CHANGELOG")
+        delegate.changelog = System.getenv("MITWEAKS_CHANGELOG")
 
         gameVersions = [project.minecraft_version]
         loaders = ["neoforge"]
