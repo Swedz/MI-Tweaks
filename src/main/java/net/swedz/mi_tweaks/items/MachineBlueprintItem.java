@@ -5,7 +5,6 @@ import aztech.modern_industrialization.machines.multiblocks.MultiblockMachineBlo
 import aztech.modern_industrialization.machines.multiblocks.ShapeMatcher;
 import aztech.modern_industrialization.machines.multiblocks.SimpleMember;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -21,7 +20,6 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.swedz.mi_tweaks.MITweaks;
 import net.swedz.mi_tweaks.MITweaksConfig;
 import net.swedz.mi_tweaks.MITweaksDataComponents;
 import net.swedz.mi_tweaks.MITweaksItems;
@@ -41,8 +39,6 @@ import static aztech.modern_industrialization.MITooltips.*;
 
 public final class MachineBlueprintItem extends Item
 {
-	public static final ModelResourceLocation RAW_ITEM_MODEL_LOCATION = ModelResourceLocation.standalone(MITweaks.id("item/machine_blueprint_raw"));
-	
 	public MachineBlueprintItem(Properties properties)
 	{
 		super(properties.stacksTo(1));

@@ -2,6 +2,7 @@ package net.swedz.mi_tweaks;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -20,6 +21,8 @@ import net.swedz.mi_tweaks.items.renderer.BlockOverlayingItemRenderer;
 @EventBusSubscriber(value = Dist.CLIENT, modid = MITweaks.ID, bus = EventBusSubscriber.Bus.MOD)
 public final class MITweaksClient
 {
+	private static final ModelResourceLocation RAW_ITEM_MODEL_LOCATION = ModelResourceLocation.standalone(MITweaks.id("item/machine_blueprint_raw"));
+	
 	public MITweaksClient(IEventBus bus)
 	{
 		bus.addListener(RegisterClientExtensionsEvent.class, (e) ->
@@ -29,7 +32,7 @@ public final class MITweaksClient
 							@Override
 							public BlockEntityWithoutLevelRenderer getCustomRenderer()
 							{
-								return new BlockOverlayingItemRenderer(MachineBlueprintItem.RAW_ITEM_MODEL_LOCATION, MachineBlueprintItem::getMachineBlock);
+								return new BlockOverlayingItemRenderer(RAW_ITEM_MODEL_LOCATION, MachineBlueprintItem::getMachineBlock);
 							}
 						},
 						MITweaksItems.MACHINE_BLUEPRINT.asItem()
@@ -54,6 +57,6 @@ public final class MITweaksClient
 	@SubscribeEvent
 	private static void onModifyBakingResult(ModelEvent.RegisterAdditional event)
 	{
-		event.register(MachineBlueprintItem.RAW_ITEM_MODEL_LOCATION);
+		event.register(RAW_ITEM_MODEL_LOCATION);
 	}
 }
