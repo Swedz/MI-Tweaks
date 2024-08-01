@@ -5,7 +5,6 @@ import aztech.modern_industrialization.machines.multiblocks.MultiblockMachineBlo
 import aztech.modern_industrialization.machines.multiblocks.ShapeMatcher;
 import aztech.modern_industrialization.machines.multiblocks.SimpleMember;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -30,6 +29,7 @@ import net.swedz.mi_tweaks.MITweaksOtherRegistries;
 import net.swedz.mi_tweaks.MITweaksText;
 import net.swedz.mi_tweaks.blueprint.BlueprintsLearned;
 import net.swedz.mi_tweaks.packets.UpdateBlueprintsLearnedPacket;
+import net.swedz.mi_tweaks.proxy.CommonProxy;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -64,19 +64,22 @@ public final class MachineBlueprintItem extends Item
 	@Override
 	public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag isAdvanced)
 	{
-		Player player = Minecraft.getInstance().player;
-		
-		getMachineBlock(stack).ifPresent((machineBlock) ->
+		if(CommonProxy.INSTANCE.isClient())
 		{
-			tooltipComponents.add(MITweaksText.BLUEPRINT_MACHINE.text(ITEM_PARSER.parse(machineBlock.asItem())));
+			Player player = CommonProxy.INSTANCE.getClientPlayer();
 			
-			if(player != null &&
-			   MITweaksConfig.machineBlueprintsLearning &&
-			   !hasBlueprintLearned(player, machineBlock))
+			getMachineBlock(stack).ifPresent((machineBlock) ->
 			{
-				tooltipComponents.add(MITweaksText.BLUEPRINT_LEARN.text(Component.keybind("key.use")).withStyle(DEFAULT_STYLE));
-			}
-		});
+				tooltipComponents.add(MITweaksText.BLUEPRINT_MACHINE.text(ITEM_PARSER.parse(machineBlock.asItem())));
+				
+				if(player != null &&
+				   MITweaksConfig.machineBlueprintsLearning &&
+				   !hasBlueprintLearned(player, machineBlock))
+				{
+					tooltipComponents.add(MITweaksText.BLUEPRINT_LEARN.text(Component.keybind("key.use")).withStyle(DEFAULT_STYLE));
+				}
+			});
+		}
 	}
 	
 	private static Optional<ItemStack> getItemStackMatchingFromInventory(SimpleMember member, Player player)

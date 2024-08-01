@@ -15,6 +15,7 @@ import net.swedz.mi_tweaks.api.CableTierHolder;
 import net.swedz.mi_tweaks.constantefficiency.ConstantEfficiencyHelper;
 import net.swedz.mi_tweaks.constantefficiency.hack.MachineEfficiencyHackOption;
 import net.swedz.mi_tweaks.items.MachineBlueprintItem;
+import net.swedz.mi_tweaks.proxy.CommonProxy;
 
 import java.util.List;
 import java.util.Optional;
@@ -59,15 +60,18 @@ public final class MITweaksTooltips
 	public static final TooltipAttachment MACHINE_BLUEPRINT_MISSING = MITooltips.TooltipAttachment.of(
 			(itemStack, item) ->
 			{
-				Player player = Minecraft.getInstance().player;
-				if(player != null &&
-				   MITweaksConfig.machineBlueprintsRequiredTooltip.isEnabled() &&
-				   item instanceof BlockItem blockItem && blockItem.getBlock() instanceof MachineBlock machineBlock &&
-				   MITweaksConfig.machineBlueprintsMachines.contains(machineBlock))
+				if(CommonProxy.INSTANCE.isClient())
 				{
-					return MachineBlueprintItem.hasBlueprint(player, machineBlock, MITweaksConfig.machineBlueprintsRequiredTooltip) ?
-							Optional.empty() :
-							Optional.of(MITweaksConfig.machineBlueprintsRequiredTooltip.tooltip().text().withStyle(ChatFormatting.RED));
+					Player player = CommonProxy.INSTANCE.getClientPlayer();
+					if(player != null &&
+					   MITweaksConfig.machineBlueprintsRequiredTooltip.isEnabled() &&
+					   item instanceof BlockItem blockItem && blockItem.getBlock() instanceof MachineBlock machineBlock &&
+					   MITweaksConfig.machineBlueprintsMachines.contains(machineBlock))
+					{
+						return MachineBlueprintItem.hasBlueprint(player, machineBlock, MITweaksConfig.machineBlueprintsRequiredTooltip) ?
+								Optional.empty() :
+								Optional.of(MITweaksConfig.machineBlueprintsRequiredTooltip.tooltip().text().withStyle(ChatFormatting.RED));
+					}
 				}
 				return Optional.empty();
 			}
