@@ -30,7 +30,7 @@ side = "BOTH"
 [[dependencies.${ mod_id }]]
 modId = "tesseract_api"
 type = "required"
-versionRange = "${tesseract_version}"
+versionRange = "${tesseract_version_range}"
 ordering = "AFTER"
 side = "BOTH"
 
