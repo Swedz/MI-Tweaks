@@ -30,13 +30,6 @@ ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.${ mod_id }]]
-modId = "tesseract_api"
-type = "required"
-versionRange = "${tesseract_version_range}"
-ordering = "AFTER"
-side = "BOTH"
-
-[[dependencies.${ mod_id }]]
 modId = "modern_industrialization"
 type = "required"
 versionRange = "${modern_industrialization_version_range}"
@@ -47,5 +40,12 @@ side = "BOTH"
 modId = "emi"
 type = "optional"
 versionRange = "${emi_version_range}"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.${ mod_id }]]
+modId = "tesseract_api"
+type = "required"
+versionRange = "${tesseract_version_range}"
 ordering = "AFTER"
 side = "BOTH"
