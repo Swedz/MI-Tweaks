@@ -27,7 +27,8 @@ import net.swedz.mi_tweaks.MITweaksOtherRegistries;
 import net.swedz.mi_tweaks.MITweaksText;
 import net.swedz.mi_tweaks.blueprint.BlueprintsLearned;
 import net.swedz.mi_tweaks.packets.UpdateBlueprintsLearnedPacket;
-import net.swedz.mi_tweaks.proxy.CommonProxy;
+import net.swedz.tesseract.neoforge.proxy.ProxyManager;
+import net.swedz.tesseract.neoforge.proxy.builtin.TesseractProxy;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -60,9 +61,10 @@ public final class MachineBlueprintItem extends Item
 	@Override
 	public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag isAdvanced)
 	{
-		if(CommonProxy.INSTANCE.isClient())
+		TesseractProxy proxy = ProxyManager.get(TesseractProxy.class);
+		if(proxy.isClient())
 		{
-			Player player = CommonProxy.INSTANCE.getClientPlayer();
+			Player player = proxy.getClientPlayer();
 			
 			getMachineBlock(stack).ifPresent((machineBlock) ->
 			{

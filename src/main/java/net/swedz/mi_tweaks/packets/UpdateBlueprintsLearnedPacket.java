@@ -7,7 +7,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.swedz.mi_tweaks.MITweaksOtherRegistries;
 import net.swedz.mi_tweaks.blueprint.BlueprintsLearned;
-import net.swedz.mi_tweaks.proxy.CommonProxy;
+import net.swedz.tesseract.neoforge.proxy.ProxyManager;
+import net.swedz.tesseract.neoforge.proxy.builtin.TesseractProxy;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -28,9 +29,10 @@ public record UpdateBlueprintsLearnedPacket(Set<ResourceLocation> machineIds) im
 	@Override
 	public void handle(Context context)
 	{
-		if(CommonProxy.INSTANCE.isClient())
+		TesseractProxy proxy = ProxyManager.get(TesseractProxy.class);
+		if(proxy.isClient())
 		{
-			Player player = CommonProxy.INSTANCE.getClientPlayer();
+			Player player = proxy.getClientPlayer();
 			
 			BlueprintsLearned blueprintsLearned = player.getData(MITweaksOtherRegistries.BLUEPRINTS_LEARNED);
 			blueprintsLearned.mergeFrom(machineIds);

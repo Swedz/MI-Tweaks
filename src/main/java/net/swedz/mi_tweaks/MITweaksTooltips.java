@@ -1,13 +1,11 @@
 package net.swedz.mi_tweaks;
 
-import aztech.modern_industrialization.MITooltips;
 import aztech.modern_industrialization.api.energy.CableTier;
 import aztech.modern_industrialization.machines.MachineBlock;
 import aztech.modern_industrialization.machines.blockentities.hatches.EnergyHatch;
 import aztech.modern_industrialization.machines.components.CasingComponent;
 import com.google.common.collect.Lists;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
@@ -15,16 +13,19 @@ import net.swedz.mi_tweaks.api.CableTierHolder;
 import net.swedz.mi_tweaks.constantefficiency.ConstantEfficiencyHelper;
 import net.swedz.mi_tweaks.constantefficiency.hack.MachineEfficiencyHackOption;
 import net.swedz.mi_tweaks.items.MachineBlueprintItem;
-import net.swedz.mi_tweaks.proxy.CommonProxy;
+import net.swedz.tesseract.neoforge.proxy.ProxyManager;
+import net.swedz.tesseract.neoforge.proxy.builtin.TesseractProxy;
+import net.swedz.tesseract.neoforge.tooltip.TooltipAttachment;
 
 import java.util.List;
 import java.util.Optional;
 
 import static aztech.modern_industrialization.MITooltips.*;
+import static net.swedz.tesseract.neoforge.compat.mi.tooltip.MICompatibleTextLine.line;
 
 public final class MITweaksTooltips
 {
-	public static final TooltipAttachment MACHINE_HULL_AND_ENERGY_HATCH_VOLTAGE = MITooltips.TooltipAttachment.ofMultilines(
+	public static final TooltipAttachment MACHINE_HULL_AND_ENERGY_HATCH_VOLTAGE = TooltipAttachment.ofMultilines(
 			(itemStack, item) ->
 			{
 				List<Component> lines = Lists.newArrayList();
@@ -45,11 +46,11 @@ public final class MITweaksTooltips
 				{
 					if(MITweaksConfig.displayMachineVoltage)
 					{
-						lines.add(DEFAULT_PARSER.parse(MITweaksText.MACHINE_VOLTAGE_RECIPES.text(Component.translatable(tier.shortEnglishKey()))));
+						lines.add(line(MITweaksText.MACHINE_VOLTAGE_RECIPES).arg(Component.translatable(tier.shortEnglishKey())));
 					}
 					if(MITweaksConfig.efficiencyHack == MachineEfficiencyHackOption.USE_VOLTAGE)
 					{
-						lines.add(DEFAULT_PARSER.parse(MITweaksText.MACHINE_VOLTAGE_RUNS_AT.text(EU_PER_TICK_PARSER.parse(ConstantEfficiencyHelper.getRecipeEu(tier)))));
+						lines.add(line(MITweaksText.MACHINE_VOLTAGE_RUNS_AT).arg(ConstantEfficiencyHelper.getRecipeEu(tier), EU_PER_TICK_PARSER));
 					}
 				}
 				
@@ -57,12 +58,13 @@ public final class MITweaksTooltips
 			}
 	);
 	
-	public static final TooltipAttachment MACHINE_BLUEPRINT_MISSING = MITooltips.TooltipAttachment.of(
+	public static final TooltipAttachment MACHINE_BLUEPRINT_MISSING = TooltipAttachment.of(
 			(itemStack, item) ->
 			{
-				if(CommonProxy.INSTANCE.isClient())
+				TesseractProxy proxy = ProxyManager.get(TesseractProxy.class);
+				if(proxy.isClient())
 				{
-					Player player = CommonProxy.INSTANCE.getClientPlayer();
+					Player player = proxy.getClientPlayer();
 					if(player != null &&
 					   MITweaksConfig.machineBlueprintsRequiredTooltip.isEnabled() &&
 					   item instanceof BlockItem blockItem && blockItem.getBlock() instanceof MachineBlock machineBlock &&

@@ -1,9 +1,8 @@
 package net.swedz.mi_tweaks;
 
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
+import net.swedz.tesseract.neoforge.tooltip.TranslatableTextEnum;
 
-public enum MITweaksText
+public enum MITweaksText implements TranslatableTextEnum
 {
 	BLUEPRINT_MACHINE("%s"),
 	BLUEPRINT_LEARN("Press %s to learn this blueprint"),
@@ -27,23 +26,15 @@ public enum MITweaksText
 		this.englishText = englishText;
 	}
 	
+	@Override
 	public String englishText()
 	{
 		return englishText;
 	}
 	
+	@Override
 	public String getTranslationKey()
 	{
 		return "text.%s.%s".formatted(MITweaks.ID, this.name().toLowerCase());
-	}
-	
-	public MutableComponent text()
-	{
-		return Component.translatable(this.getTranslationKey());
-	}
-	
-	public MutableComponent text(Object... args)
-	{
-		return Component.translatable(this.getTranslationKey(), args);
 	}
 }
