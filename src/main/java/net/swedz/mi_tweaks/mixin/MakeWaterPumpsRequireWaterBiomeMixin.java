@@ -9,7 +9,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.level.biome.Biome;
 import net.swedz.mi_tweaks.MITweaksConfig;
-import net.swedz.mi_tweaks.guicomponent.waterpumpenvironment.WaterPumpEnvironmentGui;
+import net.swedz.mi_tweaks.machine.guicomponent.waterpumpenvironment.WaterPumpEnvironmentGui;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.gen.Invoker;

@@ -4,7 +4,7 @@ import com.google.common.collect.Sets;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import net.swedz.mi_tweaks.items.MachineBlueprintItem;
+import net.swedz.mi_tweaks.item.MachineBlueprintItem;
 import net.swedz.tesseract.neoforge.registry.SortOrder;
 import net.swedz.tesseract.neoforge.registry.common.CommonModelBuilders;
 import net.swedz.tesseract.neoforge.registry.holder.ItemHolder;

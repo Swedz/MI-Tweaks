@@ -1,4 +1,4 @@
-package net.swedz.mi_tweaks.machineprocesscondition;
+package net.swedz.mi_tweaks.machine.processcondition;
 
 import aztech.modern_industrialization.api.energy.CableTier;
 import aztech.modern_industrialization.machines.recipe.MachineRecipe;

@@ -1,4 +1,4 @@
-package net.swedz.mi_tweaks.items.renderer;
+package net.swedz.mi_tweaks.item.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;

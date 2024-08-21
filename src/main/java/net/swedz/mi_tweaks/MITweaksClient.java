@@ -14,8 +14,8 @@ import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.common.NeoForge;
-import net.swedz.mi_tweaks.items.MachineBlueprintItem;
-import net.swedz.mi_tweaks.items.renderer.BlockOverlayingItemRenderer;
+import net.swedz.mi_tweaks.item.MachineBlueprintItem;
+import net.swedz.mi_tweaks.item.renderer.BlockOverlayingItemRenderer;
 
 @Mod(value = MITweaks.ID, dist = Dist.CLIENT)
 @EventBusSubscriber(value = Dist.CLIENT, modid = MITweaks.ID, bus = EventBusSubscriber.Bus.MOD)

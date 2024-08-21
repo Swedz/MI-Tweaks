@@ -9,6 +9,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.swedz.mi_tweaks.datagen.client.LanguageDatagenProvider;
+import net.swedz.mi_tweaks.network.MITweaksPackets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

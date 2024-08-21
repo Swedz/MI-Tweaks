@@ -13,7 +13,7 @@ import aztech.modern_industrialization.machines.guicomponents.RecipeEfficiencyBa
 import aztech.modern_industrialization.machines.init.MachineTier;
 import aztech.modern_industrialization.machines.recipe.MachineRecipeType;
 import net.swedz.mi_tweaks.api.CableTierHolder;
-import net.swedz.mi_tweaks.guicomponent.exposecabletier.ExposeCableTierGui;
+import net.swedz.mi_tweaks.machine.guicomponent.exposecabletier.ExposeCableTierGui;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

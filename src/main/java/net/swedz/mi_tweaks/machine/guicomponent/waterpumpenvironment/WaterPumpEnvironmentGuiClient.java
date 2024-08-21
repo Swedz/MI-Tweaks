@@ -1,4 +1,4 @@
-package net.swedz.mi_tweaks.guicomponent.waterpumpenvironment;
+package net.swedz.mi_tweaks.machine.guicomponent.waterpumpenvironment;
 
 import aztech.modern_industrialization.machines.gui.ClientComponentRenderer;
 import aztech.modern_industrialization.machines.gui.GuiComponentClient;

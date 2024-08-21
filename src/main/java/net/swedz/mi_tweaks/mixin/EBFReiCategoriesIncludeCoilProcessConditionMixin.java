@@ -4,7 +4,7 @@ import aztech.modern_industrialization.machines.blockentities.multiblocks.Electr
 import aztech.modern_industrialization.machines.init.MultiblockMachines;
 import aztech.modern_industrialization.machines.recipe.MachineRecipe;
 import com.llamalad7.mixinextras.sugar.Local;
-import net.swedz.mi_tweaks.machineprocesscondition.EBFCoilProcessCondition;
+import net.swedz.mi_tweaks.machine.processcondition.EBFCoilProcessCondition;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;

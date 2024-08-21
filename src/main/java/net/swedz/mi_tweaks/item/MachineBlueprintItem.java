@@ -1,4 +1,4 @@
-package net.swedz.mi_tweaks.items;
+package net.swedz.mi_tweaks.item;
 
 import aztech.modern_industrialization.machines.MachineBlock;
 import aztech.modern_industrialization.machines.multiblocks.MultiblockMachineBlockEntity;
@@ -26,7 +26,7 @@ import net.swedz.mi_tweaks.MITweaksItems;
 import net.swedz.mi_tweaks.MITweaksOtherRegistries;
 import net.swedz.mi_tweaks.MITweaksText;
 import net.swedz.mi_tweaks.blueprint.BlueprintsLearned;
-import net.swedz.mi_tweaks.packets.UpdateBlueprintsLearnedPacket;
+import net.swedz.mi_tweaks.network.packet.UpdateBlueprintsLearnedPacket;
 import net.swedz.tesseract.neoforge.proxy.ProxyManager;
 import net.swedz.tesseract.neoforge.proxy.builtin.TesseractProxy;
 

@@ -1,4 +1,4 @@
-package net.swedz.mi_tweaks;
+package net.swedz.mi_tweaks.network;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -7,8 +7,8 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
-import net.swedz.mi_tweaks.packets.BasePacket;
-import net.swedz.mi_tweaks.packets.UpdateBlueprintsLearnedPacket;
+import net.swedz.mi_tweaks.MITweaks;
+import net.swedz.mi_tweaks.network.packet.UpdateBlueprintsLearnedPacket;
 
 import java.util.Map;
 import java.util.Set;
@@ -17,10 +17,10 @@ public final class MITweaksPackets
 {
 	public static final class Registry
 	{
-		private static final Set<PacketRegistration<BasePacket>>                                    PACKET_REGISTRATIONS = Sets.newHashSet();
-		private static final Map<Class<? extends BasePacket>, CustomPacketPayload.Type<BasePacket>> PACKET_TYPES         = Maps.newHashMap();
+		private static final Set<PacketRegistration<MITweaksBasePacket>>                                            PACKET_REGISTRATIONS = Sets.newHashSet();
+		private static final Map<Class<? extends MITweaksBasePacket>, CustomPacketPayload.Type<MITweaksBasePacket>> PACKET_TYPES         = Maps.newHashMap();
 		
-		private record PacketRegistration<P extends BasePacket>(
+		private record PacketRegistration<P extends MITweaksBasePacket>(
 				CustomPacketPayload.Type<P> packetType,
 				Class<P> packetClass,
 				StreamCodec<? super RegistryFriendlyByteBuf, P> packetCodec
@@ -32,14 +32,14 @@ public final class MITweaksPackets
 		{
 			PayloadRegistrar registrar = event.registrar(MITweaks.ID);
 			
-			for(PacketRegistration<BasePacket> packetRegistration : Registry.PACKET_REGISTRATIONS)
+			for(PacketRegistration<MITweaksBasePacket> packetRegistration : Registry.PACKET_REGISTRATIONS)
 			{
 				registrar.playBidirectional(packetRegistration.packetType(), packetRegistration.packetCodec(), (packet, context) ->
-						packet.handle(new BasePacket.Context(packetRegistration.packetClass(), context)));
+						packet.handle(new MITweaksBasePacket.Context(packetRegistration.packetClass(), context)));
 			}
 		}
 		
-		public static CustomPacketPayload.Type<BasePacket> getType(Class<? extends BasePacket> packetClass)
+		public static CustomPacketPayload.Type<MITweaksBasePacket> getType(Class<? extends MITweaksBasePacket> packetClass)
 		{
 			return PACKET_TYPES.get(packetClass);
 		}
@@ -55,7 +55,7 @@ public final class MITweaksPackets
 		register("update_blueprints_learned", UpdateBlueprintsLearnedPacket.class, UpdateBlueprintsLearnedPacket.STREAM_CODEC);
 	}
 	
-	private static <P extends BasePacket> void register(String path, Class<P> packetClass, StreamCodec<? super RegistryFriendlyByteBuf, P> packetCodec)
+	private static <P extends MITweaksBasePacket> void register(String path, Class<P> packetClass, StreamCodec<? super RegistryFriendlyByteBuf, P> packetCodec)
 	{
 		CustomPacketPayload.Type type = new CustomPacketPayload.Type<>(MITweaks.id(path));
 		Registry.PACKET_REGISTRATIONS.add(new Registry.PacketRegistration<>(type, packetClass, packetCodec));

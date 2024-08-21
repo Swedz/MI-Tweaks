@@ -13,8 +13,8 @@ import net.neoforged.neoforge.event.entity.player.UseItemOnBlockEvent;
 import net.swedz.mi_tweaks.MITweaks;
 import net.swedz.mi_tweaks.MITweaksConfig;
 import net.swedz.mi_tweaks.MITweaksOtherRegistries;
-import net.swedz.mi_tweaks.items.MachineBlueprintItem;
-import net.swedz.mi_tweaks.packets.UpdateBlueprintsLearnedPacket;
+import net.swedz.mi_tweaks.item.MachineBlueprintItem;
+import net.swedz.mi_tweaks.network.packet.UpdateBlueprintsLearnedPacket;
 
 @EventBusSubscriber(modid = MITweaks.ID)
 public final class MachineBlueprintsListener

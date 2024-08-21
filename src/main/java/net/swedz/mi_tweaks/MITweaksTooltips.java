@@ -12,7 +12,7 @@ import net.minecraft.world.item.BlockItem;
 import net.swedz.mi_tweaks.api.CableTierHolder;
 import net.swedz.mi_tweaks.constantefficiency.ConstantEfficiencyHelper;
 import net.swedz.mi_tweaks.constantefficiency.hack.MachineEfficiencyHackOption;
-import net.swedz.mi_tweaks.items.MachineBlueprintItem;
+import net.swedz.mi_tweaks.item.MachineBlueprintItem;
 import net.swedz.tesseract.neoforge.proxy.ProxyManager;
 import net.swedz.tesseract.neoforge.proxy.builtin.TesseractProxy;
 import net.swedz.tesseract.neoforge.tooltip.TooltipAttachment;

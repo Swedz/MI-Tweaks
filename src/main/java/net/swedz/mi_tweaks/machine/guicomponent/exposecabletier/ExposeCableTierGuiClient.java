@@ -1,4 +1,4 @@
-package net.swedz.mi_tweaks.guicomponent.exposecabletier;
+package net.swedz.mi_tweaks.machine.guicomponent.exposecabletier;
 
 import aztech.modern_industrialization.api.energy.CableTier;
 import aztech.modern_industrialization.machines.gui.ClientComponentRenderer;

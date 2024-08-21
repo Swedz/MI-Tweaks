@@ -14,7 +14,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.swedz.mi_tweaks.blueprint.BlueprintsLearned;
 import net.swedz.mi_tweaks.blueprint.CopyBlueprintRecipe;
-import net.swedz.mi_tweaks.items.MachineBlueprintItem;
+import net.swedz.mi_tweaks.item.MachineBlueprintItem;
 import net.swedz.tesseract.neoforge.registry.holder.ItemHolder;
 
 import java.util.Comparator;

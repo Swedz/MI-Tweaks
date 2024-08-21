@@ -1,9 +1,9 @@
-package net.swedz.mi_tweaks.packets;
+package net.swedz.mi_tweaks.network;
 
+import aztech.modern_industrialization.network.BasePacket;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.swedz.mi_tweaks.MITweaksPackets;
 
-public interface BasePacket extends aztech.modern_industrialization.network.BasePacket
+public interface MITweaksBasePacket extends BasePacket
 {
 	@Override
 	default Type<? extends CustomPacketPayload> type()

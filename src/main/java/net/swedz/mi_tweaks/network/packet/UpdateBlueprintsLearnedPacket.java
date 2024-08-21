@@ -1,4 +1,4 @@
-package net.swedz.mi_tweaks.packets;
+package net.swedz.mi_tweaks.network.packet;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -7,13 +7,14 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.swedz.mi_tweaks.MITweaksOtherRegistries;
 import net.swedz.mi_tweaks.blueprint.BlueprintsLearned;
+import net.swedz.mi_tweaks.network.MITweaksBasePacket;
 import net.swedz.tesseract.neoforge.proxy.ProxyManager;
 import net.swedz.tesseract.neoforge.proxy.builtin.TesseractProxy;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public record UpdateBlueprintsLearnedPacket(Set<ResourceLocation> machineIds) implements BasePacket
+public record UpdateBlueprintsLearnedPacket(Set<ResourceLocation> machineIds) implements MITweaksBasePacket
 {
 	public static final StreamCodec<ByteBuf, UpdateBlueprintsLearnedPacket> STREAM_CODEC = StreamCodec.composite(
 			ByteBufCodecs.collection(HashSet::new, ResourceLocation.STREAM_CODEC),
