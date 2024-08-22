@@ -12,7 +12,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
-public final class MITweaksDataComponents
+public final class MITweaksComponents
 {
 	private static final DeferredRegister.DataComponents COMPONENTS = DeferredRegister.createDataComponents(MITweaks.ID);
 	

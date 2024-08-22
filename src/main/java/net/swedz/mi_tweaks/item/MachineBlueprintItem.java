@@ -21,7 +21,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.swedz.mi_tweaks.MITweaksConfig;
-import net.swedz.mi_tweaks.MITweaksDataComponents;
+import net.swedz.mi_tweaks.MITweaksComponents;
 import net.swedz.mi_tweaks.MITweaksItems;
 import net.swedz.mi_tweaks.MITweaksOtherRegistries;
 import net.swedz.mi_tweaks.MITweaksText;
@@ -192,7 +192,7 @@ public final class MachineBlueprintItem extends Item
 			throw new IllegalArgumentException("Cannot set machine block value to a machine block that is not included in the config");
 		}
 		
-		stack.set(MITweaksDataComponents.MACHINE_BLOCK, machineBlock);
+		stack.set(MITweaksComponents.MACHINE_BLOCK, machineBlock);
 	}
 	
 	public static Optional<Block> getMachineBlock(ItemStack stack)
@@ -202,9 +202,9 @@ public final class MachineBlueprintItem extends Item
 			throw new IllegalArgumentException("Cannot get machine block value of a non-blueprint item");
 		}
 		
-		if(stack.has(MITweaksDataComponents.MACHINE_BLOCK))
+		if(stack.has(MITweaksComponents.MACHINE_BLOCK))
 		{
-			Block machine = stack.get(MITweaksDataComponents.MACHINE_BLOCK);
+			Block machine = stack.get(MITweaksComponents.MACHINE_BLOCK);
 			if(machine instanceof MachineBlock machineBlock && MITweaksConfig.machineBlueprintsMachines.contains(machineBlock))
 			{
 				return Optional.of(machine);
