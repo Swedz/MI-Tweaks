@@ -173,6 +173,11 @@ neoForge {
         }
     }
 
+    parchment {
+        mappingsVersion = project.parchment_mappings_version
+        minecraftVersion = project.parchment_mappings_minecraft_version
+    }
+
     runs {
         configureEach {
             mods = [neoForge.mods."${mod_id}"]
