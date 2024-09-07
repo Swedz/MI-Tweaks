@@ -10,6 +10,7 @@ import aztech.modern_industrialization.machines.BEP;
 import aztech.modern_industrialization.machines.MachineBlockEntity;
 import aztech.modern_industrialization.machines.components.EnergyComponent;
 import aztech.modern_industrialization.machines.components.OrientationComponent;
+import aztech.modern_industrialization.machines.components.RedstoneControlComponent;
 import aztech.modern_industrialization.machines.gui.MachineGuiParameters;
 import aztech.modern_industrialization.machines.models.MachineModelClientData;
 import aztech.modern_industrialization.util.Simulation;
@@ -21,6 +22,8 @@ import net.swedz.tesseract.neoforge.capabilities.CapabilitiesListeners;
 
 public final class FluxTransformerBlockEntity extends MachineBlockEntity implements EnergyComponentHolder
 {
+	private final RedstoneControlComponent redstoneControl;
+	
 	private final EnergyComponent    energy;
 	private final MIEnergyStorage    insertable;
 	private final ILongEnergyStorage extractable;
@@ -33,6 +36,8 @@ public final class FluxTransformerBlockEntity extends MachineBlockEntity impleme
 				new OrientationComponent.Params(true, false, false)
 		);
 		
+		redstoneControl = new RedstoneControlComponent();
+		
 		// TODO configurable energy storage
 		energy = new EnergyComponent(this, () -> 200 * CableTier.LV.getEu());
 		insertable = energy.buildInsertable((tier) -> true);
@@ -41,7 +46,7 @@ public final class FluxTransformerBlockEntity extends MachineBlockEntity impleme
 			@Override
 			public boolean canExtract()
 			{
-				return true;
+				return redstoneControl.doAllowNormalOperation(FluxTransformerBlockEntity.this);
 			}
 			
 			@Override
@@ -75,6 +80,8 @@ public final class FluxTransformerBlockEntity extends MachineBlockEntity impleme
 				return energy.getCapacity() * 4;
 			}
 		};
+		
+		this.registerComponents(redstoneControl, energy);
 	}
 	
 	@Override
