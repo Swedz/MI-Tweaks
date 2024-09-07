@@ -6,5 +6,6 @@ import org.jetbrains.annotations.ApiStatus;
 @ApiStatus.NonExtendable
 public interface MITweaksSortOrder
 {
-	SortOrder BLUEPRINTS = new SortOrder(0);
+	SortOrder MACHINES   = new SortOrder(0);
+	SortOrder BLUEPRINTS = new SortOrder(1);
 }
