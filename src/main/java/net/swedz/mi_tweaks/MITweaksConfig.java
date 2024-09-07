@@ -1,5 +1,6 @@
 package net.swedz.mi_tweaks;
 
+import aztech.modern_industrialization.api.energy.CableTier;
 import aztech.modern_industrialization.machines.MachineBlock;
 import com.google.common.collect.Lists;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -21,6 +22,10 @@ public final class MITweaksConfig
 	private static final ModConfigSpec.BooleanValue                            LOCK_EFFICIENCY_WITH_REDSTONE;
 	private static final ModConfigSpec.BooleanValue                            WRENCHES_RENDER_MULTIBLOCK_SHAPES;
 	private static final ModConfigSpec.BooleanValue                            DISPLAY_ENERGY_CONSUMPTION_ON_ENERGY_BAR;
+	private static final ModConfigSpec.ConfigValue<String>                     FLUX_TRANSFORMER_CABLE_TIER;
+	private static final ModConfigSpec.LongValue                               FLUX_TRANSFORMER_CAPACITY;
+	private static final ModConfigSpec.LongValue                               FLUX_TRANSFORMER_MAX_EXTRACT;
+	private static final ModConfigSpec.DoubleValue                             FLUX_TRANSFORMER_CONVERSION_RATE;
 	private static final ModConfigSpec.EnumValue<MachineEfficiencyHackOption>  EFFICIENCY_HACK;
 	private static final ModConfigSpec.BooleanValue                            HIDE_MACHINE_EFFICIENCY;
 	private static final ModConfigSpec.BooleanValue                            MACHINE_BLUEPRINTS_LEARNING;
@@ -52,6 +57,23 @@ public final class MITweaksConfig
 			DISPLAY_ENERGY_CONSUMPTION_ON_ENERGY_BAR = BUILDER
 					.comment("Whether the tooltip on the energy bar should display the current energy consumption of the machine")
 					.define("display_energy_consumption_on_energy_bar", false);
+			BUILDER.pop();
+		}
+		
+		{
+			BUILDER.push("flux_transformer");
+			FLUX_TRANSFORMER_CABLE_TIER = BUILDER
+					.comment("The MI cable tier to require for inserting EU into the Flux Transformer")
+					.define("cable_tier", CableTier.HV.name, (name) -> CableTier.allTiers().stream().anyMatch((tier) -> tier.name.equals(name)));
+			FLUX_TRANSFORMER_CAPACITY = BUILDER
+					.comment("The EU capacity of the Flux Transformer")
+					.defineInRange("capacity", 200 * CableTier.HV.getEu(), 1, Long.MAX_VALUE);
+			FLUX_TRANSFORMER_MAX_EXTRACT = BUILDER
+					.comment("The max FE extractable at a time for the Flux Transformer")
+					.defineInRange("max_extract", Long.MAX_VALUE, 1, Long.MAX_VALUE);
+			FLUX_TRANSFORMER_CONVERSION_RATE = BUILDER
+					.comment("The multiplier to apply on the EU to get FE")
+					.defineInRange("conversion_rate", 2, 0.1, Double.MAX_VALUE);
 			BUILDER.pop();
 		}
 		
@@ -123,6 +145,10 @@ public final class MITweaksConfig
 	public static boolean                      lockEfficiencyWithRedstone;
 	public static boolean                      wrenchesRenderMultiblockShapes;
 	public static boolean                      displayEnergyConsumptionOnEnergyBar;
+	public static CableTier                    fluxTransformerCableTier;
+	public static long                         fluxTransformerCapacity;
+	public static long                         fluxTransformerMaxExtract;
+	public static double                       fluxTransformerConversionRate;
 	public static MachineEfficiencyHackOption  efficiencyHack;
 	public static boolean                      hideMachineEfficiency;
 	public static boolean                      machineBlueprintsLearning;
@@ -138,6 +164,10 @@ public final class MITweaksConfig
 		lockEfficiencyWithRedstone = LOCK_EFFICIENCY_WITH_REDSTONE.get();
 		wrenchesRenderMultiblockShapes = WRENCHES_RENDER_MULTIBLOCK_SHAPES.get();
 		displayEnergyConsumptionOnEnergyBar = DISPLAY_ENERGY_CONSUMPTION_ON_ENERGY_BAR.get();
+		fluxTransformerCableTier = CableTier.getTier(FLUX_TRANSFORMER_CABLE_TIER.get());
+		fluxTransformerCapacity = FLUX_TRANSFORMER_CAPACITY.get();
+		fluxTransformerMaxExtract = FLUX_TRANSFORMER_MAX_EXTRACT.get();
+		fluxTransformerConversionRate = FLUX_TRANSFORMER_CONVERSION_RATE.get();
 		efficiencyHack = EFFICIENCY_HACK.get();
 		hideMachineEfficiency = HIDE_MACHINE_EFFICIENCY.get();
 		machineBlueprintsLearning = MACHINE_BLUEPRINTS_LEARNING.get();

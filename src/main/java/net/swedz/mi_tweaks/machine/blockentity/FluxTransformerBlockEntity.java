@@ -1,6 +1,5 @@
 package net.swedz.mi_tweaks.machine.blockentity;
 
-import aztech.modern_industrialization.api.energy.CableTier;
 import aztech.modern_industrialization.api.energy.EnergyApi;
 import aztech.modern_industrialization.api.energy.MIEnergyStorage;
 import aztech.modern_industrialization.api.machine.component.EnergyAccess;
@@ -20,6 +19,7 @@ import dev.technici4n.grandpower.api.ILongEnergyStorage;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.swedz.mi_tweaks.MITweaks;
+import net.swedz.mi_tweaks.MITweaksConfig;
 import net.swedz.tesseract.neoforge.capabilities.CapabilitiesListeners;
 
 public final class FluxTransformerBlockEntity extends MachineBlockEntity implements EnergyComponentHolder
@@ -40,9 +40,8 @@ public final class FluxTransformerBlockEntity extends MachineBlockEntity impleme
 		
 		redstoneControl = new RedstoneControlComponent();
 		
-		// TODO configurable energy storage
-		energy = new EnergyComponent(this, () -> 200 * CableTier.LV.getEu());
-		insertable = energy.buildInsertable((tier) -> true);
+		energy = new EnergyComponent(this, () -> MITweaksConfig.fluxTransformerCapacity);
+		insertable = energy.buildInsertable((tier) -> tier == MITweaksConfig.fluxTransformerCableTier);
 		extractable = new ILongEnergyStorage()
 		{
 			@Override
@@ -66,20 +65,21 @@ public final class FluxTransformerBlockEntity extends MachineBlockEntity impleme
 			@Override
 			public long extract(long maxExtract, boolean simulate)
 			{
-				// TODO configurable conversion rate
-				return energy.consumeEu(maxExtract / 2, simulate ? Simulation.SIMULATE : Simulation.ACT) * 2;
+				maxExtract = (long) (maxExtract / MITweaksConfig.fluxTransformerConversionRate);
+				maxExtract = Math.min(maxExtract, MITweaksConfig.fluxTransformerMaxExtract);
+				return (long) (energy.consumeEu(maxExtract, simulate ? Simulation.SIMULATE : Simulation.ACT) * MITweaksConfig.fluxTransformerConversionRate);
 			}
 			
 			@Override
 			public long getAmount()
 			{
-				return energy.getEu() * 4;
+				return (long) (energy.getEu() * MITweaksConfig.fluxTransformerConversionRate);
 			}
 			
 			@Override
 			public long getCapacity()
 			{
-				return energy.getCapacity() * 4;
+				return (long) (energy.getCapacity() * MITweaksConfig.fluxTransformerConversionRate);
 			}
 		};
 		
