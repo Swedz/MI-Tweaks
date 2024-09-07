@@ -9,7 +9,7 @@
             "item": "modern_industrialization:turbo_machine_hull"
         },
         "F": {
-            "tag": "c:fe_cables"
+            "item": "modern_industrialization:redstone_battery"
         }
     },
     "pattern": [
@@ -23,11 +23,8 @@
     },
     "neoforge:conditions": [
         {
-            "type": "neoforge:not",
-            "value": {
-                "type": "neoforge:tag_empty",
-                "tag": "c:fe_cables"
-            }
+            "type": "neoforge:tag_empty",
+            "tag": "c:fe_cables"
         }
     ]
 }
