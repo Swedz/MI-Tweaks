@@ -15,14 +15,17 @@ import aztech.modern_industrialization.machines.guicomponents.EnergyBar;
 import aztech.modern_industrialization.machines.guicomponents.SlotPanel;
 import aztech.modern_industrialization.machines.models.MachineModelClientData;
 import aztech.modern_industrialization.util.Simulation;
+import aztech.modern_industrialization.util.Tickable;
+import dev.technici4n.grandpower.api.EnergyStorageUtil;
 import dev.technici4n.grandpower.api.ILongEnergyStorage;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.swedz.mi_tweaks.MITweaks;
 import net.swedz.mi_tweaks.MITweaksConfig;
 import net.swedz.tesseract.neoforge.capabilities.CapabilitiesListeners;
 
-public final class FluxTransformerBlockEntity extends MachineBlockEntity implements EnergyComponentHolder
+public final class FluxTransformerBlockEntity extends MachineBlockEntity implements Tickable, EnergyComponentHolder
 {
 	private final RedstoneControlComponent redstoneControl;
 	
@@ -57,17 +60,18 @@ public final class FluxTransformerBlockEntity extends MachineBlockEntity impleme
 			}
 			
 			@Override
-			public long receive(long maxReceive, boolean simulate)
+			public long receive(long receive, boolean simulate)
 			{
 				return 0;
 			}
 			
 			@Override
-			public long extract(long maxExtract, boolean simulate)
+			public long extract(long extractFE, boolean simulate)
 			{
-				maxExtract = (long) (maxExtract / MITweaksConfig.fluxTransformerConversionRate);
-				maxExtract = Math.min(maxExtract, MITweaksConfig.fluxTransformerMaxExtract);
-				return (long) (energy.consumeEu(maxExtract, simulate ? Simulation.SIMULATE : Simulation.ACT) * MITweaksConfig.fluxTransformerConversionRate);
+				extractFE = Math.min(extractFE, MITweaksConfig.fluxTransformerMaxExtract);
+				long extractEU = (long) (extractFE / MITweaksConfig.fluxTransformerConversionRate);
+				long extractedEU = energy.consumeEu(extractEU, simulate ? Simulation.SIMULATE : Simulation.ACT);
+				return (long) (extractedEU * MITweaksConfig.fluxTransformerConversionRate);
 			}
 			
 			@Override
@@ -110,6 +114,37 @@ public final class FluxTransformerBlockEntity extends MachineBlockEntity impleme
 		MachineModelClientData data = new MachineModelClientData();
 		orientation.writeModelData(data);
 		return data;
+	}
+	
+	private void autoOutputEnergy()
+	{
+		if(level.isClientSide())
+		{
+			throw new IllegalStateException("Cannot call autoOutputEnergy() on the client");
+		}
+		
+		IEnergyStorage target = level.getCapability(Capabilities.EnergyStorage.BLOCK, worldPosition.relative(orientation.outputDirection), orientation.outputDirection.getOpposite());
+		if(target != null && target.canReceive())
+		{
+			if(EnergyStorageUtil.move(extractable, ILongEnergyStorage.of(target), MITweaksConfig.fluxTransformerMaxExtract) > 0)
+			{
+				this.setChanged();
+			}
+		}
+	}
+	
+	@Override
+	public void tick()
+	{
+		if(level.isClientSide())
+		{
+			return;
+		}
+		
+		if(redstoneControl.doAllowNormalOperation(this))
+		{
+			this.autoOutputEnergy();
+		}
 	}
 	
 	public static void registerEnergyApi(BlockEntityType<?> bet)
