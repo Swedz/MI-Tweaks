@@ -3,7 +3,7 @@
   "item.mi_tweaks.machine_blueprint": "Machine Blueprint",
   "item.mi_tweaks.machine_blueprint.blank": "Blank Machine Blueprint",
   "itemGroup.mi_tweaks.mi_tweaks": "MI Tweaks",
-  "tag.item.mi_tweaks.fe_cables": "FE Cables",
+  "tag.item.c.fe_cables": "FE Cables",
   "text.mi_tweaks.blueprint_learn": "Press %s to learn this blueprint",
   "text.mi_tweaks.blueprint_learned": "You have learned the blueprints for %s",
   "text.mi_tweaks.blueprint_machine": "%s",

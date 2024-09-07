@@ -9,7 +9,7 @@
             "item": "modern_industrialization:turbo_machine_hull"
         },
         "F": {
-            "tag": "mi_tweaks:fe_cables"
+            "tag": "c:fe_cables"
         }
     },
     "pattern": [
