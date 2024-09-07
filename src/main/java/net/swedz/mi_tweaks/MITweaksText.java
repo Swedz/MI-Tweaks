@@ -10,6 +10,8 @@ public enum MITweaksText implements TranslatableTextEnum
 	BLUEPRINT_MISSING_INVENTORY("You do not have the blueprints for this machine"),
 	BLUEPRINT_MISSING_LEARN("You have not learned the blueprints for this machine"),
 	ENERGY_BAR_CURRENT_CONSUMPTION("Current consumption : %d EU/t"),
+	FLUX_TRANSFORMER_HELP_1("Converts EU to FE at a rate of %d FE per EU"),
+	FLUX_TRANSFORMER_HELP_2("Requires %s power"),
 	LEARNING_DISABLED_BUT_REQUIRING_LEARNING("WARNING: Your config is set to require learning for some machine blueprint requirement options but you do not have learning enabled. Be sure to enable learning or else you may be unable to use machines."),
 	MACHINE_MENU_VOLTAGE_PREFIX("(%s) "),
 	MACHINE_VOLTAGE_RECIPES("Allows machines to run %s recipes"),

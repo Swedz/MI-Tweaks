@@ -79,6 +79,14 @@ public final class MITweaksTooltips
 			}
 	).noShiftRequired();
 	
+	public static final TooltipAttachment FLUX_TRANSFORMER = TooltipAttachment.multilines(
+			List.of(MITweaks.id("flux_transformer")),
+			List.of(
+					line(MITweaksText.FLUX_TRANSFORMER_HELP_1).arg(MITweaksConfig.fluxTransformerConversionRate),
+					line(MITweaksText.FLUX_TRANSFORMER_HELP_2).arg(MITweaksConfig.fluxTransformerCableTier.shortEnglishName())
+			)
+	);
+	
 	public static void init()
 	{
 	}
