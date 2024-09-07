@@ -73,7 +73,7 @@ public final class MITweaksConfig
 					.defineInRange("max_extract", Long.MAX_VALUE, 1, Long.MAX_VALUE);
 			FLUX_TRANSFORMER_CONVERSION_RATE = BUILDER
 					.comment("The multiplier to apply on the EU to get FE")
-					.defineInRange("conversion_rate", 2, 0.1, Double.MAX_VALUE);
+					.defineInRange("conversion_rate", 1, 0.1, Double.MAX_VALUE);
 			BUILDER.pop();
 		}
 		
