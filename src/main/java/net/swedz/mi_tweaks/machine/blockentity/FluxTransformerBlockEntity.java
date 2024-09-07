@@ -12,6 +12,8 @@ import aztech.modern_industrialization.machines.components.EnergyComponent;
 import aztech.modern_industrialization.machines.components.OrientationComponent;
 import aztech.modern_industrialization.machines.components.RedstoneControlComponent;
 import aztech.modern_industrialization.machines.gui.MachineGuiParameters;
+import aztech.modern_industrialization.machines.guicomponents.EnergyBar;
+import aztech.modern_industrialization.machines.guicomponents.SlotPanel;
 import aztech.modern_industrialization.machines.models.MachineModelClientData;
 import aztech.modern_industrialization.util.Simulation;
 import dev.technici4n.grandpower.api.ILongEnergyStorage;
@@ -82,6 +84,12 @@ public final class FluxTransformerBlockEntity extends MachineBlockEntity impleme
 		};
 		
 		this.registerComponents(redstoneControl, energy);
+		
+		EnergyBar.Parameters energyBarParams = new EnergyBar.Parameters(76, 39);
+		this.registerGuiComponent(new EnergyBar.Server(energyBarParams, energy::getEu, energy::getCapacity));
+		
+		this.registerGuiComponent(new SlotPanel.Server(this)
+				.withRedstoneControl(redstoneControl));
 	}
 	
 	@Override
