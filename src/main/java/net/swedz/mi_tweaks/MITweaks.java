@@ -7,9 +7,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
-import net.swedz.mi_tweaks.datagen.client.LanguageDatagenProvider;
 import net.swedz.mi_tweaks.network.MITweaksPackets;
 import net.swedz.tesseract.neoforge.capabilities.CapabilitiesListeners;
 import org.slf4j.Logger;
@@ -41,8 +39,5 @@ public final class MITweaks
 		
 		bus.addListener(RegisterCapabilitiesEvent.class, (event) -> CapabilitiesListeners.triggerAll(ID, event));
 		bus.addListener(RegisterPayloadHandlersEvent.class, MITweaksPackets::init);
-		
-		bus.addListener(GatherDataEvent.class, (event) ->
-				event.getGenerator().addProvider(event.includeClient(), new LanguageDatagenProvider(event)));
 	}
 }

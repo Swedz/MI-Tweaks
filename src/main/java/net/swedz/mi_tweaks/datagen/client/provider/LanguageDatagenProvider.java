@@ -1,4 +1,4 @@
-package net.swedz.mi_tweaks.datagen.client;
+package net.swedz.mi_tweaks.datagen.client.provider;
 
 import net.neoforged.neoforge.common.data.LanguageProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
