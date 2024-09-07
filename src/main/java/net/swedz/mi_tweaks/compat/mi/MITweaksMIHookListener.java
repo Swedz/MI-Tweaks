@@ -23,7 +23,7 @@ public final class MITweaksMIHookListener implements MIHookListener
 	{
 		hook.register(
 				"Flux Transformer", "flux_transformer", "flux_transformer",
-				CableTier.EV.casing, false, false, false, false,
+				CableTier.HV.casing, false, false, false, false,
 				FluxTransformerBlockEntity::new,
 				FluxTransformerBlockEntity::registerEnergyApi
 		);
