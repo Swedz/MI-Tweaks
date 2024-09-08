@@ -3,6 +3,9 @@ This mod is an addon for [Modern Industrialization](https://modrinth.com/mod/mod
 
 For any questions, please ask in the `#mi-tweaks` channel on [my discord](https://discord.gg/vNaqDzSNaB).
 
+## Flux Transformer
+This block takes in EU (MI energy) of a configurable voltage (HV by default), stores it internally (204.8k EU by default), and converts it to FE (Forge energy, common energy used by many other mods) at a configurable rate (1:1 by default) when extracted. There is also a config option to limit the FE extract rate (2^63-1 by default).
+
 ## Extra Recipe Conditions
 There are some extra recipe conditions added to allow for further customization of progression.
 
