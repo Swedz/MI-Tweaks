@@ -5,6 +5,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.swedz.mi_tweaks.MITweaks;
 import net.swedz.mi_tweaks.datagen.client.DatagenDelegatorClient;
+import net.swedz.mi_tweaks.datagen.server.DatagenDelegatorServer;
 
 @EventBusSubscriber(modid = MITweaks.ID, bus = EventBusSubscriber.Bus.MOD)
 public final class DatagenDelegator
@@ -13,5 +14,6 @@ public final class DatagenDelegator
 	private static void gatherData(GatherDataEvent event)
 	{
 		DatagenDelegatorClient.configure(event);
+		DatagenDelegatorServer.configure(event);
 	}
 }
