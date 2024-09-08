@@ -15,6 +15,10 @@
         {
             "id": "mekanism:ultimate_universal_cable",
             "required": false
+        },
+        {
+            "id": "#powah:energy_cables",
+            "required": false
         }
     ]
 }
