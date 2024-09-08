@@ -19,6 +19,10 @@
         {
             "id": "#powah:energy_cables",
             "required": false
+        },
+        {
+            "id": "pipez:energy_pipe",
+            "required": false
         }
     ]
 }
