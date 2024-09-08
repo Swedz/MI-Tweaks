@@ -7,14 +7,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.swedz.mi_tweaks.MITweaksOtherRegistries;
 import net.swedz.mi_tweaks.blueprint.BlueprintsLearned;
-import net.swedz.mi_tweaks.network.MITweaksBasePacket;
-import net.swedz.tesseract.neoforge.proxy.ProxyManager;
-import net.swedz.tesseract.neoforge.proxy.builtin.TesseractProxy;
+import net.swedz.mi_tweaks.network.MITweaksCustomPacket;
+import net.swedz.tesseract.neoforge.packet.PacketContext;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public record UpdateBlueprintsLearnedPacket(Set<ResourceLocation> machineIds) implements MITweaksBasePacket
+public record UpdateBlueprintsLearnedPacket(Set<ResourceLocation> machineIds) implements MITweaksCustomPacket
 {
 	public static final StreamCodec<ByteBuf, UpdateBlueprintsLearnedPacket> STREAM_CODEC = StreamCodec.composite(
 			ByteBufCodecs.collection(HashSet::new, ResourceLocation.STREAM_CODEC),
@@ -28,15 +27,13 @@ public record UpdateBlueprintsLearnedPacket(Set<ResourceLocation> machineIds) im
 	}
 	
 	@Override
-	public void handle(Context context)
+	public void handle(PacketContext context)
 	{
-		TesseractProxy proxy = ProxyManager.get(TesseractProxy.class);
-		if(proxy.isClient())
-		{
-			Player player = proxy.getClientPlayer();
-			
-			BlueprintsLearned blueprintsLearned = player.getData(MITweaksOtherRegistries.BLUEPRINTS_LEARNED);
-			blueprintsLearned.mergeFrom(machineIds);
-		}
+		context.assetClientbound();
+		
+		Player player = context.getPlayer();
+		
+		BlueprintsLearned blueprintsLearned = player.getData(MITweaksOtherRegistries.BLUEPRINTS_LEARNED);
+		blueprintsLearned.mergeFrom(machineIds);
 	}
 }
