@@ -1,0 +1,33 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "key": {
+        "C": {
+            "item": "modern_industrialization:aluminum_cable"
+        },
+        "H": {
+            "item": "modern_industrialization:turbo_machine_hull"
+        },
+        "F": {
+            "tag": "c:fe_cables"
+        }
+    },
+    "pattern": [
+        "CC ",
+        " HF",
+        "CC "
+    ],
+    "result": {
+        "id": "mi_tweaks:flux_transformer",
+        "count": 1
+    },
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:not",
+            "value": {
+                "type": "neoforge:tag_empty",
+                "tag": "c:fe_cables"
+            }
+        }
+    ]
+}

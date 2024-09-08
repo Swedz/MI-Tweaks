@@ -1,0 +1,11 @@
+{
+  "casing": "hv",
+  "default_overlays": {
+    "fluid_auto": "modern_industrialization:block/overlays/fluid_auto",
+    "item_auto": "modern_industrialization:block/overlays/item_auto",
+    "output": "modern_industrialization:block/overlays/output",
+    "side": "mi_tweaks:block/machines/flux_transformer/overlay_side",
+    "top": "mi_tweaks:block/machines/flux_transformer/overlay_top"
+  },
+  "loader": "modern_industrialization:machine"
+}
