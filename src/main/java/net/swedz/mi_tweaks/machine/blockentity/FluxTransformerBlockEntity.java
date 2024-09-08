@@ -18,6 +18,10 @@ import aztech.modern_industrialization.util.Simulation;
 import aztech.modern_industrialization.util.Tickable;
 import dev.technici4n.grandpower.api.EnergyStorageUtil;
 import dev.technici4n.grandpower.api.ILongEnergyStorage;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;
@@ -145,6 +149,17 @@ public final class FluxTransformerBlockEntity extends MachineBlockEntity impleme
 		{
 			this.autoOutputEnergy();
 		}
+	}
+	
+	@Override
+	protected ItemInteractionResult useItemOn(Player player, InteractionHand hand, Direction face)
+	{
+		ItemInteractionResult result = super.useItemOn(player, hand, face);
+		if(!result.consumesAction())
+		{
+			result = redstoneControl.onUse(this, player, hand);
+		}
+		return result;
 	}
 	
 	public static void registerEnergyApi(BlockEntityType<?> bet)
