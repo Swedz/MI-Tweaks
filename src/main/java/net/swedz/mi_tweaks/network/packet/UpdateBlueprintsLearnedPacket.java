@@ -29,7 +29,7 @@ public record UpdateBlueprintsLearnedPacket(Set<ResourceLocation> machineIds) im
 	@Override
 	public void handle(PacketContext context)
 	{
-		context.assetClientbound();
+		context.assertClientbound();
 		
 		Player player = context.getPlayer();
 		
