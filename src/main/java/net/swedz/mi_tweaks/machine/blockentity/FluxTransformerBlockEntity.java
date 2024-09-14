@@ -16,7 +16,6 @@ import aztech.modern_industrialization.machines.guicomponents.SlotPanel;
 import aztech.modern_industrialization.machines.models.MachineModelClientData;
 import aztech.modern_industrialization.util.Simulation;
 import aztech.modern_industrialization.util.Tickable;
-import dev.technici4n.grandpower.api.EnergyStorageUtil;
 import dev.technici4n.grandpower.api.ILongEnergyStorage;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -24,10 +23,10 @@ import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.swedz.mi_tweaks.MITweaks;
 import net.swedz.mi_tweaks.MITweaksConfig;
 import net.swedz.tesseract.neoforge.capabilities.CapabilitiesListeners;
+import net.swedz.tesseract.neoforge.compat.mi.helper.transfer.LongEnergyTransferCache;
 
 public final class FluxTransformerBlockEntity extends MachineBlockEntity implements Tickable, EnergyComponentHolder
 {
@@ -36,6 +35,8 @@ public final class FluxTransformerBlockEntity extends MachineBlockEntity impleme
 	private final EnergyComponent    energy;
 	private final MIEnergyStorage    insertable;
 	private final ILongEnergyStorage extractable;
+	
+	private final LongEnergyTransferCache transferEnergy;
 	
 	public FluxTransformerBlockEntity(BEP bep)
 	{
@@ -91,6 +92,8 @@ public final class FluxTransformerBlockEntity extends MachineBlockEntity impleme
 			}
 		};
 		
+		transferEnergy = new LongEnergyTransferCache(() -> extractable);
+		
 		this.registerComponents(redstoneControl, energy);
 		
 		EnergyBar.Parameters energyBarParams = new EnergyBar.Parameters(76, 39);
@@ -120,23 +123,6 @@ public final class FluxTransformerBlockEntity extends MachineBlockEntity impleme
 		return data;
 	}
 	
-	private void autoOutputEnergy()
-	{
-		if(level.isClientSide())
-		{
-			throw new IllegalStateException("Cannot call autoOutputEnergy() on the client");
-		}
-		
-		IEnergyStorage target = level.getCapability(Capabilities.EnergyStorage.BLOCK, worldPosition.relative(orientation.outputDirection), orientation.outputDirection.getOpposite());
-		if(target != null && target.canReceive())
-		{
-			if(EnergyStorageUtil.move(extractable, ILongEnergyStorage.of(target), MITweaksConfig.fluxTransformerMaxExtract) > 0)
-			{
-				this.setChanged();
-			}
-		}
-	}
-	
 	@Override
 	public void tick()
 	{
@@ -147,7 +133,10 @@ public final class FluxTransformerBlockEntity extends MachineBlockEntity impleme
 		
 		if(redstoneControl.doAllowNormalOperation(this))
 		{
-			this.autoOutputEnergy();
+			if(transferEnergy.autoExtract(level, worldPosition, orientation.outputDirection, MITweaksConfig.fluxTransformerMaxExtract))
+			{
+				this.setChanged();
+			}
 		}
 	}
 	
