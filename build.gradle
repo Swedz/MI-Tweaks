@@ -133,23 +133,15 @@ static def trimChangelog(String changelog, int maxLength, boolean discordFormat)
 
 tasks.register('buildChangelog') {
     doLast {
-        //def githubEnvFile = new File(System.getenv("GITHUB_ENV"))
+        def githubEnvFile = new File(System.getenv("GITHUB_ENV"))
 
-        //def changelog = System.getenv("MOD_CHANGELOG")
-        def changelog = """## What's Changed
-* Use new tesseract transfer helper by @Swedz in https://github.com/Swedz/MI-Tweaks/pull/9
-* Fix typo in PacketContext by @Swedz in https://github.com/Swedz/MI-Tweaks/pull/10
-* Update tesseract to use proxy refactor by @Swedz in https://github.com/Swedz/MI-Tweaks/pull/11
-
-
-**Full Changelog**: https://github.com/Swedz/MI-Tweaks/compare/1.5.2-beta-1.21.1...1.5.3-beta-1.21.1"""
+        def changelog = System.getenv("MOD_CHANGELOG")
 
         def changelogTrimmedDiscord = trimChangelog(changelog, 1024, true)
-        println "changelogTrimmedDiscord=$changelogTrimmedDiscord"
-        //githubEnvFile.append("MOD_CHANGELOG_TRIMMED_DISCORD<<EOF\n${changelogTrimmedDiscord}\nEOF\n")
+        githubEnvFile.append("MOD_CHANGELOG_TRIMMED_DISCORD<<EOF\n${changelogTrimmedDiscord}\nEOF\n")
 
         def changelogTrimmedPublish = trimChangelog(changelog, 0, false)
-        //githubEnvFile.append("MOD_CHANGELOG_TRIMMED_PUBLISH<<EOF\n${changelogTrimmedPublish}\nEOF\n")
+        githubEnvFile.append("MOD_CHANGELOG_TRIMMED_PUBLISH<<EOF\n${changelogTrimmedPublish}\nEOF\n")
     }
 }
 
