@@ -13,7 +13,7 @@ import net.swedz.mi_tweaks.api.CableTierHolder;
 import net.swedz.mi_tweaks.constantefficiency.ConstantEfficiencyHelper;
 import net.swedz.mi_tweaks.constantefficiency.hack.MachineEfficiencyHackOption;
 import net.swedz.mi_tweaks.item.MachineBlueprintItem;
-import net.swedz.tesseract.neoforge.proxy.ProxyManager;
+import net.swedz.tesseract.neoforge.proxy.Proxies;
 import net.swedz.tesseract.neoforge.proxy.builtin.TesseractProxy;
 import net.swedz.tesseract.neoforge.tooltip.TooltipAttachment;
 
@@ -61,7 +61,7 @@ public final class MITweaksTooltips
 	public static final TooltipAttachment MACHINE_BLUEPRINT_MISSING = TooltipAttachment.singleLineOptional(
 			(stack, item) ->
 			{
-				TesseractProxy proxy = ProxyManager.get(TesseractProxy.class);
+				TesseractProxy proxy = Proxies.get(TesseractProxy.class);
 				if(proxy.isClient())
 				{
 					Player player = proxy.getClientPlayer();
