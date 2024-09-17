@@ -20,14 +20,14 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.swedz.mi_tweaks.MITweaksConfig;
 import net.swedz.mi_tweaks.MITweaksComponents;
+import net.swedz.mi_tweaks.MITweaksConfig;
 import net.swedz.mi_tweaks.MITweaksItems;
 import net.swedz.mi_tweaks.MITweaksOtherRegistries;
 import net.swedz.mi_tweaks.MITweaksText;
 import net.swedz.mi_tweaks.blueprint.BlueprintsLearned;
 import net.swedz.mi_tweaks.network.packet.UpdateBlueprintsLearnedPacket;
-import net.swedz.tesseract.neoforge.proxy.ProxyManager;
+import net.swedz.tesseract.neoforge.proxy.Proxies;
 import net.swedz.tesseract.neoforge.proxy.builtin.TesseractProxy;
 
 import java.util.ArrayList;
@@ -61,7 +61,7 @@ public final class MachineBlueprintItem extends Item
 	@Override
 	public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag isAdvanced)
 	{
-		TesseractProxy proxy = ProxyManager.get(TesseractProxy.class);
+		TesseractProxy proxy = Proxies.get(TesseractProxy.class);
 		if(proxy.isClient())
 		{
 			Player player = proxy.getClientPlayer();
