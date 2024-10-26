@@ -11,7 +11,7 @@ Note that there are 2 separate recipes for the Flux Transformer. One is the stan
 ## Extra Recipe Conditions
 There are some extra recipe conditions added to allow for further customization of progression.
 
-Recipe process conditions can be included in any recipe type that is a `MachineRecipeType`. Recipe conditions can be added to a recipe's json in an array with the key `conditions`.
+Recipe process conditions can be included in any recipe type that is a `MachineRecipeType`. Recipe conditions can be added to a recipe's json in an array with the key `process_conditions`.
 
 ### EBF Coil
 This process condition allows you to define a coil required for the recipe. This is distinct from MI's builtin method of doing this which uses EU/t cost, as it allows you to arbitrarily require a different tier than the EU/t cost.
