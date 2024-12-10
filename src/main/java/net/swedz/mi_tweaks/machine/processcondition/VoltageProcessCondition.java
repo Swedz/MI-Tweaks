@@ -1,6 +1,7 @@
 package net.swedz.mi_tweaks.machine.processcondition;
 
 import aztech.modern_industrialization.api.energy.CableTier;
+import aztech.modern_industrialization.api.energy.CableTierHolder;
 import aztech.modern_industrialization.machines.recipe.MachineRecipe;
 import aztech.modern_industrialization.machines.recipe.condition.MachineProcessCondition;
 import com.mojang.serialization.MapCodec;
@@ -11,7 +12,6 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.StringRepresentable;
 import net.swedz.mi_tweaks.MITweaksText;
-import net.swedz.mi_tweaks.api.CableTierHolder;
 
 import java.util.List;
 

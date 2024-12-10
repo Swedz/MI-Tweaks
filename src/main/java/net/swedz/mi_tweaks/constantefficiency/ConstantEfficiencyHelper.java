@@ -1,9 +1,9 @@
 package net.swedz.mi_tweaks.constantefficiency;
 
 import aztech.modern_industrialization.api.energy.CableTier;
+import aztech.modern_industrialization.api.energy.CableTierHolder;
 import aztech.modern_industrialization.machines.components.CrafterComponent;
 import net.swedz.mi_tweaks.MITweaksConfig;
-import net.swedz.mi_tweaks.api.CableTierHolder;
 import net.swedz.mi_tweaks.constantefficiency.hack.MachineEfficiencyHackOption;
 import net.swedz.tesseract.neoforge.compat.mi.component.craft.ModularCrafterAccessBehavior;
 

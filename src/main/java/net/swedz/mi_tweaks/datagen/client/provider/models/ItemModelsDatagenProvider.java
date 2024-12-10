@@ -1,6 +1,5 @@
 package net.swedz.mi_tweaks.datagen.client.provider.models;
 
-import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.swedz.mi_tweaks.MITweaks;
@@ -19,8 +18,10 @@ public final class ItemModelsDatagenProvider extends ItemModelProvider
 	{
 		for(ItemHolder item : MITweaksItems.values())
 		{
-			ItemModelBuilder itemModelBuilder = this.getBuilder("item/%s".formatted(item.identifier().id()));
-			item.modelBuilder().accept(itemModelBuilder);
+			if(item.hasModelProvider())
+			{
+				item.modelProvider().accept(this);
+			}
 		}
 	}
 	

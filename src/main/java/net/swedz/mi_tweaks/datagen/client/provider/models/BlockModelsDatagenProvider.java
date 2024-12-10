@@ -18,7 +18,10 @@ public final class BlockModelsDatagenProvider extends BlockStateProvider
 	{
 		for(BlockHolder<?> block : MITweaksBlocks.values())
 		{
-			block.modelBuilder().accept(this);
+			if(block.hasModelProvider())
+			{
+				block.modelProvider().accept(this);
+			}
 		}
 	}
 	
