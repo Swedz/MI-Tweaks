@@ -145,7 +145,6 @@ public final class MITweaksConfig
 	public static boolean                      lockEfficiencyWithRedstone;
 	public static boolean                      wrenchesRenderMultiblockShapes;
 	public static boolean                      displayEnergyConsumptionOnEnergyBar;
-	public static CableTier                    fluxTransformerCableTier;
 	public static long                         fluxTransformerCapacity;
 	public static long                         fluxTransformerMaxExtract;
 	public static double                       fluxTransformerConversionRate;
@@ -164,7 +163,6 @@ public final class MITweaksConfig
 		lockEfficiencyWithRedstone = LOCK_EFFICIENCY_WITH_REDSTONE.get();
 		wrenchesRenderMultiblockShapes = WRENCHES_RENDER_MULTIBLOCK_SHAPES.get();
 		displayEnergyConsumptionOnEnergyBar = DISPLAY_ENERGY_CONSUMPTION_ON_ENERGY_BAR.get();
-		fluxTransformerCableTier = CableTier.getTier(FLUX_TRANSFORMER_CABLE_TIER.get());
 		fluxTransformerCapacity = FLUX_TRANSFORMER_CAPACITY.get();
 		fluxTransformerMaxExtract = FLUX_TRANSFORMER_MAX_EXTRACT.get();
 		fluxTransformerConversionRate = FLUX_TRANSFORMER_CONVERSION_RATE.get();
