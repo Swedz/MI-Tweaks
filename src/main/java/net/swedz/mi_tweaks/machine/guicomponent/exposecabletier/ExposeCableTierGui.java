@@ -1,11 +1,11 @@
 package net.swedz.mi_tweaks.machine.guicomponent.exposecabletier;
 
 import aztech.modern_industrialization.api.energy.CableTier;
+import aztech.modern_industrialization.api.energy.CableTierHolder;
 import aztech.modern_industrialization.machines.gui.GuiComponent;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.swedz.mi_tweaks.MITweaks;
-import net.swedz.mi_tweaks.api.CableTierHolder;
 
 public class ExposeCableTierGui
 {

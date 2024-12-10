@@ -1,6 +1,7 @@
 package net.swedz.mi_tweaks.mixin.machinecabletier;
 
 import aztech.modern_industrialization.api.energy.CableTier;
+import aztech.modern_industrialization.api.energy.CableTierHolder;
 import aztech.modern_industrialization.machines.BEP;
 import aztech.modern_industrialization.machines.MachineBlockEntity;
 import aztech.modern_industrialization.machines.blockentities.hatches.EnergyHatch;
@@ -9,7 +10,6 @@ import aztech.modern_industrialization.machines.components.OrientationComponent;
 import aztech.modern_industrialization.machines.gui.MachineGuiParameters;
 import aztech.modern_industrialization.machines.multiblocks.HatchBlockEntity;
 import aztech.modern_industrialization.machines.multiblocks.ShapeMatcher;
-import net.swedz.mi_tweaks.api.CableTierHolder;
 import net.swedz.mi_tweaks.machine.guicomponent.exposecabletier.ExposeCableTierGui;
 import net.swedz.tesseract.neoforge.compat.mi.machine.blockentity.multiblock.multiplied.AbstractElectricMultipliedCraftingMultiblockBlockEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -52,20 +52,22 @@ public abstract class ElectricCraftingMultiblockCableTierGetterMixin extends Mac
 	}
 	
 	@Inject(
-			method = "onSuccessfulMatch",
+			method = "onRematch",
 			at = @At("HEAD")
 	)
-	private void onSuccessfulMatch(ShapeMatcher shapeMatcher, CallbackInfo callback)
+	private void onRematch(ShapeMatcher shapeMatcher, CallbackInfo callback)
 	{
-		cableTier = CableTier.LV;
-		for(HatchBlockEntity hatch : shapeMatcher.getMatchedHatches())
+		if(shapeMatcher.isMatchSuccessful())
 		{
-			if(hatch instanceof EnergyHatch)
+			cableTier = CableTier.LV;
+			for(HatchBlockEntity hatch : shapeMatcher.getMatchedHatches())
 			{
-				CableTierHolder energyHatch = (CableTierHolder) hatch;
-				if(cableTier.eu < energyHatch.getCableTier().eu)
+				if(hatch instanceof EnergyHatch energyHatch)
 				{
-					cableTier = energyHatch.getCableTier();
+					if(cableTier.eu < energyHatch.getCableTier().eu)
+					{
+						cableTier = energyHatch.getCableTier();
+					}
 				}
 			}
 		}

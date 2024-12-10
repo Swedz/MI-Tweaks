@@ -1,6 +1,6 @@
 package net.swedz.mi_tweaks.constantefficiency.hack;
 
-import net.swedz.mi_tweaks.api.CableTierHolder;
+import aztech.modern_industrialization.api.energy.CableTierHolder;
 import net.swedz.mi_tweaks.constantefficiency.ConstantEfficiencyHelper;
 import net.swedz.tesseract.neoforge.compat.mi.hook.context.machine.EfficiencyMIHookContext;
 import net.swedz.tesseract.neoforge.compat.mi.hook.context.machine.MachineMIHookContext;

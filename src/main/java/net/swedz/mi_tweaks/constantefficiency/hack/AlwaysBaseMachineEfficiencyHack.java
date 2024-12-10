@@ -120,7 +120,7 @@ public final class AlwaysBaseMachineEfficiencyHack implements MachineEfficiencyH
 		{
 			throw new IllegalStateException("Efficiency hack was called for non crafter component holding machine (%s)".formatted(machine.getClass()));
 		}
-		long additionalEuFromUpgrades = machine.mapComponentOrDefault(UpgradeComponent.class, UpgradeComponent::getAddMaxEUPerTick, 0L);
+		long additionalEuFromUpgrades = machine.components.mapOrDefault(UpgradeComponent.class, UpgradeComponent::getAddMaxEUPerTick, 0L);
 		long machineBaseMaxEu = maxRecipeEu - additionalEuFromUpgrades;
 		
 		long targetEu;

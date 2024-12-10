@@ -1,15 +1,14 @@
 package net.swedz.mi_tweaks;
 
 import aztech.modern_industrialization.api.energy.CableTier;
+import aztech.modern_industrialization.api.energy.CableTierHolder;
 import aztech.modern_industrialization.machines.MachineBlock;
 import aztech.modern_industrialization.machines.blockentities.hatches.EnergyHatch;
-import aztech.modern_industrialization.machines.components.CasingComponent;
 import com.google.common.collect.Lists;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
-import net.swedz.mi_tweaks.api.CableTierHolder;
 import net.swedz.mi_tweaks.constantefficiency.ConstantEfficiencyHelper;
 import net.swedz.mi_tweaks.constantefficiency.hack.MachineEfficiencyHackOption;
 import net.swedz.mi_tweaks.item.MachineBlueprintItem;
@@ -30,20 +29,11 @@ public final class MITweaksTooltips
 			{
 				List<Component> lines = Lists.newArrayList();
 				
-				CableTier tier;
 				if(item instanceof BlockItem blockItem &&
 				   blockItem.getBlock() instanceof MachineBlock machineBlock &&
 				   machineBlock.getBlockEntityInstance() instanceof EnergyHatch energyHatch)
 				{
-					tier = ((CableTierHolder) energyHatch).getCableTier();
-				}
-				else
-				{
-					tier = CasingComponent.getCasingTier(item);
-				}
-				
-				if(tier != null)
-				{
+					CableTier tier = ((CableTierHolder) energyHatch).getCableTier();
 					if(MITweaksConfig.displayMachineVoltage)
 					{
 						lines.add(line(MITweaksText.MACHINE_VOLTAGE_RECIPES).arg(Component.translatable(tier.shortEnglishKey())));

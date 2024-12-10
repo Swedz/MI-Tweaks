@@ -10,10 +10,8 @@
         "accessor.AbstractCraftingMultiblockBlockEntityAccessor",
         "constantefficiency.ConstantEfficiencyPreventUpgradeInsertionMixin",
         "constantefficiency.ConstantEfficiencyPreventUpgradeSlotMixin",
-        "machinecabletier.CasingComponentCableTierGetterMixin",
         "machinecabletier.ElectricCraftingMultiblockCableTierGetterMixin",
-        "machinecabletier.ElectricCraftingSingleblockCableTierGetterMixin",
-        "machinecabletier.EnergyHatchCableTierGetterMixin"
+        "machinecabletier.ElectricCraftingSingleblockCableTierGetterMixin"
     ],
     "client": [
         "client.DisplayEnergyConsumptionOnEnergyBarClientMixin",
