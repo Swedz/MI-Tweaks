@@ -72,8 +72,7 @@ public final class MITweaksTooltips
 	public static final TooltipAttachment FLUX_TRANSFORMER = TooltipAttachment.multilines(
 			List.of(MITweaks.id("flux_transformer")),
 			List.of(
-					line(MITweaksText.FLUX_TRANSFORMER_HELP_1).arg(MITweaksConfig.fluxTransformerConversionRate),
-					line(MITweaksText.FLUX_TRANSFORMER_HELP_2).arg(MITweaksConfig.fluxTransformerCableTier.shortEnglishName())
+					line(MITweaksText.FLUX_TRANSFORMER_HELP).arg(MITweaksConfig.fluxTransformerConversionRate)
 			)
 	);
 	

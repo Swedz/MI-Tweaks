@@ -7,6 +7,7 @@ import aztech.modern_industrialization.api.machine.holder.EnergyComponentHolder;
 import aztech.modern_industrialization.inventory.MIInventory;
 import aztech.modern_industrialization.machines.BEP;
 import aztech.modern_industrialization.machines.MachineBlockEntity;
+import aztech.modern_industrialization.machines.components.CasingComponent;
 import aztech.modern_industrialization.machines.components.EnergyComponent;
 import aztech.modern_industrialization.machines.components.OrientationComponent;
 import aztech.modern_industrialization.machines.components.RedstoneControlComponent;
@@ -31,6 +32,7 @@ import net.swedz.tesseract.neoforge.compat.mi.helper.transfer.LongEnergyTransfer
 public final class FluxTransformerBlockEntity extends MachineBlockEntity implements Tickable, EnergyComponentHolder
 {
 	private final RedstoneControlComponent redstoneControl;
+	private final CasingComponent          casing;
 	
 	private final EnergyComponent    energy;
 	private final MIEnergyStorage    insertable;
@@ -47,9 +49,10 @@ public final class FluxTransformerBlockEntity extends MachineBlockEntity impleme
 		);
 		
 		redstoneControl = new RedstoneControlComponent();
+		casing = new CasingComponent();
 		
 		energy = new EnergyComponent(this, () -> MITweaksConfig.fluxTransformerCapacity);
-		insertable = energy.buildInsertable((tier) -> tier == MITweaksConfig.fluxTransformerCableTier);
+		insertable = energy.buildInsertable(casing::canInsertEu);
 		extractable = new ILongEnergyStorage()
 		{
 			@Override
@@ -94,13 +97,14 @@ public final class FluxTransformerBlockEntity extends MachineBlockEntity impleme
 		
 		transferEnergy = new LongEnergyTransferCache(() -> extractable);
 		
-		this.registerComponents(redstoneControl, energy);
+		this.registerComponents(redstoneControl, casing, energy);
 		
 		EnergyBar.Parameters energyBarParams = new EnergyBar.Parameters(76, 39);
 		this.registerGuiComponent(new EnergyBar.Server(energyBarParams, energy::getEu, energy::getCapacity));
 		
 		this.registerGuiComponent(new SlotPanel.Server(this)
-				.withRedstoneControl(redstoneControl));
+				.withRedstoneControl(redstoneControl)
+				.withCasing(casing));
 	}
 	
 	@Override
@@ -118,7 +122,7 @@ public final class FluxTransformerBlockEntity extends MachineBlockEntity impleme
 	@Override
 	protected MachineModelClientData getMachineModelData()
 	{
-		MachineModelClientData data = new MachineModelClientData();
+		MachineModelClientData data = new MachineModelClientData(casing.getCasing());
 		orientation.writeModelData(data);
 		return data;
 	}
@@ -147,6 +151,10 @@ public final class FluxTransformerBlockEntity extends MachineBlockEntity impleme
 		if(!result.consumesAction())
 		{
 			result = redstoneControl.onUse(this, player, hand);
+		}
+		if(!result.consumesAction())
+		{
+			result = casing.onUse(this, player, hand);
 		}
 		return result;
 	}
