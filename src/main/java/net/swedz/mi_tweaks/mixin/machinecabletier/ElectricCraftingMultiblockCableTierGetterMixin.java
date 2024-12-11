@@ -4,7 +4,6 @@ import aztech.modern_industrialization.api.energy.CableTier;
 import aztech.modern_industrialization.api.energy.CableTierHolder;
 import aztech.modern_industrialization.machines.BEP;
 import aztech.modern_industrialization.machines.MachineBlockEntity;
-import aztech.modern_industrialization.machines.blockentities.hatches.EnergyHatch;
 import aztech.modern_industrialization.machines.blockentities.multiblocks.AbstractElectricCraftingMultiblockBlockEntity;
 import aztech.modern_industrialization.machines.components.OrientationComponent;
 import aztech.modern_industrialization.machines.gui.MachineGuiParameters;
@@ -62,7 +61,7 @@ public abstract class ElectricCraftingMultiblockCableTierGetterMixin extends Mac
 			cableTier = CableTier.LV;
 			for(HatchBlockEntity hatch : shapeMatcher.getMatchedHatches())
 			{
-				if(hatch instanceof EnergyHatch energyHatch)
+				if(hatch instanceof CableTierHolder energyHatch)
 				{
 					if(cableTier.eu < energyHatch.getCableTier().eu)
 					{

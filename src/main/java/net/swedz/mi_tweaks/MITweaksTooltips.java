@@ -3,7 +3,7 @@ package net.swedz.mi_tweaks;
 import aztech.modern_industrialization.api.energy.CableTier;
 import aztech.modern_industrialization.api.energy.CableTierHolder;
 import aztech.modern_industrialization.machines.MachineBlock;
-import aztech.modern_industrialization.machines.blockentities.hatches.EnergyHatch;
+import aztech.modern_industrialization.machines.multiblocks.HatchBlockEntity;
 import com.google.common.collect.Lists;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -31,9 +31,10 @@ public final class MITweaksTooltips
 				
 				if(item instanceof BlockItem blockItem &&
 				   blockItem.getBlock() instanceof MachineBlock machineBlock &&
-				   machineBlock.getBlockEntityInstance() instanceof EnergyHatch energyHatch)
+				   machineBlock.getBlockEntityInstance() instanceof HatchBlockEntity &&
+				   machineBlock.getBlockEntityInstance() instanceof CableTierHolder energyHatch)
 				{
-					CableTier tier = ((CableTierHolder) energyHatch).getCableTier();
+					CableTier tier = energyHatch.getCableTier();
 					if(MITweaksConfig.displayMachineVoltage)
 					{
 						lines.add(line(MITweaksText.MACHINE_VOLTAGE_RECIPES).arg(Component.translatable(tier.shortEnglishKey())));
