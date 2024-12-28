@@ -63,4 +63,4 @@ The `machine_blueprints` config section provides quite a few options to customiz
 - Disable wrenches from rendering multiblock shapes (this is only logical when machine blueprints have been properly implemented)
 - Include current energy consumption in the energy bar tooltip (this is only logical when machine efficiency is hidden)
 - Water explosive items data map (`mi_tweaks:water_explosive`)
-- Very hot items tag (`#mi_tweaks:very_hot`)
+- Very hot items tag (`#mi_tweaks:very_hot`) and heat protection attribute (`mi_tweaks:heat_protection`)
