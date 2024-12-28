@@ -23,6 +23,20 @@ This process condition allows you to define a coil required for the recipe. This
 }
 ```
 
+### Machine Tier
+This process condition makes it so that the machine must be a certain machine tier in order to run the recipe. This performs an exact equals check, so you can make recipes exclusive to bronze machines, for example. Below is a list of acceptable machine tiers.
+- `bronze`
+- `steel`
+- `singeblock_electric`
+- `multiblock_electric`
+
+```json
+{
+    "type": "mi_tweaks:machine_tier",
+    "tier": "bronze"
+}
+```
+
 ### Voltage
 This process condition makes it so that the machine must have a certain hull (or higher) provided to it in order to run the recipe.
 
