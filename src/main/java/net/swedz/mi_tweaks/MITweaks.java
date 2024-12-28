@@ -33,6 +33,7 @@ public final class MITweaks
 		MITweaksConfig.loadConfig();
 		bus.addListener(FMLCommonSetupEvent.class, (event) -> MITweaksConfig.loadConfig());
 		
+		MITweaksAttributes.init(bus);
 		MITweaksComponents.init(bus);
 		MITweaksItems.init(bus);
 		MITweaksBlocks.init(bus);

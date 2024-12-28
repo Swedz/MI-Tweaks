@@ -22,6 +22,7 @@ public final class MITweaksConfig
 	private static final ModConfigSpec.BooleanValue                            LOCK_EFFICIENCY_WITH_REDSTONE;
 	private static final ModConfigSpec.BooleanValue                            WRENCHES_RENDER_MULTIBLOCK_SHAPES;
 	private static final ModConfigSpec.BooleanValue                            DISPLAY_ENERGY_CONSUMPTION_ON_ENERGY_BAR;
+	private static final ModConfigSpec.IntValue                                VERY_HOT_ITEMS_BURN_TIME;
 	private static final ModConfigSpec.ConfigValue<String>                     FLUX_TRANSFORMER_CABLE_TIER;
 	private static final ModConfigSpec.LongValue                               FLUX_TRANSFORMER_CAPACITY;
 	private static final ModConfigSpec.LongValue                               FLUX_TRANSFORMER_MAX_EXTRACT;
@@ -57,6 +58,9 @@ public final class MITweaksConfig
 			DISPLAY_ENERGY_CONSUMPTION_ON_ENERGY_BAR = BUILDER
 					.comment("Whether the tooltip on the energy bar should display the current energy consumption of the machine")
 					.define("display_energy_consumption_on_energy_bar", false);
+			VERY_HOT_ITEMS_BURN_TIME = BUILDER
+					.comment("The duration in ticks of burn time to apply when holding an item tagged mi_tweaks:very_hot")
+					.defineInRange("very_hot_items_burn_time", 5 * 20, 1, Integer.MAX_VALUE);
 			BUILDER.pop();
 		}
 		
@@ -145,6 +149,7 @@ public final class MITweaksConfig
 	public static boolean                      lockEfficiencyWithRedstone;
 	public static boolean                      wrenchesRenderMultiblockShapes;
 	public static boolean                      displayEnergyConsumptionOnEnergyBar;
+	public static int                          veryHotItemsBurnTime;
 	public static long                         fluxTransformerCapacity;
 	public static long                         fluxTransformerMaxExtract;
 	public static double                       fluxTransformerConversionRate;
@@ -163,6 +168,7 @@ public final class MITweaksConfig
 		lockEfficiencyWithRedstone = LOCK_EFFICIENCY_WITH_REDSTONE.get();
 		wrenchesRenderMultiblockShapes = WRENCHES_RENDER_MULTIBLOCK_SHAPES.get();
 		displayEnergyConsumptionOnEnergyBar = DISPLAY_ENERGY_CONSUMPTION_ON_ENERGY_BAR.get();
+		veryHotItemsBurnTime = VERY_HOT_ITEMS_BURN_TIME.get();
 		fluxTransformerCapacity = FLUX_TRANSFORMER_CAPACITY.get();
 		fluxTransformerMaxExtract = FLUX_TRANSFORMER_MAX_EXTRACT.get();
 		fluxTransformerConversionRate = FLUX_TRANSFORMER_CONVERSION_RATE.get();
