@@ -8,6 +8,7 @@ import net.swedz.mi_tweaks.machine.blockentity.FluxTransformerBlockEntity;
 import net.swedz.mi_tweaks.machine.guicomponent.exposecabletier.ExposeCableTierGui;
 import net.swedz.mi_tweaks.machine.guicomponent.exposecabletier.ExposeCableTierGuiClient;
 import net.swedz.mi_tweaks.machine.processcondition.EBFCoilProcessCondition;
+import net.swedz.mi_tweaks.machine.processcondition.MachineTierProcessCondition;
 import net.swedz.mi_tweaks.machine.processcondition.VoltageProcessCondition;
 import net.swedz.tesseract.neoforge.compat.mi.hook.MIHookEntrypoint;
 import net.swedz.tesseract.neoforge.compat.mi.hook.MIHookListener;
@@ -38,8 +39,9 @@ public final class MITweaksMIHookListener implements MIHookListener
 	@Override
 	public void machineProcessConditions(MachineProcessConditionsMIHookContext hook)
 	{
-		hook.register(MITweaks.id("voltage"), VoltageProcessCondition.CODEC, VoltageProcessCondition.STREAM_CODEC);
 		hook.register(MITweaks.id("ebf_coil"), EBFCoilProcessCondition.CODEC, EBFCoilProcessCondition.STREAM_CODEC);
+		hook.register(MITweaks.id("machine_tier"), MachineTierProcessCondition.CODEC, MachineTierProcessCondition.STREAM_CODEC);
+		hook.register(MITweaks.id("voltage"), VoltageProcessCondition.CODEC, VoltageProcessCondition.STREAM_CODEC);
 	}
 	
 	@Override
