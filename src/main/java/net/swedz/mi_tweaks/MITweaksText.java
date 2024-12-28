@@ -4,6 +4,8 @@ import net.swedz.tesseract.neoforge.tooltip.TranslatableTextEnum;
 
 public enum MITweaksText implements TranslatableTextEnum
 {
+	ATTRIBUTE_HEAT_PROTECTION("Heat Protection"),
+	ATTRIBUTE_VALUE_GIVES("Gives"),
 	BLUEPRINT_MACHINE("%s"),
 	BLUEPRINT_LEARN("Press %s to learn this blueprint"),
 	BLUEPRINT_LEARNED("You have learned the blueprints for %s"),
