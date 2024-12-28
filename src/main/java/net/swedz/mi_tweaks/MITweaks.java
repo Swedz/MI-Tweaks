@@ -8,6 +8,7 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
 import net.swedz.mi_tweaks.network.MITweaksPackets;
 import net.swedz.tesseract.neoforge.capabilities.CapabilitiesListeners;
 import org.slf4j.Logger;
@@ -39,5 +40,7 @@ public final class MITweaks
 		
 		bus.addListener(RegisterCapabilitiesEvent.class, (event) -> CapabilitiesListeners.triggerAll(ID, event));
 		bus.addListener(RegisterPayloadHandlersEvent.class, MITweaksPackets::init);
+		
+		bus.addListener(RegisterDataMapTypesEvent.class, MITweaksDataMaps::init);
 	}
 }
