@@ -12,7 +12,7 @@ public record WaterExplosive(float strength, boolean fire)
 {
 	public static final Codec<WaterExplosive> CODEC = RecordCodecBuilder.create((instance) -> instance
 			.group(
-					ExtraCodecs.POSITIVE_FLOAT.fieldOf("strength").forGetter(WaterExplosive::strength),
+					ExtraCodecs.floatRangeMinExclusiveWithMessage(0, 200, (v) -> "Value must be within range [1;200]: " + v).fieldOf("strength").forGetter(WaterExplosive::strength),
 					Codec.BOOL.fieldOf("fire").forGetter(WaterExplosive::fire)
 			)
 			.apply(instance, WaterExplosive::new));
