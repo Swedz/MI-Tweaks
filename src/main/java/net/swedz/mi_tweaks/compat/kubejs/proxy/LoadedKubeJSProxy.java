@@ -1,0 +1,23 @@
+package net.swedz.mi_tweaks.compat.kubejs.proxy;
+
+import net.swedz.mi_tweaks.compat.kubejs.machine.MITweaksMachineKubeJSEvents;
+import net.swedz.mi_tweaks.compat.kubejs.machine.RegisterBatchMultiblocksEventJS;
+import net.swedz.tesseract.neoforge.compat.mi.hook.context.listener.MultiblockMachinesMIHookContext;
+import net.swedz.tesseract.neoforge.proxy.ProxyEntrypoint;
+import net.swedz.tesseract.neoforge.proxy.ProxyEnvironment;
+
+@ProxyEntrypoint(environment = ProxyEnvironment.MOD, modid = "kubejs")
+public class LoadedKubeJSProxy extends KubeJSProxy
+{
+	@Override
+	public boolean isLoaded()
+	{
+		return true;
+	}
+	
+	@Override
+	public void fireRegisterBatchMultiblocks(MultiblockMachinesMIHookContext hook)
+	{
+		MITweaksMachineKubeJSEvents.REGISTER_BATCH_MULTIBLOCKS.post(new RegisterBatchMultiblocksEventJS(hook));
+	}
+}

@@ -39,7 +39,10 @@ repositories {
         name = "shedaniel"
         url "https://maven.shedaniel.me"
         content {
+            // Cloth Config
             includeGroup "me.shedaniel.cloth"
+            // Architectury
+            includeGroup "dev.architectury"
         }
     }
     maven {
@@ -48,6 +51,13 @@ repositories {
         content {
             // EMI
             includeGroup "dev.emi"
+        }
+    }
+    maven {
+        url = "https://maven.saps.dev/minecraft"
+        content {
+            // KubeJS & Rhino
+            includeGroup "dev.latvian.mods"
         }
     }
 }
@@ -73,6 +83,8 @@ dependencies {
     }
 
     implementation "net.swedz:tesseract-api-neoforge:${tesseract_version}"
+
+    localImplementation "dev.latvian.mods:kubejs-neoforge:${kubejs_version}"
 }
 
 tasks.named('jar') {
