@@ -43,8 +43,7 @@ public class RegisterBatchMultiblocksEventJS implements KubeEvent, ShapeTemplate
 	
 	private void create(
 			String englishName, String name, MachineRecipeType recipeType, Consumer<WorkstationAdder> workstations, ShapeTemplate shape,
-			ResourceLocation controllerCasingId, String overlayFolder, boolean frontOverlay, boolean topOverlay, boolean sideOverlay,
-			int batchSize, float euCostMultiplier,
+			String controllerCasingId, String overlayFolder, boolean frontOverlay, boolean topOverlay, boolean sideOverlay,
 			Function<BEP, MachineBlockEntity> factory
 	)
 	{
@@ -65,14 +64,13 @@ public class RegisterBatchMultiblocksEventJS implements KubeEvent, ShapeTemplate
 	
 	public void steam(
 			String englishName, String name, MachineRecipeType recipeType, Consumer<WorkstationAdder> workstations, ShapeTemplate shape,
-			ResourceLocation controllerCasingId, String overlayFolder, boolean frontOverlay, boolean topOverlay, boolean sideOverlay,
+			String controllerCasingId, String overlayFolder, boolean frontOverlay, boolean topOverlay, boolean sideOverlay,
 			int batchSize, float euCostMultiplier
 	)
 	{
 		this.create(
 				englishName, name, recipeType, workstations, shape,
 				controllerCasingId, overlayFolder, frontOverlay, topOverlay, sideOverlay,
-				batchSize, euCostMultiplier,
 				(bep) -> new SteamMultipliedCraftingMultiblockBlockEntity(
 						bep, MITweaks.id(name), new ShapeTemplate[]{shape},
 						OverclockComponent.getDefaultCatalysts(),
@@ -83,14 +81,13 @@ public class RegisterBatchMultiblocksEventJS implements KubeEvent, ShapeTemplate
 	
 	public void electric(
 			String englishName, String name, MachineRecipeType recipeType, Consumer<WorkstationAdder> workstations, ShapeTemplate shape,
-			ResourceLocation controllerCasingId, String overlayFolder, boolean frontOverlay, boolean topOverlay, boolean sideOverlay,
+			String controllerCasingId, String overlayFolder, boolean frontOverlay, boolean topOverlay, boolean sideOverlay,
 			int batchSize, float euCostMultiplier
 	)
 	{
 		this.create(
 				englishName, name, recipeType, workstations, shape,
 				controllerCasingId, overlayFolder, frontOverlay, topOverlay, sideOverlay,
-				batchSize, euCostMultiplier,
 				(bep) -> new ElectricMultipliedCraftingMultiblockBlockEntity(
 						bep, MITweaks.id(name), new ShapeTemplate[]{shape},
 						MachineTier.LV,
