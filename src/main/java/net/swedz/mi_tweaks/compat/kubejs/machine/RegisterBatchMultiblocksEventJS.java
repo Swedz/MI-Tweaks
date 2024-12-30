@@ -5,7 +5,6 @@ import aztech.modern_industrialization.compat.rei.machines.ReiMachineRecipes;
 import aztech.modern_industrialization.machines.BEP;
 import aztech.modern_industrialization.machines.MachineBlockEntity;
 import aztech.modern_industrialization.machines.components.OverclockComponent;
-import aztech.modern_industrialization.machines.init.MIMachineRecipeTypes;
 import aztech.modern_industrialization.machines.init.MachineTier;
 import aztech.modern_industrialization.machines.models.MachineCasing;
 import aztech.modern_industrialization.machines.models.MachineCasings;
@@ -24,7 +23,7 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public class RegisterBatchMultiblocksEventJS implements KubeEvent, ShapeTemplateHelper
+public final class RegisterBatchMultiblocksEventJS implements KubeEvent, ShapeTemplateHelper, RecipeTypeHelper
 {
 	private final MultiblockMachinesMIHookContext hook;
 	
@@ -33,16 +32,9 @@ public class RegisterBatchMultiblocksEventJS implements KubeEvent, ShapeTemplate
 		this.hook = hook;
 	}
 	
-	public MachineRecipeType getRecipeType(ResourceLocation id)
-	{
-		return MIMachineRecipeTypes.getRecipeTypes().stream()
-				.filter((type) -> type.getId().equals(id))
-				.findFirst()
-				.orElseThrow(() -> new IllegalArgumentException("Could not find recipe type with id " + id));
-	}
-	
 	private void create(
-			String englishName, String name, MachineRecipeType recipeType, Consumer<WorkstationAdder> workstations, ShapeTemplate shape,
+			String englishName, String name, MachineRecipeType recipeType, ShapeTemplate shape,
+			Consumer<WorkstationAdder> workstations,
 			String controllerCasingId, String overlayFolder, boolean frontOverlay, boolean topOverlay, boolean sideOverlay,
 			Function<BEP, MachineBlockEntity> factory
 	)
@@ -63,13 +55,15 @@ public class RegisterBatchMultiblocksEventJS implements KubeEvent, ShapeTemplate
 	}
 	
 	public void steam(
-			String englishName, String name, MachineRecipeType recipeType, Consumer<WorkstationAdder> workstations, ShapeTemplate shape,
+			String englishName, String name, MachineRecipeType recipeType, ShapeTemplate shape,
+			Consumer<WorkstationAdder> workstations,
 			String controllerCasingId, String overlayFolder, boolean frontOverlay, boolean topOverlay, boolean sideOverlay,
 			int batchSize, float euCostMultiplier
 	)
 	{
 		this.create(
-				englishName, name, recipeType, workstations, shape,
+				englishName, name, recipeType, shape,
+				workstations,
 				controllerCasingId, overlayFolder, frontOverlay, topOverlay, sideOverlay,
 				(bep) -> new SteamMultipliedCraftingMultiblockBlockEntity(
 						bep, MITweaks.id(name), new ShapeTemplate[]{shape},
@@ -80,13 +74,15 @@ public class RegisterBatchMultiblocksEventJS implements KubeEvent, ShapeTemplate
 	}
 	
 	public void electric(
-			String englishName, String name, MachineRecipeType recipeType, Consumer<WorkstationAdder> workstations, ShapeTemplate shape,
+			String englishName, String name, MachineRecipeType recipeType, ShapeTemplate shape,
+			Consumer<WorkstationAdder> workstations,
 			String controllerCasingId, String overlayFolder, boolean frontOverlay, boolean topOverlay, boolean sideOverlay,
 			int batchSize, float euCostMultiplier
 	)
 	{
 		this.create(
-				englishName, name, recipeType, workstations, shape,
+				englishName, name, recipeType, shape,
+				workstations,
 				controllerCasingId, overlayFolder, frontOverlay, topOverlay, sideOverlay,
 				(bep) -> new ElectricMultipliedCraftingMultiblockBlockEntity(
 						bep, MITweaks.id(name), new ShapeTemplate[]{shape},

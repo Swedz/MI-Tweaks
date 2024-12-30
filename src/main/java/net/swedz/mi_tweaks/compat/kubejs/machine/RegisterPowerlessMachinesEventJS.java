@@ -24,7 +24,7 @@ import net.swedz.tesseract.neoforge.compat.mi.machine.blockentity.powerless.Powe
 
 import java.util.function.Consumer;
 
-public class RegisterPowerlessMachinesEventJS implements KubeEvent, ShapeTemplateHelper
+public final class RegisterPowerlessMachinesEventJS implements KubeEvent, ShapeTemplateHelper, RecipeTypeHelper
 {
 	private final SingleBlockSpecialMachinesMIHookContext hook;
 	
@@ -49,14 +49,16 @@ public class RegisterPowerlessMachinesEventJS implements KubeEvent, ShapeTemplat
 	}
 	
 	public void singleblock(
-			String englishName, String name, MachineRecipeType recipeType, int baseRecipeEU,
+			String englishName, String name, MachineRecipeType recipeType,
 			
 			int backgroundHeight, ProgressBar.Parameters progressBar,
 			
 			int itemInputs, int itemOutputs, int fluidInputs, int fluidOutputs, int bucketCapacity,
 			Consumer<SlotPositions.Builder> itemSlotPositions, Consumer<SlotPositions.Builder> fluidSlotPositions,
 			
-			String casingId, String overlayFolder, boolean frontOverlay, boolean topOverlay, boolean sideOverlay
+			String casingId, String overlayFolder, boolean frontOverlay, boolean topOverlay, boolean sideOverlay,
+			
+			int baseRecipeEU
 	)
 	{
 		ResourceLocation id = MITweaks.id(name);
@@ -108,14 +110,16 @@ public class RegisterPowerlessMachinesEventJS implements KubeEvent, ShapeTemplat
 	}
 	
 	public void multiblock(
-			String englishName, String name, ShapeTemplate shape, MachineRecipeType recipeType, int baseRecipeEU,
+			String englishName, String name, MachineRecipeType recipeType, ShapeTemplate shape,
 			
 			ProgressBar.Parameters progressBar,
 			
 			Consumer<SlotPositions.Builder> itemInputPositions, Consumer<SlotPositions.Builder> itemOutputPositions,
 			Consumer<SlotPositions.Builder> fluidInputPositions, Consumer<SlotPositions.Builder> fluidOutputPositions,
 			
-			String controllerCasingId, String overlayFolder, boolean frontOverlay, boolean topOverlay, boolean sideOverlay
+			String controllerCasingId, String overlayFolder, boolean frontOverlay, boolean topOverlay, boolean sideOverlay,
+			
+			int baseRecipeEU
 	)
 	{
 		ResourceLocation id = MITweaks.id(name);
