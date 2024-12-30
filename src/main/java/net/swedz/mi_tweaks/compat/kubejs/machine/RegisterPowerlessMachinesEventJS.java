@@ -84,7 +84,7 @@ public final class RegisterPowerlessMachinesEventJS implements KubeEvent, ShapeT
 				itemPositions.sublist(itemInputs, itemInputs + itemOutputs),
 				fluidPositions.sublist(0, fluidInputs),
 				fluidPositions.sublist(fluidInputs, fluidInputs + fluidOutputs),
-				progressBar, recipeType, (recipe) -> true, false, SteamMode.BOTH
+				progressBar, recipeType, (recipe) -> true, false, SteamMode.NEITHER
 		);
 		category.workstations.add(id);
 		ReiMachineRecipes.registerCategory(id, category);
@@ -126,7 +126,7 @@ public final class RegisterPowerlessMachinesEventJS implements KubeEvent, ShapeT
 				new SlotPositions.Builder().buildWithConsumer(itemOutputPositions),
 				new SlotPositions.Builder().buildWithConsumer(fluidInputPositions),
 				new SlotPositions.Builder().buildWithConsumer(fluidOutputPositions),
-				progressBar, recipeType, (recipe) -> true, true, SteamMode.BOTH
+				progressBar, recipeType, (recipe) -> true, true, SteamMode.NEITHER
 		);
 		category.workstations.add(id);
 		ReiMachineRecipes.registerCategory(id, category);
