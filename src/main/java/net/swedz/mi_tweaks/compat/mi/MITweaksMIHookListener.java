@@ -32,12 +32,16 @@ public final class MITweaksMIHookListener implements MIHookListener
 				FluxTransformerBlockEntity::new,
 				FluxTransformerBlockEntity::registerEnergyApi
 		);
+		
+		var kubejs = Proxies.get(KubeJSProxy.class);
+		kubejs.fireRegisterPowerlessMachines(hook);
 	}
 	
 	@Override
 	public void multiblockMachines(MultiblockMachinesMIHookContext hook)
 	{
-		Proxies.get(KubeJSProxy.class).fireRegisterBatchMultiblocks(hook);
+		var kubejs = Proxies.get(KubeJSProxy.class);
+		kubejs.fireRegisterBatchMultiblocks(hook);
 	}
 	
 	@Override

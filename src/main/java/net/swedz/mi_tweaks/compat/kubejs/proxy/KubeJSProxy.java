@@ -1,6 +1,7 @@
 package net.swedz.mi_tweaks.compat.kubejs.proxy;
 
 import net.swedz.tesseract.neoforge.compat.mi.hook.context.listener.MultiblockMachinesMIHookContext;
+import net.swedz.tesseract.neoforge.compat.mi.hook.context.listener.SingleBlockSpecialMachinesMIHookContext;
 import net.swedz.tesseract.neoforge.proxy.Proxy;
 import net.swedz.tesseract.neoforge.proxy.ProxyEntrypoint;
 
@@ -13,6 +14,10 @@ public class KubeJSProxy implements Proxy
 	}
 	
 	public void fireRegisterBatchMultiblocks(MultiblockMachinesMIHookContext hook)
+	{
+	}
+	
+	public void fireRegisterPowerlessMachines(SingleBlockSpecialMachinesMIHookContext hook)
 	{
 	}
 }
