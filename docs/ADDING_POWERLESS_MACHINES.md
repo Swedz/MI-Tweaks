@@ -57,8 +57,8 @@ MITweaksMachineEvents.registerPowerlessMachines((event) =>
 		},
 		// Casing of the machine, overlay folder, front overlay?, top overlay?, side overlay?
 		"steel", "circuit_assembler", true, true, false,
-		// Base recipe EU
-		1
+		// Base recipe EU, allow redstone control module?
+		1, false
 	);
 
 	// Create your multiblock shape...
@@ -90,8 +90,8 @@ MITweaksMachineEvents.registerPowerlessMachines((event) =>
 		(fluidOutputs) => fluidOutputs.addSlot(122, 35),
 		// Casing of the controller, overlay folder, front overlay?, top overlay?, side overlay?
 		"heatproof_machine_casing", "pyrolyse_oven", true, false, false,
-		// Base recipe EU
-		1
+		// Base recipe EU, allow redstone control module?
+		1, true
 	);
 });
 ```

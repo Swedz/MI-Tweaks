@@ -41,7 +41,7 @@ public final class RegisterPowerlessMachinesEventJS implements KubeEvent, ShapeT
 			
 			String casingId, String overlayFolder, boolean frontOverlay, boolean topOverlay, boolean sideOverlay,
 			
-			int baseRecipeEU
+			int baseRecipeEU, boolean hasRedstoneControl
 	)
 	{
 		ResourceLocation id = MITweaks.id(name);
@@ -63,7 +63,7 @@ public final class RegisterPowerlessMachinesEventJS implements KubeEvent, ShapeT
 				(bep) -> new PowerlessMachineBlockEntity(
 						bep, guiParams, progressBar,
 						MachineInventoryHelper.buildInventoryComponent(itemInputs, itemOutputs, fluidInputs, fluidOutputs, itemPositions, fluidPositions, 0, bucketCapacity),
-						recipeType, baseRecipeEU
+						recipeType, baseRecipeEU, hasRedstoneControl
 				),
 				(bet) ->
 				{
@@ -102,7 +102,7 @@ public final class RegisterPowerlessMachinesEventJS implements KubeEvent, ShapeT
 			
 			String controllerCasingId, String overlayFolder, boolean frontOverlay, boolean topOverlay, boolean sideOverlay,
 			
-			int baseRecipeEU
+			int baseRecipeEU, boolean hasRedstoneControl
 	)
 	{
 		ResourceLocation id = MITweaks.id(name);
@@ -115,7 +115,7 @@ public final class RegisterPowerlessMachinesEventJS implements KubeEvent, ShapeT
 				overlayFolder, casing, frontOverlay, topOverlay, sideOverlay,
 				(bep) -> new PowerlessMultiblockMachineBlockEntity(
 						bep, guiParams, shape,
-						recipeType, baseRecipeEU
+						recipeType, baseRecipeEU, hasRedstoneControl
 				)
 		);
 		ReiMachineRecipes.registerMultiblockShape(id, shape);
