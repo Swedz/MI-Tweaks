@@ -7,9 +7,7 @@ import aztech.modern_industrialization.compat.rei.machines.SteamMode;
 import aztech.modern_industrialization.inventory.SlotPositions;
 import aztech.modern_industrialization.machines.MachineBlockEntity;
 import aztech.modern_industrialization.machines.gui.MachineGuiParameters;
-import aztech.modern_industrialization.machines.guicomponents.EnergyBar;
 import aztech.modern_industrialization.machines.guicomponents.ProgressBar;
-import aztech.modern_industrialization.machines.guicomponents.RecipeEfficiencyBar;
 import aztech.modern_industrialization.machines.models.MachineCasing;
 import aztech.modern_industrialization.machines.models.MachineCasings;
 import aztech.modern_industrialization.machines.multiblocks.ShapeTemplate;
@@ -24,28 +22,13 @@ import net.swedz.tesseract.neoforge.compat.mi.machine.blockentity.powerless.Powe
 
 import java.util.function.Consumer;
 
-public final class RegisterPowerlessMachinesEventJS implements KubeEvent, ShapeTemplateHelper, RecipeTypeHelper
+public final class RegisterPowerlessMachinesEventJS implements KubeEvent, ShapeTemplateHelper, RecipeTypeHelper, BarHelper
 {
 	private final SingleBlockSpecialMachinesMIHookContext hook;
 	
 	public RegisterPowerlessMachinesEventJS(SingleBlockSpecialMachinesMIHookContext hook)
 	{
 		this.hook = hook;
-	}
-	
-	public ProgressBar.Parameters progressBar(int renderX, int renderY, String type)
-	{
-		return new ProgressBar.Parameters(renderX, renderY, type);
-	}
-	
-	public RecipeEfficiencyBar.Parameters efficiencyBar(int renderX, int renderY)
-	{
-		return new RecipeEfficiencyBar.Parameters(renderX, renderY);
-	}
-	
-	public EnergyBar.Parameters energyBar(int renderX, int renderY)
-	{
-		return new EnergyBar.Parameters(renderX, renderY);
 	}
 	
 	public void singleblock(
