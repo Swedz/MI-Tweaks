@@ -27,3 +27,6 @@ repo
 
 # datagen
 src/generated/resources/.cache/
+
+# testing stuff
+src/main/resources/data/mi_tweaks/recipe/test.json

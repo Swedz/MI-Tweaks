@@ -23,6 +23,12 @@ public enum MITweaksText implements TranslatableTextEnum
 	MACHINE_VOLTAGE_RUNS_AT("Runs recipes at %s"),
 	RECIPE_REQUIRES_COIL("Requires coil: %s"),
 	RECIPE_REQUIRES_MACHINE_TIER("Requires tier: %s"),
+	RECIPE_REQUIRES_OPEN_WATER("Requires %s water %swithin %d blocks"),
+	RECIPE_REQUIRES_OPEN_WATER_ABOVE("above "),
+	RECIPE_REQUIRES_OPEN_WATER_ALL(""),
+	RECIPE_REQUIRES_OPEN_WATER_AT_AND_ABOVE("at and above "),
+	RECIPE_REQUIRES_OPEN_WATER_AT_AND_BELOW("at and below "),
+	RECIPE_REQUIRES_OPEN_WATER_BELOW("below "),
 	RECIPE_REQUIRES_VOLTAGE("Requires voltage: %s"),
 	WATER_PUMP_ENVIRONMENT_1("Invalid Pump Environment"),
 	WATER_PUMP_ENVIRONMENT_2("Must be in Ocean or River biome.");

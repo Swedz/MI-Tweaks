@@ -35,6 +35,31 @@ acceptable machine tiers.
 }
 ```
 
+## Open Water
+
+This process condition allows you to require a machine to be in an area that is considered "open water". This is similar
+to the system used by vanilla Minecraft's fishing system. For this condition, you must define a `relative` value and a
+`range` value (1 -> 16). The `relative` value determines what blocks relative to the machine to be checked, and the
+`range` value determines the cuboidal radius to check for water around the machine. The range used by vanilla
+Minecraft's fishing hook is 2. Below is a list of acceptable relative values.
+
+- `all`
+- `at_and_below`
+- `below`
+- `at_and_above`
+- `above`
+
+Additionally, you may optionally set a `fill` value (0 -> 1) that determines the percentage of water blocks in the
+specified area that are required to be water.
+
+```json
+{
+    "type": "mi_tweaks:open_water",
+    "relative": "below",
+    "range": 2
+}
+```
+
 ## Voltage
 
 This process condition makes it so that the machine must have a certain hull (or higher) provided to it in order to run
