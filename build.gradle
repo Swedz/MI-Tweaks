@@ -72,7 +72,7 @@ dependencies {
         }
     }
 
-    implementation "net.swedz:tesseract-neoforge:${tesseract_version}"
+    implementation "net.swedz:tesseract-api-neoforge:${tesseract_version}"
 }
 
 tasks.named('jar') {
