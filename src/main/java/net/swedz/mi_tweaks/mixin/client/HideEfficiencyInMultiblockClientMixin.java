@@ -2,7 +2,7 @@ package net.swedz.mi_tweaks.mixin.client;
 
 import aztech.modern_industrialization.machines.guicomponents.CraftingMultiblockGuiClient;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.swedz.mi_tweaks.MITweaksConfig;
+import net.swedz.mi_tweaks.MITweaks;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -27,7 +27,7 @@ public class HideEfficiencyInMultiblockClientMixin
 	)
 	private void readCurrentData(RegistryFriendlyByteBuf buf, CallbackInfo callback)
 	{
-		if(MITweaksConfig.hideMachineEfficiency)
+		if(MITweaks.config().efficiency().hide())
 		{
 			efficiencyTicks = 0;
 			maxEfficiencyTicks = 0;

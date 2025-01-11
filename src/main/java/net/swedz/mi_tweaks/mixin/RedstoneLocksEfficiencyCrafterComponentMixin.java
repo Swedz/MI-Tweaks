@@ -1,7 +1,7 @@
 package net.swedz.mi_tweaks.mixin;
 
 import aztech.modern_industrialization.machines.components.CrafterComponent;
-import net.swedz.mi_tweaks.MITweaksConfig;
+import net.swedz.mi_tweaks.MITweaks;
 import net.swedz.tesseract.neoforge.compat.mi.component.craft.AbstractModularCrafterComponent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -25,7 +25,7 @@ public class RedstoneLocksEfficiencyCrafterComponentMixin
 	)
 	private void tickRecipe(CallbackInfoReturnable<Boolean> callback)
 	{
-		if(MITweaksConfig.lockEfficiencyWithRedstone)
+		if(MITweaks.config().tweaks().lockEfficiencyWithRedstone())
 		{
 			boolean enabled;
 			if((Object) this instanceof CrafterComponent crafter)

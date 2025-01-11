@@ -6,7 +6,7 @@ import aztech.modern_industrialization.machines.gui.MachineScreen;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
-import net.swedz.mi_tweaks.MITweaksConfig;
+import net.swedz.mi_tweaks.MITweaks;
 import net.swedz.mi_tweaks.MITweaksText;
 import net.swedz.mi_tweaks.machine.guicomponent.exposecabletier.ExposeCableTierGuiClient;
 import org.spongepowered.asm.mixin.Mixin;
@@ -23,7 +23,7 @@ public abstract class MachineScreenIncludeCableTierInTitleMixin extends MIHandle
 	@Unique
 	private Component getTieredTitle()
 	{
-		if(MITweaksConfig.displayMachineVoltage)
+		if(MITweaks.config().tweaks().displayMachineVoltage())
 		{
 			ExposeCableTierGuiClient exposeCableTier = menu.getComponent(ExposeCableTierGuiClient.class);
 			if(exposeCableTier != null)

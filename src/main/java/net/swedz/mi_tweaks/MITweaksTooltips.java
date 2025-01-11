@@ -35,11 +35,11 @@ public final class MITweaksTooltips
 				   machineBlock.getBlockEntityInstance() instanceof CableTierHolder energyHatch)
 				{
 					CableTier tier = energyHatch.getCableTier();
-					if(MITweaksConfig.displayMachineVoltage)
+					if(MITweaks.config().tweaks().displayMachineVoltage())
 					{
 						lines.add(line(MITweaksText.MACHINE_VOLTAGE_RECIPES).arg(Component.translatable(tier.shortEnglishKey())));
 					}
-					if(MITweaksConfig.efficiencyHack == MachineEfficiencyHackOption.USE_VOLTAGE)
+					if(MITweaks.config().efficiency().hack() == MachineEfficiencyHackOption.USE_VOLTAGE)
 					{
 						lines.add(line(MITweaksText.MACHINE_VOLTAGE_RUNS_AT).arg(ConstantEfficiencyHelper.getRecipeEu(tier), EU_PER_TICK_PARSER));
 					}
@@ -57,13 +57,13 @@ public final class MITweaksTooltips
 				{
 					Player player = proxy.getClientPlayer();
 					if(player != null &&
-					   MITweaksConfig.machineBlueprintsRequiredTooltip.isEnabled() &&
+					   MITweaks.config().machineBlueprints().required().tooltip().isEnabled() &&
 					   item instanceof BlockItem blockItem && blockItem.getBlock() instanceof MachineBlock machineBlock &&
-					   MITweaksConfig.machineBlueprintsMachines.contains(machineBlock))
+					   MITweaks.config().machineBlueprints().machines().contains(machineBlock))
 					{
-						return MachineBlueprintItem.hasBlueprint(player, machineBlock, MITweaksConfig.machineBlueprintsRequiredTooltip) ?
+						return MachineBlueprintItem.hasBlueprint(player, machineBlock, MITweaks.config().machineBlueprints().required().tooltip()) ?
 								Optional.empty() :
-								Optional.of(MITweaksConfig.machineBlueprintsRequiredTooltip.tooltip().text().withStyle(ChatFormatting.RED));
+								Optional.of(MITweaks.config().machineBlueprints().required().tooltip().tooltip().text().withStyle(ChatFormatting.RED));
 					}
 				}
 				return Optional.empty();
@@ -73,7 +73,7 @@ public final class MITweaksTooltips
 	public static final TooltipAttachment FLUX_TRANSFORMER = TooltipAttachment.multilines(
 			List.of(MITweaks.id("flux_transformer")),
 			List.of(
-					line(MITweaksText.FLUX_TRANSFORMER_HELP).arg(MITweaksConfig.fluxTransformerConversionRate)
+					line(MITweaksText.FLUX_TRANSFORMER_HELP).arg(MITweaks.config().fluxTransformer().conversionRate())
 			)
 	);
 	

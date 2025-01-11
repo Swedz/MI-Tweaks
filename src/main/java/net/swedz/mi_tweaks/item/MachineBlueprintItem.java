@@ -20,6 +20,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.swedz.mi_tweaks.MITweaks;
 import net.swedz.mi_tweaks.MITweaksComponents;
 import net.swedz.mi_tweaks.MITweaksConfig;
 import net.swedz.mi_tweaks.MITweaksItems;
@@ -71,7 +72,7 @@ public final class MachineBlueprintItem extends Item
 				tooltipComponents.add(MITweaksText.BLUEPRINT_MACHINE.text(ITEM_PARSER.parse(machineBlock.asItem())));
 				
 				if(player != null &&
-				   MITweaksConfig.machineBlueprintsLearning &&
+				   MITweaks.config().machineBlueprints().learning() &&
 				   !hasBlueprintLearned(player, machineBlock))
 				{
 					tooltipComponents.add(MITweaksText.BLUEPRINT_LEARN.text(Component.keybind("key.use")).withStyle(DEFAULT_STYLE));
@@ -187,7 +188,7 @@ public final class MachineBlueprintItem extends Item
 		{
 			throw new IllegalArgumentException("Cannot set machine block value to a non-machine block");
 		}
-		if(!MITweaksConfig.machineBlueprintsMachines.contains(machineBlock))
+		if(!MITweaks.config().machineBlueprints().machines().contains(machineBlock))
 		{
 			throw new IllegalArgumentException("Cannot set machine block value to a machine block that is not included in the config");
 		}
@@ -205,7 +206,7 @@ public final class MachineBlueprintItem extends Item
 		if(stack.has(MITweaksComponents.MACHINE_BLOCK))
 		{
 			Block machine = stack.get(MITweaksComponents.MACHINE_BLOCK);
-			if(machine instanceof MachineBlock machineBlock && MITweaksConfig.machineBlueprintsMachines.contains(machineBlock))
+			if(machine instanceof MachineBlock machineBlock && MITweaks.config().machineBlueprints().machines().contains(machineBlock))
 			{
 				return Optional.of(machine);
 			}
@@ -237,12 +238,12 @@ public final class MachineBlueprintItem extends Item
 	public static boolean hasBlueprint(Player player, Block machineBlock, MITweaksConfig.MachineBlueprintRequiredMode requiredMode)
 	{
 		return switch (requiredMode)
-				{
-					case DISABLED -> true;
-					case INVENTORY -> hasBlueprintInInventory(player, machineBlock);
-					case LEARN -> hasBlueprintLearned(player, machineBlock);
-					case INVENTORY_OR_LEARN -> hasBlueprintLearned(player, machineBlock) ||
-											   hasBlueprintInInventory(player, machineBlock);
-				};
+		{
+			case DISABLED -> true;
+			case INVENTORY -> hasBlueprintInInventory(player, machineBlock);
+			case LEARN -> hasBlueprintLearned(player, machineBlock);
+			case INVENTORY_OR_LEARN -> hasBlueprintLearned(player, machineBlock) ||
+									   hasBlueprintInInventory(player, machineBlock);
+		};
 	}
 }

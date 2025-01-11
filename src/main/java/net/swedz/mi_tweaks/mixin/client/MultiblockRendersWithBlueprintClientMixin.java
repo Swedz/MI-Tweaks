@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
-import net.swedz.mi_tweaks.MITweaksConfig;
+import net.swedz.mi_tweaks.MITweaks;
 import net.swedz.mi_tweaks.MITweaksItems;
 import net.swedz.mi_tweaks.item.MachineBlueprintItem;
 import org.spongepowered.asm.mixin.Mixin;
@@ -43,15 +43,17 @@ public class MultiblockRendersWithBlueprintClientMixin
 	)
 	private boolean isHoldingBlueprint(MultiblockMachineBlockEntity be, float tickDelta, PoseStack matrices, MultiBufferSource vcp, int light, int overlay)
 	{
-		if(MITweaksConfig.wrenchesRenderMultiblockShapes && isHoldingWrench())
+		if(MITweaks.config().tweaks().wrenchesRenderMultiblockShapes() && isHoldingWrench())
 		{
 			return true;
 		}
 		
 		Player player = Minecraft.getInstance().player;
-		ItemStack blueprintItem =
-				player.getMainHandItem().is(MITweaksItems.MACHINE_BLUEPRINT.asItem()) ? player.getMainHandItem() :
-				player.getOffhandItem().is(MITweaksItems.MACHINE_BLUEPRINT.asItem()) ? player.getOffhandItem() : null;
+		ItemStack blueprintItem = player.getMainHandItem().is(MITweaksItems.MACHINE_BLUEPRINT.asItem()) ?
+				player.getMainHandItem() :
+				player.getOffhandItem().is(MITweaksItems.MACHINE_BLUEPRINT.asItem()) ?
+						player.getOffhandItem() :
+						null;
 		if(blueprintItem != null)
 		{
 			Optional<Block> blueprintMachineBlockOptional = MachineBlueprintItem.getMachineBlock(blueprintItem);
@@ -74,12 +76,12 @@ public class MultiblockRendersWithBlueprintClientMixin
 	)
 	private HatchType getHeldHatchType(MultiblockMachineBlockEntity be, float tickDelta, PoseStack matrices, MultiBufferSource vcp, int light, int overlay)
 	{
-		if(MITweaksConfig.machineBlueprintsRequiredForRenderingHatches.isDisabled())
+		if(MITweaks.config().machineBlueprints().required().renderingHatches().isDisabled())
 		{
 			return getHeldHatchType();
 		}
 		
 		Player player = Minecraft.getInstance().player;
-		return MachineBlueprintItem.hasBlueprint(player, be.getBlockState().getBlock(), MITweaksConfig.machineBlueprintsRequiredForRenderingHatches) ? getHeldHatchType() : null;
+		return MachineBlueprintItem.hasBlueprint(player, be.getBlockState().getBlock(), MITweaks.config().machineBlueprints().required().renderingHatches()) ? getHeldHatchType() : null;
 	}
 }
