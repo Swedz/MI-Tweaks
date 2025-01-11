@@ -25,7 +25,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.swedz.mi_tweaks.MITweaks;
-import net.swedz.mi_tweaks.MITweaksConfig;
 import net.swedz.tesseract.neoforge.capabilities.CapabilitiesListeners;
 import net.swedz.tesseract.neoforge.compat.mi.helper.transfer.LongEnergyTransferCache;
 
@@ -51,7 +50,7 @@ public final class FluxTransformerBlockEntity extends MachineBlockEntity impleme
 		redstoneControl = new RedstoneControlComponent();
 		casing = new CasingComponent();
 		
-		energy = new EnergyComponent(this, () -> MITweaksConfig.fluxTransformerCapacity);
+		energy = new EnergyComponent(this, () -> MITweaks.config().fluxTransformer().capacity());
 		insertable = energy.buildInsertable(casing::canInsertEu);
 		extractable = new ILongEnergyStorage()
 		{
@@ -76,22 +75,22 @@ public final class FluxTransformerBlockEntity extends MachineBlockEntity impleme
 			@Override
 			public long extract(long extractFE, boolean simulate)
 			{
-				extractFE = Math.min(extractFE, MITweaksConfig.fluxTransformerMaxExtract);
-				long extractEU = (long) (extractFE / MITweaksConfig.fluxTransformerConversionRate);
+				extractFE = Math.min(extractFE, MITweaks.config().fluxTransformer().maxExtract());
+				long extractEU = (long) (extractFE / MITweaks.config().fluxTransformer().conversionRate());
 				long extractedEU = energy.consumeEu(extractEU, simulate ? Simulation.SIMULATE : Simulation.ACT);
-				return (long) (extractedEU * MITweaksConfig.fluxTransformerConversionRate);
+				return (long) (extractedEU * MITweaks.config().fluxTransformer().conversionRate());
 			}
 			
 			@Override
 			public long getAmount()
 			{
-				return (long) (energy.getEu() * MITweaksConfig.fluxTransformerConversionRate);
+				return (long) (energy.getEu() * MITweaks.config().fluxTransformer().conversionRate());
 			}
 			
 			@Override
 			public long getCapacity()
 			{
-				return (long) (energy.getCapacity() * MITweaksConfig.fluxTransformerConversionRate);
+				return (long) (energy.getCapacity() * MITweaks.config().fluxTransformer().conversionRate());
 			}
 		};
 		
@@ -137,7 +136,7 @@ public final class FluxTransformerBlockEntity extends MachineBlockEntity impleme
 		
 		if(redstoneControl.doAllowNormalOperation(this))
 		{
-			if(transferEnergy.autoExtract(level, worldPosition, orientation.outputDirection, MITweaksConfig.fluxTransformerMaxExtract))
+			if(transferEnergy.autoExtract(level, worldPosition, orientation.outputDirection, MITweaks.config().fluxTransformer().maxExtract()))
 			{
 				this.setChanged();
 			}

@@ -44,10 +44,10 @@ public final class MITweaksClient
 	{
 		NeoForge.EVENT_BUS.addListener(ClientPlayerNetworkEvent.LoggingIn.class, (e) ->
 		{
-			if(!MITweaksConfig.machineBlueprintsLearning &&
-			   (MITweaksConfig.machineBlueprintsRequiredTooltip.isLearning() ||
-				MITweaksConfig.machineBlueprintsRequiredForPlacing.isLearning() ||
-				MITweaksConfig.machineBlueprintsRequiredForRenderingHatches.isLearning()))
+			if(!MITweaks.config().machineBlueprints().learning() &&
+			   (MITweaks.config().machineBlueprints().required().tooltip().isLearning() ||
+				MITweaks.config().machineBlueprints().required().placing().isLearning() ||
+				MITweaks.config().machineBlueprints().required().renderingHatches().isLearning()))
 			{
 				e.getPlayer().displayClientMessage(MITweaksText.LEARNING_DISABLED_BUT_REQUIRING_LEARNING.text().withStyle(ChatFormatting.GOLD), false);
 			}

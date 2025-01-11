@@ -8,7 +8,7 @@ import aztech.modern_industrialization.machines.gui.MachineGuiParameters;
 import net.minecraft.core.Holder;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.level.biome.Biome;
-import net.swedz.mi_tweaks.MITweaksConfig;
+import net.swedz.mi_tweaks.MITweaks;
 import net.swedz.mi_tweaks.machine.guicomponent.waterpumpenvironment.WaterPumpEnvironmentGui;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -35,7 +35,7 @@ public abstract class MakeWaterPumpsRequireWaterBiomeMixin extends MachineBlockE
 	)
 	private void init(BEP bep, String blockName, CallbackInfo callback)
 	{
-		if(MITweaksConfig.requireWaterBiomeForPump)
+		if(MITweaks.config().tweaks().requireWaterBiomeForPump())
 		{
 			this.registerGuiComponent(new WaterPumpEnvironmentGui.Server(
 					new WaterPumpEnvironmentGui.Parameters(57, 29),
@@ -59,6 +59,6 @@ public abstract class MakeWaterPumpsRequireWaterBiomeMixin extends MachineBlockE
 	)
 	private long redirectConsumeEu(AbstractWaterPumpBlockEntity instance, long max)
 	{
-		return !MITweaksConfig.requireWaterBiomeForPump || this.isWaterBiome(level.getBiome(worldPosition)) ? this.invokeConsumeEu(max) : 0;
+		return !MITweaks.config().tweaks().requireWaterBiomeForPump() || this.isWaterBiome(level.getBiome(worldPosition)) ? this.invokeConsumeEu(max) : 0;
 	}
 }

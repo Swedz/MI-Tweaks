@@ -8,7 +8,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
-import net.swedz.mi_tweaks.MITweaksConfig;
+import net.swedz.mi_tweaks.MITweaks;
 import net.swedz.mi_tweaks.MITweaksText;
 import net.swedz.mi_tweaks.mixin.client.accessor.RecipeEfficiencyBarClientAccessor;
 import org.spongepowered.asm.mixin.Mixin;
@@ -38,7 +38,7 @@ public class DisplayEnergyConsumptionOnEnergyBarClientMixin
 		
 		tooltipLines.addAll(originalTooltipLines);
 		
-		if(MITweaksConfig.displayEnergyConsumptionOnEnergyBar)
+		if(MITweaks.config().tweaks().displayEnergyConsumptionOnEnergyBar())
 		{
 			RecipeEfficiencyBarClient efficiencyBar = screen.getMenu().getComponent(RecipeEfficiencyBarClient.class);
 			if(efficiencyBar != null)

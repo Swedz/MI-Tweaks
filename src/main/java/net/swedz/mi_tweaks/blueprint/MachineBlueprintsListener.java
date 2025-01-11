@@ -11,7 +11,6 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.UseItemOnBlockEvent;
 import net.swedz.mi_tweaks.MITweaks;
-import net.swedz.mi_tweaks.MITweaksConfig;
 import net.swedz.mi_tweaks.MITweaksOtherRegistries;
 import net.swedz.mi_tweaks.item.MachineBlueprintItem;
 import net.swedz.mi_tweaks.network.packet.UpdateBlueprintsLearnedPacket;
@@ -32,15 +31,15 @@ public final class MachineBlueprintsListener
 	{
 		Player player = event.getPlayer();
 		if(player != null &&
-		   MITweaksConfig.machineBlueprintsRequiredForPlacing.isEnabled() &&
+		   MITweaks.config().machineBlueprints().required().placing().isEnabled() &&
 		   event.getUsePhase() == UseItemOnBlockEvent.UsePhase.ITEM_BEFORE_BLOCK &&
 		   event.getUseOnContext().getItemInHand().getItem() instanceof BlockItem blockItem &&
 		   blockItem.getBlock() instanceof MachineBlock machineBlock &&
-		   MITweaksConfig.machineBlueprintsMachines.contains(machineBlock) &&
-		   !MachineBlueprintItem.hasBlueprint(player, machineBlock, MITweaksConfig.machineBlueprintsRequiredForPlacing))
+		   MITweaks.config().machineBlueprints().machines().contains(machineBlock) &&
+		   !MachineBlueprintItem.hasBlueprint(player, machineBlock, MITweaks.config().machineBlueprints().required().placing()))
 		{
 			event.cancelWithResult(ItemInteractionResult.CONSUME);
-			player.displayClientMessage(MITweaksConfig.machineBlueprintsRequiredForPlacing.tooltip().text().withStyle(ChatFormatting.RED), true);
+			player.displayClientMessage(MITweaks.config().machineBlueprints().required().placing().tooltip().text().withStyle(ChatFormatting.RED), true);
 		}
 	}
 }

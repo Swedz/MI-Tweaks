@@ -7,7 +7,6 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.swedz.mi_tweaks.MITweaks;
 import net.swedz.mi_tweaks.MITweaksAttributes;
-import net.swedz.mi_tweaks.MITweaksConfig;
 import net.swedz.mi_tweaks.MITweaksTags;
 
 @EventBusSubscriber(modid = MITweaks.ID)
@@ -15,7 +14,7 @@ public final class VeryHotItems
 {
 	private static void burn(Player player)
 	{
-		player.setRemainingFireTicks(MITweaksConfig.veryHotItemsBurnTime);
+		player.setRemainingFireTicks(MITweaks.config().tweaks().veryHotItemsBurnTime());
 	}
 	
 	@SubscribeEvent

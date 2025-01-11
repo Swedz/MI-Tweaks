@@ -8,7 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
-import net.swedz.mi_tweaks.MITweaksConfig;
+import net.swedz.mi_tweaks.MITweaks;
 import net.swedz.mi_tweaks.MITweaksItems;
 import net.swedz.mi_tweaks.item.MachineBlueprintItem;
 
@@ -52,10 +52,10 @@ public final class EmiCopyBlueprintRecipe extends EmiPatternCraftingRecipe
 	private static EmiStack generateBlueprintItem(Random random)
 	{
 		ItemStack blueprintItem = MITweaksItems.MACHINE_BLUEPRINT.asItem().getDefaultInstance();
-		if(!MITweaksConfig.machineBlueprintsMachines.isEmpty())
+		if(!MITweaks.config().machineBlueprints().machines().isEmpty())
 		{
-			int index = random.nextInt(MITweaksConfig.machineBlueprintsMachines.size());
-			Block machineBlock = MITweaksConfig.machineBlueprintsMachines.get(index);
+			int index = random.nextInt(MITweaks.config().machineBlueprints().machines().size());
+			Block machineBlock = MITweaks.config().machineBlueprints().machines().get(index);
 			MachineBlueprintItem.setMachineBlock(blueprintItem, machineBlock);
 		}
 		return EmiStack.of(blueprintItem);
