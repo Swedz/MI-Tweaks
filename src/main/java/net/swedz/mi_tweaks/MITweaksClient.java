@@ -1,19 +1,30 @@
 package net.swedz.mi_tweaks;
 
+import aztech.modern_industrialization.machines.MachineBlock;
+import aztech.modern_industrialization.machines.MachineBlockEntity;
+import aztech.modern_industrialization.machines.MachineBlockEntityRenderer;
+import aztech.modern_industrialization.machines.multiblocks.MultiblockMachineBER;
+import aztech.modern_industrialization.machines.multiblocks.MultiblockMachineBlockEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.swedz.mi_tweaks.item.MachineBlueprintItem;
 import net.swedz.mi_tweaks.item.renderer.BlockOverlayingItemRenderer;
 
@@ -37,6 +48,26 @@ public final class MITweaksClient
 						},
 						MITweaksItems.MACHINE_BLUEPRINT.asItem()
 				));
+	}
+	
+	@SubscribeEvent
+	private static void registerBlockEntityRenderers(FMLClientSetupEvent event)
+	{
+		for(DeferredHolder<Block, ? extends Block> blockDef : MITweaksBlocks.Registry.BLOCKS.getEntries())
+		{
+			if(blockDef.get() instanceof MachineBlock machine)
+			{
+				MachineBlockEntity blockEntity = machine.getBlockEntityInstance();
+				BlockEntityType type = blockEntity.getType();
+				
+				BlockEntityRendererProvider provider = switch (blockEntity)
+				{
+					case MultiblockMachineBlockEntity be -> MultiblockMachineBER::new;
+					default -> MachineBlockEntityRenderer::new;
+				};
+				BlockEntityRenderers.register(type, provider);
+			}
+		}
 	}
 	
 	@SubscribeEvent

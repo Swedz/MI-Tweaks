@@ -1,0 +1,1 @@
+net.swedz.mi_tweaks.compat.kubejs.MITweaksKJSPlugin

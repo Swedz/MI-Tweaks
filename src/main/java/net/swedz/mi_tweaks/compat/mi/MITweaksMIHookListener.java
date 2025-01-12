@@ -4,6 +4,7 @@ import aztech.modern_industrialization.api.energy.CableTier;
 import aztech.modern_industrialization.machines.GuiComponentsClient;
 import net.swedz.mi_tweaks.MITweaks;
 import net.swedz.mi_tweaks.MITweaksTooltips;
+import net.swedz.mi_tweaks.compat.kubejs.proxy.KubeJSProxy;
 import net.swedz.mi_tweaks.machine.blockentity.FluxTransformerBlockEntity;
 import net.swedz.mi_tweaks.machine.guicomponent.exposecabletier.ExposeCableTierGui;
 import net.swedz.mi_tweaks.machine.guicomponent.exposecabletier.ExposeCableTierGuiClient;
@@ -15,7 +16,9 @@ import net.swedz.tesseract.neoforge.compat.mi.hook.MIHookEntrypoint;
 import net.swedz.tesseract.neoforge.compat.mi.hook.MIHookListener;
 import net.swedz.tesseract.neoforge.compat.mi.hook.context.listener.ClientGuiComponentsMIHookContext;
 import net.swedz.tesseract.neoforge.compat.mi.hook.context.listener.MachineProcessConditionsMIHookContext;
+import net.swedz.tesseract.neoforge.compat.mi.hook.context.listener.MultiblockMachinesMIHookContext;
 import net.swedz.tesseract.neoforge.compat.mi.hook.context.listener.SingleBlockSpecialMachinesMIHookContext;
+import net.swedz.tesseract.neoforge.proxy.Proxies;
 
 @MIHookEntrypoint
 public final class MITweaksMIHookListener implements MIHookListener
@@ -29,6 +32,16 @@ public final class MITweaksMIHookListener implements MIHookListener
 				FluxTransformerBlockEntity::new,
 				FluxTransformerBlockEntity::registerEnergyApi
 		);
+		
+		var kubejs = Proxies.get(KubeJSProxy.class);
+		kubejs.fireRegisterPowerlessMachines(hook);
+	}
+	
+	@Override
+	public void multiblockMachines(MultiblockMachinesMIHookContext hook)
+	{
+		var kubejs = Proxies.get(KubeJSProxy.class);
+		kubejs.fireRegisterBatchMultiblocks(hook);
 	}
 	
 	@Override
