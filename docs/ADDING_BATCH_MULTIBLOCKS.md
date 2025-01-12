@@ -8,7 +8,7 @@ multiblock shapes are made won't be thoroughly covered here since that is covere
 
 You can create both steam and electric batch crafting machines.
 
-For information on how to put together the assets for your machines, see [here](MACHINE_ASSETS.md).
+For information on how to put together the assets for your machines, see [here](MACHINE_ASSETS_AND_DATA.md).
 
 The main difference here is that you need to retrieve the recipe type and pass that to the creator, you can add
 workstations to add this machine to, and you must provide the batch size and EU cost multiplier for this machine. An EU

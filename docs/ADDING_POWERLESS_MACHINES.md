@@ -14,7 +14,7 @@ your powerless machines to consume 1 EU/t and the base recipe EU of your machine
 
 ## Creating Machines
 
-For information on how to put together the assets for your machines, see [here](MACHINE_ASSETS.md).
+For information on how to put together the assets for your machines, see [here](MACHINE_ASSETS_AND_DATA.md).
 
 The below example is very rudimentary and are simply powerless versions of the machines shown how to be made in the MI
 documentation. This includes both an example of a singleblock and multiblock powerless machine.
