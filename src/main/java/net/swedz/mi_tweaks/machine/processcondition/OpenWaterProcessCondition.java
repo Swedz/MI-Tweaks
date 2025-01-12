@@ -16,16 +16,15 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.swedz.mi_tweaks.MITweaksText;
 import net.swedz.tesseract.neoforge.api.WorldPos;
+import net.swedz.tesseract.neoforge.helper.CodecHelper;
 import net.swedz.tesseract.neoforge.tooltip.Parser;
 import net.swedz.tesseract.neoforge.tooltip.TranslatableTextEnum;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
@@ -124,7 +123,7 @@ public record OpenWaterProcessCondition(Relative relative, int range, float fill
 		return STREAM_CODEC;
 	}
 	
-	public enum Relative implements StringRepresentable
+	public enum Relative
 	{
 		ALL(
 				MITweaksText.RECIPE_REQUIRES_OPEN_WATER_ALL,
@@ -162,9 +161,9 @@ public record OpenWaterProcessCondition(Relative relative, int range, float fill
 				)
 		);
 		
-		public static final Codec<Relative> CODEC = StringRepresentable.fromEnum(Relative::values);
+		public static final Codec<Relative> CODEC = CodecHelper.forLowercaseEnum(Relative.class);
 		
-		public static final StreamCodec<ByteBuf, Relative> STREAM_CODEC = ByteBufCodecs.fromCodec(CODEC);
+		public static final StreamCodec<ByteBuf, Relative> STREAM_CODEC = CodecHelper.forLowercaseEnumStream(Relative.class);
 		
 		private final TranslatableTextEnum                              text;
 		private final BiFunction<BlockPos, Integer, Iterable<BlockPos>> blocks;
@@ -183,12 +182,6 @@ public record OpenWaterProcessCondition(Relative relative, int range, float fill
 		public Iterable<BlockPos> blocks(BlockPos origin, int range)
 		{
 			return blocks.apply(origin, range);
-		}
-		
-		@Override
-		public String getSerializedName()
-		{
-			return this.toString().toLowerCase(Locale.ROOT);
 		}
 	}
 }

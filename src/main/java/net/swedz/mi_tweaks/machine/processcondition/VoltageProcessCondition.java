@@ -10,26 +10,25 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.ItemStack;
 import net.swedz.mi_tweaks.MITweaksText;
+import net.swedz.tesseract.neoforge.compat.mi.serialization.MICodecs;
+import net.swedz.tesseract.neoforge.compat.mi.serialization.MIStreamCodecs;
 
 import java.util.List;
 
 public record VoltageProcessCondition(CableTier tier) implements MachineProcessCondition
 {
-	public static final MapCodec<VoltageProcessCondition>                             CODEC        = RecordCodecBuilder.mapCodec(
+	public static final MapCodec<VoltageProcessCondition> CODEC = RecordCodecBuilder.mapCodec(
 			(g) -> g.group(
-					StringRepresentable.fromValues(() -> CableTier.allTiers().stream().map(WrappedCableTier::new).toList().toArray(new WrappedCableTier[0]))
-							.fieldOf("voltage")
-							.forGetter((c) -> new WrappedCableTier(c.tier()))
-			).apply(g, (wrappedTier) -> new VoltageProcessCondition(wrappedTier.tier()))
+					MICodecs.CABLE_TIER.fieldOf("voltage").forGetter(VoltageProcessCondition::tier)
+			).apply(g, VoltageProcessCondition::new)
 	);
+	
 	public static final StreamCodec<RegistryFriendlyByteBuf, VoltageProcessCondition> STREAM_CODEC = StreamCodec.composite(
-			ByteBufCodecs.STRING_UTF8.map(CableTier::getTier, (tier) -> tier.name),
+			MIStreamCodecs.CABLE_TIER,
 			VoltageProcessCondition::tier,
 			VoltageProcessCondition::new
 	);
@@ -67,14 +66,5 @@ public record VoltageProcessCondition(CableTier tier) implements MachineProcessC
 	public StreamCodec<? super RegistryFriendlyByteBuf, ? extends MachineProcessCondition> streamCodec()
 	{
 		return STREAM_CODEC;
-	}
-	
-	private record WrappedCableTier(CableTier tier) implements StringRepresentable
-	{
-		@Override
-		public String getSerializedName()
-		{
-			return tier.name;
-		}
 	}
 }
