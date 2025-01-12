@@ -17,6 +17,8 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.swedz.mi_tweaks.MITweaksText;
 import net.swedz.tesseract.neoforge.api.WorldPos;
 import net.swedz.tesseract.neoforge.tooltip.Parser;
@@ -102,6 +104,12 @@ public record OpenWaterProcessCondition(Relative relative, int range, float fill
 	public void appendDescription(List<Component> list)
 	{
 		list.add(MITweaksText.RECIPE_REQUIRES_OPEN_WATER.text(Parser.FLOAT_PERCENTAGE.parse(fill, 1), relative.text(), range));
+	}
+	
+	@Override
+	public ItemStack icon()
+	{
+		return Items.WATER_BUCKET.getDefaultInstance();
 	}
 	
 	@Override
