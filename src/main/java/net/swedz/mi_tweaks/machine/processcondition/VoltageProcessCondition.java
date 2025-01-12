@@ -1,16 +1,20 @@
 package net.swedz.mi_tweaks.machine.processcondition;
 
+import aztech.modern_industrialization.MI;
 import aztech.modern_industrialization.api.energy.CableTier;
 import aztech.modern_industrialization.api.energy.CableTierHolder;
 import aztech.modern_industrialization.machines.recipe.MachineRecipe;
 import aztech.modern_industrialization.machines.recipe.condition.MachineProcessCondition;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.item.ItemStack;
 import net.swedz.mi_tweaks.MITweaksText;
 
 import java.util.List;
@@ -44,6 +48,13 @@ public record VoltageProcessCondition(CableTier tier) implements MachineProcessC
 	public void appendDescription(List<Component> list)
 	{
 		list.add(MITweaksText.RECIPE_REQUIRES_VOLTAGE.text(Component.translatable(tier.shortEnglishKey())));
+	}
+	
+	@Override
+	public ItemStack icon()
+	{
+		ResourceLocation id = tier.itemKey == null ? MI.id("basic_machine_hull") : tier.itemKey;
+		return BuiltInRegistries.BLOCK.get(id).asItem().getDefaultInstance();
 	}
 	
 	@Override

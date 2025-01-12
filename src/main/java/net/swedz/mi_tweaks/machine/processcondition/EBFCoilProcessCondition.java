@@ -5,12 +5,14 @@ import aztech.modern_industrialization.machines.recipe.MachineRecipe;
 import aztech.modern_industrialization.machines.recipe.condition.MachineProcessCondition;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.item.ItemStack;
 import net.swedz.mi_tweaks.MITweaksText;
 import net.swedz.mi_tweaks.mixin.accessor.AbstractCraftingMultiblockBlockEntityAccessor;
 
@@ -51,6 +53,12 @@ public record EBFCoilProcessCondition(ElectricBlastFurnaceBlockEntity.Tier coilT
 	public void appendDescription(List<Component> list)
 	{
 		list.add(MITweaksText.RECIPE_REQUIRES_COIL.text(coilTier.getDisplayName()));
+	}
+	
+	@Override
+	public ItemStack icon()
+	{
+		return BuiltInRegistries.BLOCK.get(coilTier.coilBlockId()).asItem().getDefaultInstance();
 	}
 	
 	@Override
