@@ -1,0 +1,66 @@
+repositories {
+	mavenLocal()
+	mavenCentral()
+	maven {
+		name "Modmaven"
+		url "https://modmaven.dev"
+		content {
+			// GrandPower
+			includeGroup "dev.technici4n"
+			// Modern Industrialization
+			includeGroup "aztech"
+			// Tesseract
+			includeGroup "net.swedz"
+		}
+	}
+	maven {
+		name = "shedaniel"
+		url "https://maven.shedaniel.me"
+		content {
+			// Cloth Config
+			includeGroup "me.shedaniel.cloth"
+			// Architectury
+			includeGroup "dev.architectury"
+		}
+	}
+	maven {
+		name = "TerraformersMC"
+		url = "https://maven.terraformersmc.com/releases/"
+		content {
+			// EMI
+			includeGroup "dev.emi"
+		}
+	}
+	maven {
+		url = "https://maven.saps.dev/minecraft"
+		content {
+			// KubeJS & Rhino
+			includeGroup "dev.latvian.mods"
+		}
+	}
+}
+
+dependencies {
+	implementation "aztech:Modern-Industrialization:${modern_industrialization_version}"
+
+	implementation "dev.technici4n:GrandPower:${grandpower_version}"
+
+	implementation "me.shedaniel.cloth:cloth-config-neoforge:${cloth_config_version}"
+
+	if (project.runtime_include_emi.toBoolean()) {
+		localImplementation "dev.emi:emi-neoforge:${emi_version}"
+	} else {
+		compileOnly "dev.emi:emi-neoforge:${emi_version}"
+	}
+
+	jarJar(implementation("io.github.llamalad7:mixinextras-neoforge:${mixinextras_version}")) {
+		version {
+			strictly "[${mixinextras_version},)"
+			prefer mixinextras_version
+		}
+	}
+
+	implementation "net.swedz:tesseract-api-neoforge:${tesseract_version}"
+
+	localImplementation "dev.latvian.mods:kubejs-neoforge:${kubejs_version}"
+}
