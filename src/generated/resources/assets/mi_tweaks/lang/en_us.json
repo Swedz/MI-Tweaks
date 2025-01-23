@@ -1,4 +1,5 @@
 {
+  "block.mi_tweaks.eu_transformer": "EU Transformer",
   "block.mi_tweaks.flux_transformer": "Flux Transformer",
   "item.mi_tweaks.machine_blueprint": "Machine Blueprint",
   "item.mi_tweaks.machine_blueprint.blank": "Blank Machine Blueprint",
@@ -12,6 +13,7 @@
   "text.mi_tweaks.blueprint_missing_inventory": "You do not have the blueprints for this machine",
   "text.mi_tweaks.blueprint_missing_learn": "You have not learned the blueprints for this machine",
   "text.mi_tweaks.energy_bar_current_consumption": "Current consumption : %d EU/t",
+  "text.mi_tweaks.eu_transformer_help": "Converts FE to EU at a rate of %d EU per FE",
   "text.mi_tweaks.flux_transformer_help": "Converts EU to FE at a rate of %d FE per EU",
   "text.mi_tweaks.learning_disabled_but_requiring_learning": "WARNING: Your config is set to require learning for some machine blueprint requirement options but you do not have learning enabled. Be sure to enable learning or else you may be unable to use machines.",
   "text.mi_tweaks.machine_menu_voltage_prefix": "(%s) ",
