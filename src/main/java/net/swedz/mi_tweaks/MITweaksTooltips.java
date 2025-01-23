@@ -77,6 +77,13 @@ public final class MITweaksTooltips
 			)
 	);
 	
+	public static final TooltipAttachment EU_TRANSFORMER = TooltipAttachment.multilines(
+			List.of(MITweaks.id("eu_transformer")),
+			List.of(
+					line(MITweaksText.EU_TRANSFORMER_HELP).arg(MITweaks.config().euTransformer().conversionRate())
+			)
+	);
+	
 	public static void init()
 	{
 	}

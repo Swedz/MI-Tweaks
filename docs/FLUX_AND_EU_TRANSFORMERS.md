@@ -10,3 +10,8 @@ its place when no items are in the FE Cables tag (recipe id is `mi_tweaks:flux_t
 currently supported cables in the FE Cables tag, see [this file](../src/main/resources/data/c/tags/item/fe_cables.json).
 If there are any cables that you think should be added to this tag, let me know and I can add them - or you can add them
 yourself for your pack.
+
+# EU Transformer
+
+The EU Transformer is very similar to the Flux Transformer, but works in the opposite direction (FE -> EU). By default,
+there is no recipe for this block, since it has a much larger impact on gameplay than the Flux Transformer does.

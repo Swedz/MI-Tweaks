@@ -5,6 +5,7 @@ import aztech.modern_industrialization.machines.GuiComponentsClient;
 import net.swedz.mi_tweaks.MITweaks;
 import net.swedz.mi_tweaks.MITweaksTooltips;
 import net.swedz.mi_tweaks.compat.kubejs.proxy.KubeJSProxy;
+import net.swedz.mi_tweaks.machine.blockentity.EUTransformerBlockEntity;
 import net.swedz.mi_tweaks.machine.blockentity.FluxTransformerBlockEntity;
 import net.swedz.mi_tweaks.machine.guicomponent.exposecabletier.ExposeCableTierGui;
 import net.swedz.mi_tweaks.machine.guicomponent.exposecabletier.ExposeCableTierGuiClient;
@@ -31,6 +32,12 @@ public final class MITweaksMIHookListener implements MIHookListener
 				CableTier.LV.casing, false, true, true, false,
 				FluxTransformerBlockEntity::new,
 				FluxTransformerBlockEntity::registerEnergyApi
+		);
+		hook.register(
+				"EU Transformer", "eu_transformer", "eu_transformer",
+				CableTier.LV.casing, false, true, true, false,
+				EUTransformerBlockEntity::new,
+				EUTransformerBlockEntity::registerEnergyApi
 		);
 		
 		var kubejs = Proxies.get(KubeJSProxy.class);

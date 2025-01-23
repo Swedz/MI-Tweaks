@@ -100,6 +100,37 @@ public interface MITweaksConfig
 		}
 	}
 	
+	@ConfigKey("eu_transformer")
+	@SubSection
+	EUTransformer euTransformer();
+	
+	interface EUTransformer
+	{
+		@ConfigKey("capacity")
+		@ConfigComment("The EU capacity of the EU Transformer")
+		@Range.Long(min = 1, max = Long.MAX_VALUE)
+		default long capacity()
+		{
+			return 200 * CableTier.HV.getEu();
+		}
+		
+		@ConfigKey("max_insert")
+		@ConfigComment("The max FE insertable at a time for the EU Transformer")
+		@Range.Long(min = 1, max = Long.MAX_VALUE)
+		default long maxInsert()
+		{
+			return Long.MAX_VALUE;
+		}
+		
+		@ConfigKey("conversion_rate")
+		@ConfigComment("The multiplier to apply on the FE to get EU")
+		@Range.Double(min = 0.1, max = Double.MAX_VALUE)
+		default double conversionRate()
+		{
+			return 1;
+		}
+	}
+	
 	@ConfigKey("efficiency")
 	@SubSection
 	Efficiency efficiency();
