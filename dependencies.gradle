@@ -62,5 +62,9 @@ dependencies {
 
 	implementation "net.swedz:tesseract-api-neoforge:${tesseract_version}"
 
-	localImplementation "dev.latvian.mods:kubejs-neoforge:${kubejs_version}"
+	if (project.runtime_include_kjs.toBoolean()) {
+		localImplementation "dev.latvian.mods:kubejs-neoforge:${kubejs_version}"
+	} else {
+		compileOnly "dev.latvian.mods:kubejs-neoforge:${kubejs_version}"
+	}
 }
