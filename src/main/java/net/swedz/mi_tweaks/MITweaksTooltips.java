@@ -25,7 +25,7 @@ import static net.swedz.tesseract.neoforge.compat.mi.tooltip.MICompatibleTextLin
 public final class MITweaksTooltips
 {
 	public static final TooltipAttachment MACHINE_HULL_AND_ENERGY_HATCH_VOLTAGE = TooltipAttachment.multilinesOptional(
-			(stack, item) ->
+			(flags, context, stack, item) ->
 			{
 				List<Component> lines = Lists.newArrayList();
 				
@@ -50,7 +50,7 @@ public final class MITweaksTooltips
 	);
 	
 	public static final TooltipAttachment MACHINE_BLUEPRINT_MISSING = TooltipAttachment.singleLineOptional(
-			(stack, item) ->
+			(flags, context, stack, item) ->
 			{
 				TesseractProxy proxy = Proxies.get(TesseractProxy.class);
 				if(proxy.isClient())
