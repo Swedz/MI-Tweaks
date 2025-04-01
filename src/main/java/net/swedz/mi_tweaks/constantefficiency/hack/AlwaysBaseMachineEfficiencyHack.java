@@ -46,7 +46,8 @@ public final class AlwaysBaseMachineEfficiencyHack implements MachineEfficiencyH
 	private static long getRecipeMaxEu(long machineBaseEu, long machineMaxEu, long recipeEu, long totalEu, int efficiencyTicks)
 	{
 		long baseEu = Math.max(machineBaseEu, recipeEu);
-		return Math.min(totalEu, Math.min((int) Math.floor(baseEu * CrafterComponent.getEfficiencyOverclock(efficiencyTicks)), machineMaxEu));
+		long overclockedEu = baseEu + efficiencyTicks * totalEu / (20 * 30);
+		return Math.min(totalEu, Math.min(overclockedEu, machineMaxEu));
 	}
 	
 	private static int calculateEfficiencyTicks(long machineBaseEu, long machineMaxEu, long recipeEu, long totalEu, long targetEu)
