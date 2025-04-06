@@ -9,8 +9,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
-import net.swedz.mi_tweaks.constantefficiency.ConstantEfficiencyHelper;
-import net.swedz.mi_tweaks.constantefficiency.hack.MachineEfficiencyHackOption;
 import net.swedz.mi_tweaks.item.MachineBlueprintItem;
 import net.swedz.tesseract.neoforge.proxy.Proxies;
 import net.swedz.tesseract.neoforge.proxy.builtin.TesseractProxy;
@@ -19,8 +17,7 @@ import net.swedz.tesseract.neoforge.tooltip.TooltipAttachment;
 import java.util.List;
 import java.util.Optional;
 
-import static aztech.modern_industrialization.MITooltips.*;
-import static net.swedz.tesseract.neoforge.compat.mi.tooltip.MICompatibleTextLine.line;
+import static net.swedz.tesseract.neoforge.compat.mi.tooltip.MICompatibleTextLine.*;
 
 public final class MITweaksTooltips
 {
@@ -38,10 +35,6 @@ public final class MITweaksTooltips
 					if(MITweaks.config().tweaks().displayMachineVoltage())
 					{
 						lines.add(line(MITweaksText.MACHINE_VOLTAGE_RECIPES).arg(Component.translatable(tier.shortEnglishKey())));
-					}
-					if(MITweaks.config().efficiency().hack() == MachineEfficiencyHackOption.USE_VOLTAGE)
-					{
-						lines.add(line(MITweaksText.MACHINE_VOLTAGE_RUNS_AT).arg(ConstantEfficiencyHelper.getRecipeEu(tier), EU_PER_TICK_PARSER));
 					}
 				}
 				
