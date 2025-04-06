@@ -146,8 +146,7 @@ public interface MITweaksConfig
 				"The machine efficiency hack mode to use. Only applies to electric machines",
 				"DISABLED = No change will be made to MI's efficiency behavior",
 				"ALWAYS_BASE = The efficiency will always be the base machine eu (or recipe eu if it's greater) + upgrades",
-				"ALWAYS_MAX = The efficiency will always be forced to max",
-				"USE_VOLTAGE = The speed of machines will be determined by their voltage (WARNING! This is designed specifically for pack creators, and existing recipes may not be accessible by all voltages, most notably EBF recipes. Use at your own risk. It is recommended when using this mode to modify recipes with higher EU costs to use the voltage recipe condition or the ebf coil recipe condition)"
+				"ALWAYS_MAX = The efficiency will always be forced to max"
 		})
 		default MachineEfficiencyHackOption hack()
 		{

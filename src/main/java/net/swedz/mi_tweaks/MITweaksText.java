@@ -21,7 +21,6 @@ public enum MITweaksText implements TranslatableTextEnum
 	MACHINE_TIER_SINGLEBLOCK_ELECTRIC("Electric (Singleblock)"),
 	MACHINE_TIER_STEEL("Steel"),
 	MACHINE_VOLTAGE_RECIPES("Allows machines to run %s recipes"),
-	MACHINE_VOLTAGE_RUNS_AT("Runs recipes at %s"),
 	RECIPE_REQUIRES_COIL("Requires coil: %s"),
 	RECIPE_REQUIRES_MACHINE_TIER("Requires tier: %s"),
 	RECIPE_REQUIRES_OPEN_WATER("Requires %s water %swithin %d blocks"),

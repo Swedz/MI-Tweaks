@@ -6,8 +6,7 @@ public enum MachineEfficiencyHackOption
 {
 	DISABLED(DisabledMachineEfficiencyHack::new),
 	ALWAYS_BASE(AlwaysBaseMachineEfficiencyHack::new),
-	ALWAYS_MAX(AlwaysMaxMachineEfficiencyHack::new),
-	USE_VOLTAGE(UseVoltageMachineEfficiencyHack::new);
+	ALWAYS_MAX(AlwaysMaxMachineEfficiencyHack::new);
 	
 	private final MachineEfficiencyHack instance;
 	

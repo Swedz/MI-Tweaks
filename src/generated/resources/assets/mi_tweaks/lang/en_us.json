@@ -22,7 +22,6 @@
   "text.mi_tweaks.machine_tier_singleblock_electric": "Electric (Singleblock)",
   "text.mi_tweaks.machine_tier_steel": "Steel",
   "text.mi_tweaks.machine_voltage_recipes": "Allows machines to run %s recipes",
-  "text.mi_tweaks.machine_voltage_runs_at": "Runs recipes at %s",
   "text.mi_tweaks.recipe_requires_coil": "Requires coil: %s",
   "text.mi_tweaks.recipe_requires_machine_tier": "Requires tier: %s",
   "text.mi_tweaks.recipe_requires_open_water": "Requires %s water %swithin %d blocks",
