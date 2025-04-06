@@ -57,6 +57,7 @@ public final class MITweaks
 		var manager = new ConfigManager()
 				.includeDefaultValueComments();
 		manager.codecs()
+				.register(MITweaksConfig.Efficiency.CableTierMaxOverclockOverrides.class, MITweaksConfig.Efficiency.CableTierMaxOverclockOverrides.CODEC)
 				.register(MITweaksConfig.MachineList.class, MITweaksConfig.MachineList.CODEC);
 		CONFIG = manager
 				.build(MITweaksConfig.class)

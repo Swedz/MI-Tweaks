@@ -1,5 +1,7 @@
 package net.swedz.mi_tweaks.compat.mi;
 
+import aztech.modern_industrialization.api.energy.CableTierHolder;
+import aztech.modern_industrialization.machines.components.UpgradeComponent;
 import net.swedz.mi_tweaks.MITweaks;
 import net.swedz.tesseract.neoforge.compat.mi.hook.MIHookEfficiency;
 import net.swedz.tesseract.neoforge.compat.mi.hook.MIHookEntrypoint;
@@ -23,7 +25,18 @@ public final class MITweaksMIHookEfficiency implements MIHookEfficiency
 	@Override
 	public void onGetRecipeMaxEu(EfficiencyMIHookContext context)
 	{
-		context.setMaxRecipeEu(MITweaks.config().efficiency().hack().instance().getMaxRecipeEu(context));
+		if(MITweaks.config().efficiency().useCasingMaxOverclockOverrides())
+		{
+			if(context.getMachineBlockEntity() instanceof CableTierHolder machine)
+			{
+				long upgradeEu = context.getMachineBlockEntity().components.mapOrDefault(UpgradeComponent.class, UpgradeComponent::getAddMaxEUPerTick, 0L);
+				context.setMaxRecipeEu(MITweaks.config().efficiency().casingMaxOverclockOverrides().get(machine.getCableTier()) + upgradeEu);
+			}
+		}
+		else
+		{
+			context.setMaxRecipeEu(MITweaks.config().efficiency().hack().instance().getMaxRecipeEu(context));
+		}
 	}
 	
 	@Override
