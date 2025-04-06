@@ -7,13 +7,17 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.swedz.mi_tweaks.constantefficiency.hack.MachineEfficiencyHackOption;
+import net.swedz.tesseract.neoforge.api.Assert;
+import net.swedz.tesseract.neoforge.compat.mi.serialization.MICodecs;
 import net.swedz.tesseract.neoforge.config.annotation.ConfigComment;
 import net.swedz.tesseract.neoforge.config.annotation.ConfigKey;
 import net.swedz.tesseract.neoforge.config.annotation.Range;
 import net.swedz.tesseract.neoforge.config.annotation.SubSection;
+import net.swedz.tesseract.neoforge.helper.CodecHelper;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
@@ -155,6 +159,55 @@ public interface MITweaksConfig
 		default boolean hide()
 		{
 			return false;
+		}
+		
+		@ConfigKey("use_casing_max_overclock_overrides")
+		@ConfigComment({
+				"Whether the casing max overclock overrides (as per `casing_max_overclock_overrides`) should be used",
+				"This only applies to electric machines. Also applies to multiblocks but uses the highest tier energy hatch's casing",
+				"Note that when this is enabled, it will override any behavior relating to the max efficiency for the `hack` mode (for example, as in `USE_VOLTAGE`)"
+		})
+		default boolean useCasingMaxOverclockOverrides()
+		{
+			return false;
+		}
+		
+		@ConfigKey("casing_max_overclock_overrides")
+		@ConfigComment({
+				"The base max EU/t a machine can run at for a given casing",
+				"Range: > 0"
+		})
+		default CableTierMaxOverclockOverrides casingMaxOverclockOverrides()
+		{
+			return new CableTierMaxOverclockOverrides(Map.of(
+					CableTier.LV, 32L,
+					CableTier.MV, 128L,
+					CableTier.HV, 512L,
+					CableTier.EV, 2048L,
+					CableTier.SUPERCONDUCTOR, 8192L
+			));
+		}
+		
+		final class CableTierMaxOverclockOverrides
+		{
+			public static final Codec<CableTierMaxOverclockOverrides> CODEC = Codec.unboundedMap(
+					MICodecs.CABLE_TIER,
+					CodecHelper.longRange(1, Long.MAX_VALUE)
+			).xmap(CableTierMaxOverclockOverrides::new, (value) -> value.overrides);
+			
+			private final Map<CableTier, Long> overrides;
+			
+			private CableTierMaxOverclockOverrides(Map<CableTier, Long> overrides)
+			{
+				this.overrides = overrides;
+			}
+			
+			public long get(CableTier cableTier)
+			{
+				Assert.notNull(cableTier);
+				
+				return overrides.getOrDefault(cableTier, 32L);
+			}
 		}
 	}
 	
