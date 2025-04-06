@@ -15,6 +15,7 @@ public enum MITweaksText implements TranslatableTextEnum
 	EU_TRANSFORMER_HELP("Converts FE to EU at a rate of %d EU per FE"),
 	FLUX_TRANSFORMER_HELP("Converts EU to FE at a rate of %d FE per EU"),
 	LEARNING_DISABLED_BUT_REQUIRING_LEARNING("WARNING: Your config is set to require learning for some machine blueprint requirement options but you do not have learning enabled. Be sure to enable learning or else you may be unable to use machines."),
+	MACHINE_HULL_AND_HATCH_MAX_OVERCLOCK("Allows machines to run up to %s"),
 	MACHINE_MENU_VOLTAGE_PREFIX("(%s) "),
 	MACHINE_TIER_BRONZE("Bronze"),
 	MACHINE_TIER_MULTIBLOCK_ELECTRIC("Electric (Multiblock)"),

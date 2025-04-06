@@ -16,6 +16,7 @@
   "text.mi_tweaks.eu_transformer_help": "Converts FE to EU at a rate of %d EU per FE",
   "text.mi_tweaks.flux_transformer_help": "Converts EU to FE at a rate of %d FE per EU",
   "text.mi_tweaks.learning_disabled_but_requiring_learning": "WARNING: Your config is set to require learning for some machine blueprint requirement options but you do not have learning enabled. Be sure to enable learning or else you may be unable to use machines.",
+  "text.mi_tweaks.machine_hull_and_hatch_max_overclock": "Allows machines to run up to %s",
   "text.mi_tweaks.machine_menu_voltage_prefix": "(%s) ",
   "text.mi_tweaks.machine_tier_bronze": "Bronze",
   "text.mi_tweaks.machine_tier_multiblock_electric": "Electric (Multiblock)",
