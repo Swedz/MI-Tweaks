@@ -1,8 +1,10 @@
 package net.swedz.mi_tweaks;
 
+import aztech.modern_industrialization.MITooltips;
 import aztech.modern_industrialization.api.energy.CableTier;
 import aztech.modern_industrialization.api.energy.CableTierHolder;
 import aztech.modern_industrialization.machines.MachineBlock;
+import aztech.modern_industrialization.machines.components.CasingComponent;
 import aztech.modern_industrialization.machines.multiblocks.HatchBlockEntity;
 import com.google.common.collect.Lists;
 import net.minecraft.ChatFormatting;
@@ -26,15 +28,24 @@ public final class MITweaksTooltips
 			{
 				List<Component> lines = Lists.newArrayList();
 				
-				if(item instanceof BlockItem blockItem &&
+				CableTier tier = CasingComponent.getCasingTier(item);
+				if(tier == null &&
+				   item instanceof BlockItem blockItem &&
 				   blockItem.getBlock() instanceof MachineBlock machineBlock &&
 				   machineBlock.getBlockEntityInstance() instanceof HatchBlockEntity &&
 				   machineBlock.getBlockEntityInstance() instanceof CableTierHolder energyHatch)
 				{
-					CableTier tier = energyHatch.getCableTier();
+					tier = energyHatch.getCableTier();
 					if(MITweaks.config().tweaks().displayMachineVoltage())
 					{
 						lines.add(line(MITweaksText.MACHINE_VOLTAGE_RECIPES).arg(Component.translatable(tier.shortEnglishKey())));
+					}
+				}
+				if(tier != null)
+				{
+					if(MITweaks.config().efficiency().useCasingMaxOverclockOverrides())
+					{
+						lines.add(line(MITweaksText.MACHINE_HULL_AND_HATCH_MAX_OVERCLOCK).arg(MITweaks.config().efficiency().casingMaxOverclockOverrides().get(tier), MITooltips.EU_PER_TICK_PARSER));
 					}
 				}
 				
