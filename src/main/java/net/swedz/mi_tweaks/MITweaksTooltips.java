@@ -36,13 +36,13 @@ public final class MITweaksTooltips
 				   machineBlock.getBlockEntityInstance() instanceof CableTierHolder energyHatch)
 				{
 					tier = energyHatch.getCableTier();
+				}
+				if(tier != null)
+				{
 					if(MITweaks.config().tweaks().displayMachineVoltage())
 					{
 						lines.add(line(MITweaksText.MACHINE_VOLTAGE_RECIPES).arg(Component.translatable(tier.shortEnglishKey())));
 					}
-				}
-				if(tier != null)
-				{
 					if(MITweaks.config().efficiency().useCasingMaxOverclockOverrides())
 					{
 						lines.add(line(MITweaksText.MACHINE_HULL_AND_HATCH_MAX_OVERCLOCK).arg(MITweaks.config().efficiency().casingMaxOverclockOverrides().get(tier), MITooltips.EU_PER_TICK_PARSER));
