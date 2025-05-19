@@ -20,4 +20,8 @@ public class KubeJSProxy implements Proxy
 	public void fireRegisterPowerlessMachines(SingleBlockSpecialMachinesMIHookContext hook)
 	{
 	}
+	
+	public void fireRegisterTieredMultiblocks(MultiblockMachinesMIHookContext hook)
+	{
+	}
 }
