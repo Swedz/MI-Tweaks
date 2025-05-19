@@ -9,4 +9,5 @@ public interface MITweaksMachineKubeJSEvents
 	
 	EventHandler REGISTER_BATCH_MULTIBLOCKS  = EVENT_GROUP.startup("registerBatchMultiblocks", () -> RegisterBatchMultiblocksEventJS.class);
 	EventHandler REGISTER_POWERLESS_MACHINES = EVENT_GROUP.startup("registerPowerlessMachines", () -> RegisterPowerlessMachinesEventJS.class);
+	EventHandler REGISTER_TIERED_MULTIBLOCKS = EVENT_GROUP.startup("registerTieredMultiblocks", () -> RegisterTieredMultiblocksEventJS.class);
 }

@@ -49,6 +49,7 @@ public final class MITweaksMIHookListener implements MIHookListener
 	{
 		var kubejs = Proxies.get(KubeJSProxy.class);
 		kubejs.fireRegisterBatchMultiblocks(hook);
+		kubejs.fireRegisterTieredMultiblocks(hook);
 	}
 	
 	@Override

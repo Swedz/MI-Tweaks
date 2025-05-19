@@ -10,7 +10,6 @@ import aztech.modern_industrialization.machines.models.MachineCasing;
 import aztech.modern_industrialization.machines.models.MachineCasings;
 import aztech.modern_industrialization.machines.multiblocks.ShapeTemplate;
 import aztech.modern_industrialization.machines.recipe.MachineRecipeType;
-import com.google.common.collect.Lists;
 import dev.latvian.mods.kubejs.event.KubeEvent;
 import net.minecraft.resources.ResourceLocation;
 import net.swedz.mi_tweaks.MITweaks;
@@ -19,7 +18,6 @@ import net.swedz.tesseract.neoforge.compat.mi.hook.context.listener.MultiblockMa
 import net.swedz.tesseract.neoforge.compat.mi.machine.blockentity.multiblock.multiplied.ElectricMultipliedCraftingMultiblockBlockEntity;
 import net.swedz.tesseract.neoforge.compat.mi.machine.blockentity.multiblock.multiplied.SteamMultipliedCraftingMultiblockBlockEntity;
 
-import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -48,7 +46,7 @@ public final class RegisterBatchMultiblocksEventJS implements KubeEvent, ShapeTe
 		
 		WorkstationAdder workstationAdder = new WorkstationAdder();
 		workstations.accept(workstationAdder);
-		for(ResourceLocation workstation : workstationAdder.workstations)
+		for(ResourceLocation workstation : workstationAdder.get())
 		{
 			ReiMachineRecipes.registerWorkstation(workstation, id);
 		}
@@ -90,16 +88,5 @@ public final class RegisterBatchMultiblocksEventJS implements KubeEvent, ShapeTe
 						recipeType, batchSize, EuCostTransformers.percentage(() -> euCostMultiplier)
 				)
 		);
-	}
-	
-	public static final class WorkstationAdder
-	{
-		private final List<ResourceLocation> workstations = Lists.newArrayList();
-		
-		public WorkstationAdder add(ResourceLocation... workstations)
-		{
-			this.workstations.addAll(Lists.newArrayList(workstations));
-			return this;
-		}
 	}
 }
