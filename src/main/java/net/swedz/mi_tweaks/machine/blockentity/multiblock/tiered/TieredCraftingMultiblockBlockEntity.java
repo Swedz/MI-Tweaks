@@ -3,6 +3,8 @@ package net.swedz.mi_tweaks.machine.blockentity.multiblock.tiered;
 import aztech.modern_industrialization.machines.BEP;
 import aztech.modern_industrialization.machines.components.CrafterComponent;
 import aztech.modern_industrialization.machines.gui.MachineGuiParameters;
+import aztech.modern_industrialization.machines.guicomponents.ReiSlotLocking;
+import aztech.modern_industrialization.machines.multiblocks.ShapeMatcher;
 import aztech.modern_industrialization.machines.multiblocks.ShapeTemplate;
 import aztech.modern_industrialization.machines.recipe.MachineRecipe;
 import aztech.modern_industrialization.machines.recipe.MachineRecipeType;
@@ -40,6 +42,10 @@ public abstract class TieredCraftingMultiblockBlockEntity extends BasicMultibloc
 		this.maxRecipeEu = maxRecipeEu;
 		
 		this.crafter = new CrafterComponent(this, inventory, this);
+		
+		this.registerComponents(crafter);
+		
+		this.registerGuiComponent(new ReiSlotLocking.Server(crafter::lockRecipe, () -> operatingState != OperatingState.NOT_MATCHED));
 		
 		List<Component> tierTranslations = Arrays.stream(tiers).map(CustomMultiblockTier::getDisplayName).toList();
 		this.registerGuiComponent(CommonGuiComponents.rangedShapeSelection(this, activeShape, tierTranslations, true));
@@ -79,6 +85,18 @@ public abstract class TieredCraftingMultiblockBlockEntity extends BasicMultibloc
 	public UUID getOwnerUuid()
 	{
 		return placedBy.placerId;
+	}
+	
+	@Override
+	protected void onRematch(ShapeMatcher shapeMatcher)
+	{
+		super.onRematch(shapeMatcher);
+		
+		operatingState = OperatingState.NOT_MATCHED;
+		if(shapeMatcher.isMatchSuccessful())
+		{
+			operatingState = OperatingState.TRYING_TO_RESUME;
+		}
 	}
 	
 	@Override
