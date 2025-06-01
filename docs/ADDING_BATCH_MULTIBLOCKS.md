@@ -10,14 +10,12 @@ You can create both steam and electric batch crafting machines.
 
 For information on how to put together the assets for your machines, see [here](MACHINE_ASSETS_AND_DATA.md).
 
+### Dependent Machines
+
 The main difference here is that you need to retrieve the recipe type and pass that to the creator, you can add
 workstations to add this machine to, and you must provide the batch size and EU cost multiplier for this machine. An EU
 cost multiplier of 1 means that the EU cost when using the batching machine is the same as the normal machine - and then
 using a multiplier of 0.5 means that the EU cost will be halved when using the batching machine.
-
-Note that when you provide a recipe type (custom or already existing) for the batch multiblock to use, you must use a
-recipe type that has an associated normal machine with it. If you don't the recipes will not be shown properly in your
-recipe viewer.
 
 Steam batch machines can be defined like so:
 
@@ -89,6 +87,67 @@ MITweaksMachineEvents.registerBatchMultiblocks((event) =>
 		"extended_industrialization:steel_plated_bricks", "chemical_reactor", true, false, false,
 		// Batch size, EU cost multiplier
 		16, 0.75
+	);
+});
+```
+
+### Standalone Machines
+
+Note that when creating a batch multiblock, if there is not already an existing machine using the chosen recipe type,
+you must use the standalone functions instead of the normal ones. Here is how you would define a standalone batch
+multiblock:
+
+```js
+// Create your recipe types as normal...
+// Or you can use an existing recipe type if you'd like as shown above
+let PYROLYSE_OVEN;
+
+MIMachineEvents.registerRecipeTypes((event) =>
+{
+	PYROLYSE_OVEN = event.register("pyrolyse_oven")
+		.withItemInputs()
+		.withItemOutputs()
+		.withFluidInputs()
+		.withFluidOutputs();
+});
+
+MITweaksMachineEvents.registerBatchMultiblocks((event) =>
+{
+	// Create your multiblock shape ...
+	// This is the same as how you do it for other multiblock machines in MI's KubeJS plugin
+	const pyrolyseHatch = event.hatchOf("item_input", "item_output", "fluid_input", "fluid_output", "energy_input");
+	const heatproofMember = event.memberOfBlock("modern_industrialization:heatproof_machine_casing");
+	const cupronickelCoilMember = event.memberOfBlock("modern_industrialization:cupronickel_coil");
+	const shape = event.layeredShape("heatproof_machine_casing",
+		[
+			["HHH", "HHH", "HHH"],
+			["CCC", "C C", "CCC"],
+			["CCC", "C C", "CCC"],
+			["HHH", "H#H", "HHH"],
+		])
+		.key("H", heatproofMember, pyrolyseHatch)
+		.key("C", cupronickelCoilMember, event.noHatch())
+		.build();
+
+	// You can also use steamStandalone(...)
+	event.electricStandalone(
+		// English name, internal name
+		"Pyrolyse Oven", "pyrolyse_oven",
+		// Recipe type, multiblock shape
+		PYROLYSE_OVEN, shape,
+		// REI progress bar
+		event.progressBar(77, 33, "arrow"),
+		// REI item inputs, item outputs, fluid inputs, fluid outputs
+		(itemInputs) => itemInputs.addSlots(56, 35, 1, 2),
+		(itemOutputs) => itemOutputs.addSlot(102, 35),
+		(fluidInputs) => fluidInputs.addSlot(36, 35),
+		(fluidOutputs) => fluidOutputs.addSlot(122, 35),
+		// Casing of the controller, overlay folder, front overlay?, top overlay?, side overlay?
+		"heatproof_machine_casing", "pyrolyse_oven", true, false, false,
+		// Batch size, EU cost multiplier
+		16, 1,
+		// Optional: Additional configuration
+		(config) => {}
 	);
 });
 ```
