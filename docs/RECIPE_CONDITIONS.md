@@ -60,6 +60,25 @@ specified area that are required to be water.
 }
 ```
 
+## Nearby Entity
+
+This process condition allows you to require a machine to have a specific entity type nearby it. The area checked by
+this condition is determined identically to how the above "Open Water" condition works with the exception that it does
+not have a `fill` field and instead uses a `count` field. The `count` field determines the amount of the given type of
+entity is required *at minimum* to be within the specified range of the machine.
+
+This will require that at least 1 sheep is within 10 blocks of the machine for it to run.
+
+```json
+{
+    "type": "mi_tweaks:nearby_entity",
+    "relative": "all",
+    "range": 10,
+    "entity": "minecraft:sheep",
+    "count": 1
+}
+```
+
 ## Voltage
 
 This process condition makes it so that the machine must have a certain hull (or higher) provided to it in order to run

@@ -11,6 +11,7 @@ import net.swedz.mi_tweaks.machine.guicomponent.exposecabletier.ExposeCableTierG
 import net.swedz.mi_tweaks.machine.guicomponent.exposecabletier.ExposeCableTierGuiClient;
 import net.swedz.mi_tweaks.machine.processcondition.EBFCoilProcessCondition;
 import net.swedz.mi_tweaks.machine.processcondition.MachineTierProcessCondition;
+import net.swedz.mi_tweaks.machine.processcondition.NearbyEntityProcessCondition;
 import net.swedz.mi_tweaks.machine.processcondition.OpenWaterProcessCondition;
 import net.swedz.mi_tweaks.machine.processcondition.VoltageProcessCondition;
 import net.swedz.tesseract.neoforge.compat.mi.hook.MIHookEntrypoint;
@@ -63,6 +64,7 @@ public final class MITweaksMIHookListener implements MIHookListener
 	{
 		hook.register(MITweaks.id("ebf_coil"), EBFCoilProcessCondition.CODEC, EBFCoilProcessCondition.STREAM_CODEC);
 		hook.register(MITweaks.id("machine_tier"), MachineTierProcessCondition.CODEC, MachineTierProcessCondition.STREAM_CODEC);
+		hook.register(MITweaks.id("nearby_entity"), NearbyEntityProcessCondition.CODEC, NearbyEntityProcessCondition.STREAM_CODEC);
 		hook.register(MITweaks.id("open_water"), OpenWaterProcessCondition.CODEC, OpenWaterProcessCondition.STREAM_CODEC);
 		hook.register(MITweaks.id("voltage"), VoltageProcessCondition.CODEC, VoltageProcessCondition.STREAM_CODEC);
 	}
