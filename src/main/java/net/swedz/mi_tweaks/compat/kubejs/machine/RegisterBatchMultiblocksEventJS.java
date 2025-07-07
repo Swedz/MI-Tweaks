@@ -89,7 +89,7 @@ public final class RegisterBatchMultiblocksEventJS implements KubeEvent, ShapeTe
 			
 			String controllerCasingId, String overlayFolder, boolean frontOverlay, boolean topOverlay, boolean sideOverlay,
 			
-			int batchSize, float euCostMultiplier
+			int batchSize, float euCostMultiplier, boolean multiblockTier
 	)
 	{
 		this.create(
@@ -98,9 +98,27 @@ public final class RegisterBatchMultiblocksEventJS implements KubeEvent, ShapeTe
 				controllerCasingId, overlayFolder, frontOverlay, topOverlay, sideOverlay,
 				(bep) -> new ElectricMultipliedCraftingMultiblockBlockEntity(
 						bep, MITweaks.id(name), new ShapeTemplate[]{shape},
-						MachineTier.LV,
+						multiblockTier ? MachineTier.MULTIBLOCK : MachineTier.LV,
 						recipeType, batchSize, EuCostTransformers.percentage(() -> euCostMultiplier)
 				)
+		);
+	}
+	
+	public void electric(
+			String englishName, String name, MachineRecipeType recipeType, ShapeTemplate shape,
+			
+			Consumer<WorkstationAdder> workstations,
+			
+			String controllerCasingId, String overlayFolder, boolean frontOverlay, boolean topOverlay, boolean sideOverlay,
+			
+			int batchSize, float euCostMultiplier
+	)
+	{
+		this.electric(
+				englishName, name, recipeType, shape,
+				workstations,
+				controllerCasingId, overlayFolder, frontOverlay, topOverlay, sideOverlay,
+				batchSize, euCostMultiplier, false
 		);
 	}
 	
@@ -205,7 +223,7 @@ public final class RegisterBatchMultiblocksEventJS implements KubeEvent, ShapeTe
 			
 			String controllerCasingId, String overlayFolder, boolean frontOverlay, boolean topOverlay, boolean sideOverlay,
 			
-			int batchSize, float euCostMultiplier,
+			int batchSize, float euCostMultiplier, boolean multiblockTier,
 			
 			Consumer<ExtraMachineConfig.CraftingMultiBlock> extraConfig
 	)
@@ -221,10 +239,62 @@ public final class RegisterBatchMultiblocksEventJS implements KubeEvent, ShapeTe
 				controllerCasingId, overlayFolder, frontOverlay, topOverlay, sideOverlay,
 				(bep) -> new ElectricMultipliedCraftingMultiblockBlockEntity(
 						bep, MITweaks.id(name), new ShapeTemplate[]{shape},
-						MachineTier.LV,
+						multiblockTier ? MachineTier.MULTIBLOCK : MachineTier.LV,
 						recipeType, batchSize, EuCostTransformers.percentage(() -> euCostMultiplier)
 				),
 				config.reiConfigs
+		);
+	}
+	
+	public void electricStandalone(
+			String englishName, String name, MachineRecipeType recipeType, ShapeTemplate shape,
+			
+			ProgressBar.Parameters progressBar,
+			
+			Consumer<SlotPositions.Builder> itemInputPositions, Consumer<SlotPositions.Builder> itemOutputPositions,
+			Consumer<SlotPositions.Builder> fluidInputPositions, Consumer<SlotPositions.Builder> fluidOutputPositions,
+			
+			String controllerCasingId, String overlayFolder, boolean frontOverlay, boolean topOverlay, boolean sideOverlay,
+			
+			int batchSize, float euCostMultiplier,
+			
+			Consumer<ExtraMachineConfig.CraftingMultiBlock> extraConfig
+	)
+	{
+		this.electricStandalone(
+				englishName, name, recipeType, shape,
+				progressBar,
+				itemInputPositions, itemOutputPositions,
+				fluidInputPositions, fluidOutputPositions,
+				controllerCasingId, overlayFolder, frontOverlay, topOverlay, sideOverlay,
+				batchSize, euCostMultiplier, false,
+				extraConfig
+		);
+	}
+	
+	public void electricStandalone(
+			String englishName, String name, MachineRecipeType recipeType, ShapeTemplate shape,
+			
+			ProgressBar.Parameters progressBar,
+			
+			Consumer<SlotPositions.Builder> itemInputPositions, Consumer<SlotPositions.Builder> itemOutputPositions,
+			Consumer<SlotPositions.Builder> fluidInputPositions, Consumer<SlotPositions.Builder> fluidOutputPositions,
+			
+			String controllerCasingId, String overlayFolder, boolean frontOverlay, boolean topOverlay, boolean sideOverlay,
+			
+			int batchSize, float euCostMultiplier, boolean multiblockTier
+	)
+	{
+		this.electricStandalone(
+				englishName, name, recipeType, shape,
+				progressBar,
+				itemInputPositions, itemOutputPositions,
+				fluidInputPositions, fluidOutputPositions,
+				controllerCasingId, overlayFolder, frontOverlay, topOverlay, sideOverlay,
+				batchSize, euCostMultiplier, multiblockTier,
+				(config) ->
+				{
+				}
 		);
 	}
 	
@@ -247,10 +317,7 @@ public final class RegisterBatchMultiblocksEventJS implements KubeEvent, ShapeTe
 				itemInputPositions, itemOutputPositions,
 				fluidInputPositions, fluidOutputPositions,
 				controllerCasingId, overlayFolder, frontOverlay, topOverlay, sideOverlay,
-				batchSize, euCostMultiplier,
-				(config) ->
-				{
-				}
+				batchSize, euCostMultiplier, false
 		);
 	}
 }
