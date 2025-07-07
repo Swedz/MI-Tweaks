@@ -86,7 +86,9 @@ MITweaksMachineEvents.registerBatchMultiblocks((event) =>
 		// Casing of the controller, overlay folder, front overlay?, top overlay?, side overlay?
 		"extended_industrialization:steel_plated_bricks", "chemical_reactor", true, false, false,
 		// Batch size, EU cost multiplier
-		16, 0.75
+		16, 0.75,
+		// Should the machine use 128 EU/t as the max base EU (like normal multiblocks)? If false, it will use 32 EU/t (like single block electric machines). Optional, defaults to false
+		false
 	);
 });
 ```
@@ -146,6 +148,8 @@ MITweaksMachineEvents.registerBatchMultiblocks((event) =>
 		"heatproof_machine_casing", "pyrolyse_oven", true, false, false,
 		// Batch size, EU cost multiplier
 		16, 1,
+		// Should the machine use 128 EU/t as the max base EU (like normal multiblocks)? If false, it will use 32 EU/t (like single block electric machines). Optional, defaults to false
+		false,
 		// Optional: Additional configuration
 		(config) => {}
 	);
