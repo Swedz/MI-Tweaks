@@ -4,6 +4,7 @@
     "package": "net.swedz.mi_tweaks.mixin",
     "compatibilityLevel": "JAVA_21",
     "mixins": [
+        "DisableItemFuelBoilerMultiblockMixin",
         "EBFReiCategoriesIncludeCoilProcessConditionMixin",
         "MakeWaterPumpsRequireWaterBiomeMixin",
         "RedstoneLocksEfficiencyCrafterComponentMixin",

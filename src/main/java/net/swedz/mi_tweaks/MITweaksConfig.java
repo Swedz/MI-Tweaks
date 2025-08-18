@@ -71,6 +71,13 @@ public interface MITweaksConfig
 		{
 			return 5 * 20;
 		}
+		
+		@ConfigKey("disable_item_fuel_in_multiblock_boilers")
+		@ConfigComment("Whether item fuels should be blocked in multiblock boilers")
+		default boolean disableItemFuelInMultiblockBoilers()
+		{
+			return false;
+		}
 	}
 	
 	@ConfigKey("flux_transformer")
