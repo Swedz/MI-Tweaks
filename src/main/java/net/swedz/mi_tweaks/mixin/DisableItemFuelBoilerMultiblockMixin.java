@@ -21,11 +21,11 @@ public class DisableItemFuelBoilerMultiblockMixin
 			method = "tick",
 			at = @At(
 					value = "INVOKE",
-					target = "Laztech/modern_industrialization/machines/components/FuelBurningComponent;tick(Ljava/util/List;Ljava/util/List;)V"
+					target = "Laztech/modern_industrialization/machines/components/FuelBurningComponent;tick(Ljava/util/List;Ljava/util/List;Z)V"
 			)
 	)
-	private void fuelTick(FuelBurningComponent fuelBurning, List<ConfigurableItemStack> items, List<ConfigurableFluidStack> fluids)
+	private void fuelTick(FuelBurningComponent fuelBurning, List<ConfigurableItemStack> items, List<ConfigurableFluidStack> fluids, boolean canConsumeNewFuel)
 	{
-		fuelBurning.tick(MITweaks.config().tweaks().disableItemFuelInMultiblockBoilers() ? List.of() : items, fluids);
+		fuelBurning.tick(MITweaks.config().tweaks().disableItemFuelInMultiblockBoilers() ? List.of() : items, fluids, canConsumeNewFuel);
 	}
 }
