@@ -66,7 +66,7 @@ public final class RegisterTieredMultiblocksEventJS implements KubeEvent, ShapeT
 			BiFunction<BEP, CustomMultiblockTier[], MachineBlockEntity> factory
 	)
 	{
-		ResourceLocation machineId = MITweaks.id(name);
+		ResourceLocation machineId = MITweaks.machineId(name);
 		MachineCasing casing = MachineCasings.get(controllerCasingId);
 		
 		var tierAdder = new TierAdder();
@@ -80,7 +80,7 @@ public final class RegisterTieredMultiblocksEventJS implements KubeEvent, ShapeT
 			long previousMax = index == 0 ? 0 : tierAdder.get().get(index - 1).maxBaseEu();
 			long currentMax = tier.maxBaseEu();
 			
-			ResourceLocation categoryId = MITweaks.id(tier.id());
+			ResourceLocation categoryId = MITweaks.machineId(tier.id());
 			
 			ReiMachineRecipes.registerMultiblockShape(machineId, tier.shape(), tier.id());
 			
@@ -126,7 +126,7 @@ public final class RegisterTieredMultiblocksEventJS implements KubeEvent, ShapeT
 				controllerCasingId, overlayFolder, frontOverlay, topOverlay, sideOverlay,
 				SteamMode.STEAM_ONLY,
 				(bep, t) -> new SteamTieredCraftingMultiblockBlockEntity(
-						bep, MITweaks.id(name), t,
+						bep, MITweaks.machineId(name), t,
 						maxRecipeEu,
 						OverclockComponent.getDefaultCatalysts()
 				)
@@ -181,7 +181,7 @@ public final class RegisterTieredMultiblocksEventJS implements KubeEvent, ShapeT
 				controllerCasingId, overlayFolder, frontOverlay, topOverlay, sideOverlay,
 				SteamMode.ELECTRIC_ONLY,
 				(bep, t) -> new ElectricTieredCraftingMultiblockBlockEntity(
-						bep, MITweaks.id(name), t,
+						bep, MITweaks.machineId(name), t,
 						maxRecipeEu
 				)
 		);

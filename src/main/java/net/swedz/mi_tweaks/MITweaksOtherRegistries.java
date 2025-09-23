@@ -14,11 +14,13 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.swedz.mi_tweaks.blueprint.BlueprintsLearned;
 import net.swedz.mi_tweaks.blueprint.CopyBlueprintRecipe;
+import net.swedz.mi_tweaks.compat.mi.custom.MITweaksMIRegistries;
 import net.swedz.mi_tweaks.item.MachineBlueprintItem;
 import net.swedz.tesseract.neoforge.registry.holder.ItemHolder;
 
 import java.util.Comparator;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 public final class MITweaksOtherRegistries
 {
@@ -35,7 +37,7 @@ public final class MITweaksOtherRegistries
 			{
 				Comparator<ItemHolder> compareBySortOrder = Comparator.comparing(ItemHolder::sortOrder);
 				Comparator<ItemHolder> compareByName = Comparator.comparing((i) -> i.identifier().id());
-				MITweaksItems.values().stream()
+				Stream.concat(MITweaksItems.values().stream(), MITweaksMIRegistries.getItems().stream())
 						.sorted(compareBySortOrder.thenComparing(compareByName))
 						.forEach((item) ->
 						{

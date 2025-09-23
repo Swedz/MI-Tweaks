@@ -45,7 +45,7 @@ public final class RegisterBatchMultiblocksEventJS implements KubeEvent, ShapeTe
 			Function<BEP, MachineBlockEntity> factory
 	)
 	{
-		ResourceLocation id = MITweaks.id(name);
+		ResourceLocation id = MITweaks.machineId(name);
 		MachineCasing casing = MachineCasings.get(controllerCasingId);
 		
 		hook.register(englishName, name, overlayFolder, casing, frontOverlay, topOverlay, sideOverlay, factory);
@@ -75,7 +75,7 @@ public final class RegisterBatchMultiblocksEventJS implements KubeEvent, ShapeTe
 				workstations,
 				controllerCasingId, overlayFolder, frontOverlay, topOverlay, sideOverlay,
 				(bep) -> new SteamMultipliedCraftingMultiblockBlockEntity(
-						bep, MITweaks.id(name), new ShapeTemplate[]{shape},
+						bep, MITweaks.machineId(name), new ShapeTemplate[]{shape},
 						OverclockComponent.getDefaultCatalysts(),
 						recipeType, batchSize, EuCostTransformers.percentage(() -> euCostMultiplier)
 				)
@@ -97,7 +97,7 @@ public final class RegisterBatchMultiblocksEventJS implements KubeEvent, ShapeTe
 				workstations,
 				controllerCasingId, overlayFolder, frontOverlay, topOverlay, sideOverlay,
 				(bep) -> new ElectricMultipliedCraftingMultiblockBlockEntity(
-						bep, MITweaks.id(name), new ShapeTemplate[]{shape},
+						bep, MITweaks.machineId(name), new ShapeTemplate[]{shape},
 						multiblockTier ? MachineTier.MULTIBLOCK : MachineTier.LV,
 						recipeType, batchSize, EuCostTransformers.percentage(() -> euCostMultiplier)
 				)
@@ -136,7 +136,7 @@ public final class RegisterBatchMultiblocksEventJS implements KubeEvent, ShapeTe
 			List<Consumer<MultiblockMachines.Rei>> reiConfigs
 	)
 	{
-		ResourceLocation id = MITweaks.id(name);
+		ResourceLocation id = MITweaks.machineId(name);
 		MachineCasing casing = MachineCasings.get(controllerCasingId);
 		
 		hook.register(englishName, name, overlayFolder, casing, frontOverlay, topOverlay, sideOverlay, factory);
@@ -179,7 +179,7 @@ public final class RegisterBatchMultiblocksEventJS implements KubeEvent, ShapeTe
 				fluidInputPositions, fluidOutputPositions,
 				controllerCasingId, overlayFolder, frontOverlay, topOverlay, sideOverlay,
 				(bep) -> new SteamMultipliedCraftingMultiblockBlockEntity(
-						bep, MITweaks.id(name), new ShapeTemplate[]{shape},
+						bep, MITweaks.machineId(name), new ShapeTemplate[]{shape},
 						config.steamOverclockCatalysts,
 						recipeType, batchSize, EuCostTransformers.percentage(() -> euCostMultiplier)
 				),
@@ -238,7 +238,7 @@ public final class RegisterBatchMultiblocksEventJS implements KubeEvent, ShapeTe
 				fluidInputPositions, fluidOutputPositions,
 				controllerCasingId, overlayFolder, frontOverlay, topOverlay, sideOverlay,
 				(bep) -> new ElectricMultipliedCraftingMultiblockBlockEntity(
-						bep, MITweaks.id(name), new ShapeTemplate[]{shape},
+						bep, MITweaks.machineId(name), new ShapeTemplate[]{shape},
 						multiblockTier ? MachineTier.MULTIBLOCK : MachineTier.LV,
 						recipeType, batchSize, EuCostTransformers.percentage(() -> euCostMultiplier)
 				),
