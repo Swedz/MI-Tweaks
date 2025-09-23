@@ -43,7 +43,6 @@ public final class MITweaksMIHookListener implements MIHookListener
 		
 		if(MITweaks.config().machineNamespace().equals(MITweaks.ID))
 		{
-			MITweaks.LOGGER.info("registering machines using the mi_tweaks namespace");
 			var kubejs = Proxies.get(KubeJSProxy.class);
 			kubejs.fireRegisterPowerlessMachines(hook);
 		}

@@ -26,7 +26,6 @@ public final class CustomMITweaksMIHookListener implements MIHookListener
 	@Override
 	public void singleBlockSpecialMachines(SingleBlockSpecialMachinesMIHookContext hook)
 	{
-		MITweaks.LOGGER.info("registering machines using a custom namespace ({})", this.modId());
 		var kubejs = Proxies.get(KubeJSProxy.class);
 		kubejs.fireRegisterPowerlessMachines(hook);
 	}
