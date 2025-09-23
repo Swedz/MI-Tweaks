@@ -23,6 +23,12 @@ import java.util.stream.Stream;
 
 public interface MITweaksConfig
 {
+	@ConfigKey("machine_namespace")
+	default String machineNamespace()
+	{
+		return MITweaks.ID;
+	}
+	
 	@ConfigKey("tweaks")
 	@SubSection
 	Tweaks tweaks();
@@ -280,9 +286,9 @@ public interface MITweaksConfig
 	{
 		public static final Codec<MachineList> CODEC = Codec.list(Codec.STRING).xmap(MachineList::new, (list) -> list.config);
 		
-		private final List<String>           config;
+		private final List<String> config;
 		private final List<ResourceLocation> machineIds;
-		private final List<Block>            machineBlocks;
+		private final List<Block> machineBlocks;
 		
 		private MachineList(List<String> config)
 		{

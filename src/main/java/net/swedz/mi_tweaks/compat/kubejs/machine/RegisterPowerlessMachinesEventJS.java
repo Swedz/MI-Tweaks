@@ -44,7 +44,7 @@ public final class RegisterPowerlessMachinesEventJS implements KubeEvent, ShapeT
 			int baseRecipeEU, boolean hasRedstoneControl
 	)
 	{
-		ResourceLocation id = MITweaks.id(name);
+		ResourceLocation id = MITweaks.machineId(name);
 		MachineCasing casing = MachineCasings.get(casingId);
 		
 		MachineGuiParameters.Builder guiParamsBuilder = new MachineGuiParameters.Builder(id, true);
@@ -105,7 +105,7 @@ public final class RegisterPowerlessMachinesEventJS implements KubeEvent, ShapeT
 			int baseRecipeEU, boolean hasRedstoneControl
 	)
 	{
-		ResourceLocation id = MITweaks.id(name);
+		ResourceLocation id = MITweaks.machineId(name);
 		MachineCasing casing = MachineCasings.get(controllerCasingId);
 		
 		MachineGuiParameters guiParams = new MachineGuiParameters.Builder(id, false).backgroundHeight(200).build();

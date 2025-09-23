@@ -25,8 +25,11 @@ import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.registries.DeferredHolder;
+import net.swedz.mi_tweaks.compat.mi.custom.MITweaksMIRegistries;
 import net.swedz.mi_tweaks.item.MachineBlueprintItem;
 import net.swedz.mi_tweaks.item.renderer.BlockOverlayingItemRenderer;
+
+import java.util.stream.Stream;
 
 @Mod(value = MITweaks.ID, dist = Dist.CLIENT)
 @EventBusSubscriber(value = Dist.CLIENT, modid = MITweaks.ID, bus = EventBusSubscriber.Bus.MOD)
@@ -53,7 +56,7 @@ public final class MITweaksClient
 	@SubscribeEvent
 	private static void registerBlockEntityRenderers(FMLClientSetupEvent event)
 	{
-		for(DeferredHolder<Block, ? extends Block> blockDef : MITweaksBlocks.Registry.BLOCKS.getEntries())
+		for(DeferredHolder<Block, ? extends Block> blockDef : Stream.concat(MITweaksBlocks.Registry.BLOCKS.getEntries().stream(), MITweaksMIRegistries.BLOCKS.getEntries().stream()).toList())
 		{
 			if(blockDef.get() instanceof MachineBlock machine)
 			{

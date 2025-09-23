@@ -41,16 +41,23 @@ public final class MITweaksMIHookListener implements MIHookListener
 				EUTransformerBlockEntity::registerEnergyApi
 		);
 		
-		var kubejs = Proxies.get(KubeJSProxy.class);
-		kubejs.fireRegisterPowerlessMachines(hook);
+		if(MITweaks.config().machineNamespace().equals(MITweaks.ID))
+		{
+			MITweaks.LOGGER.info("registering machines using the mi_tweaks namespace");
+			var kubejs = Proxies.get(KubeJSProxy.class);
+			kubejs.fireRegisterPowerlessMachines(hook);
+		}
 	}
 	
 	@Override
 	public void multiblockMachines(MultiblockMachinesMIHookContext hook)
 	{
-		var kubejs = Proxies.get(KubeJSProxy.class);
-		kubejs.fireRegisterBatchMultiblocks(hook);
-		kubejs.fireRegisterTieredMultiblocks(hook);
+		if(MITweaks.config().machineNamespace().equals(MITweaks.ID))
+		{
+			var kubejs = Proxies.get(KubeJSProxy.class);
+			kubejs.fireRegisterBatchMultiblocks(hook);
+			kubejs.fireRegisterTieredMultiblocks(hook);
+		}
 	}
 	
 	@Override
