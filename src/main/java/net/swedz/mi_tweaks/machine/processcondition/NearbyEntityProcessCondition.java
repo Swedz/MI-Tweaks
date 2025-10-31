@@ -61,7 +61,7 @@ public record NearbyEntityProcessCondition(
 		if(value == null)
 		{
 			var area = relative.bounds(pos.pos(), range);
-			var entities = level.getEntities((Entity) null, area, (e) -> e.getType() == entity);
+			var entities = level.getEntities((Entity) null, area, (entity) -> entity.getType() == this.entity);
 			value = entities.size() >= count;
 			NEARBY_ENTITY_CACHE.put(pos, value);
 		}

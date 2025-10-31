@@ -38,8 +38,8 @@ public final class MITweaksClient
 	
 	public MITweaksClient(IEventBus bus)
 	{
-		bus.addListener(RegisterClientExtensionsEvent.class, (e) ->
-				e.registerItem(
+		bus.addListener(RegisterClientExtensionsEvent.class, (event) ->
+				event.registerItem(
 						new IClientItemExtensions()
 						{
 							@Override
