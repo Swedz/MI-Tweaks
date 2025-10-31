@@ -13,7 +13,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.ItemStack;
-import net.swedz.mi_tweaks.MITweaksText;
+import net.swedz.mi_tweaks.MITweaks;
 import net.swedz.mi_tweaks.mixin.accessor.AbstractCraftingMultiblockBlockEntityAccessor;
 
 import java.util.List;
@@ -50,9 +50,9 @@ public record EBFCoilProcessCondition(ElectricBlastFurnaceBlockEntity.Tier coilT
 	}
 	
 	@Override
-	public void appendDescription(List<Component> list)
+	public void appendDescription(List<Component> lines)
 	{
-		list.add(MITweaksText.RECIPE_REQUIRES_COIL.text(coilTier.getDisplayName()));
+		lines.add(MITweaks.text().recipeRequiresCoil(coilTier));
 	}
 	
 	@Override

@@ -6,36 +6,36 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.phys.AABB;
-import net.swedz.mi_tweaks.MITweaksText;
+import net.swedz.mi_tweaks.MITweaks;
 import net.swedz.tesseract.neoforge.helper.CodecHelper;
-import net.swedz.tesseract.neoforge.tooltip.TranslatableTextEnum;
 
 import java.util.function.BiFunction;
+import java.util.function.Supplier;
 
 public enum SurroundingArea
 {
 	ALL(
-			MITweaksText.RECIPE_REQUIRES_SURROUNDING_AREA_ALL,
+			() -> MITweaks.text().recipeRequiresSurroundingAreaAll(),
 			(origin, range) -> origin.offset(-range, -range, -range),
 			(origin, range) -> origin.offset(range, range, range)
 	),
 	AT_AND_BELOW(
-			MITweaksText.RECIPE_REQUIRES_SURROUNDING_AREA_AT_AND_BELOW,
+			() -> MITweaks.text().recipeRequiresSurroundingAreaAtAndBelow(),
 			(origin, range) -> origin.offset(-range, -range, -range),
 			(origin, range) -> origin.offset(range, 0, range)
 	),
 	BELOW(
-			MITweaksText.RECIPE_REQUIRES_SURROUNDING_AREA_BELOW,
+			() -> MITweaks.text().recipeRequiresSurroundingAreaBelow(),
 			(origin, range) -> origin.offset(-range, -range, -range),
 			(origin, range) -> origin.offset(range, -1, range)
 	),
 	AT_AND_ABOVE(
-			MITweaksText.RECIPE_REQUIRES_SURROUNDING_AREA_AT_AND_ABOVE,
+			() -> MITweaks.text().recipeRequiresSurroundingAreaAtAndAbove(),
 			(origin, range) -> origin.offset(-range, 0, -range),
 			(origin, range) -> origin.offset(range, range, range)
 	),
 	ABOVE(
-			MITweaksText.RECIPE_REQUIRES_SURROUNDING_AREA_ABOVE,
+			() -> MITweaks.text().recipeRequiresSurroundingAreaAbove(),
 			(origin, range) -> origin.offset(-range, 1, -range),
 			(origin, range) -> origin.offset(range, range, range)
 	);
@@ -44,10 +44,10 @@ public enum SurroundingArea
 	
 	public static final StreamCodec<ByteBuf, SurroundingArea> STREAM_CODEC = CodecHelper.forLowercaseEnumStream(SurroundingArea.class);
 	
-	private final TranslatableTextEnum                    text;
+	private final Supplier<MutableComponent>              text;
 	private final BiFunction<BlockPos, Integer, BlockPos> firstPos, secondPos;
 	
-	SurroundingArea(TranslatableTextEnum text,
+	SurroundingArea(Supplier<MutableComponent> text,
 					BiFunction<BlockPos, Integer, BlockPos> firstPos,
 					BiFunction<BlockPos, Integer, BlockPos> secondPos)
 	{
@@ -58,7 +58,7 @@ public enum SurroundingArea
 	
 	public MutableComponent text()
 	{
-		return text.text();
+		return text.get();
 	}
 	
 	public Iterable<BlockPos> blocks(BlockPos origin, int range)

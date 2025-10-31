@@ -13,7 +13,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.swedz.mi_tweaks.MITweaksText;
+import net.swedz.mi_tweaks.MITweaks;
 import net.swedz.tesseract.neoforge.compat.mi.serialization.MICodecs;
 import net.swedz.tesseract.neoforge.compat.mi.serialization.MIStreamCodecs;
 
@@ -44,9 +44,9 @@ public record VoltageProcessCondition(CableTier tier) implements MachineProcessC
 	}
 	
 	@Override
-	public void appendDescription(List<Component> list)
+	public void appendDescription(List<Component> lines)
 	{
-		list.add(MITweaksText.RECIPE_REQUIRES_VOLTAGE.text(Component.translatable(tier.shortEnglishKey())));
+		lines.add(MITweaks.text().recipeRequiresVoltage(tier));
 	}
 	
 	@Override

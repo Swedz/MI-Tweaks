@@ -11,11 +11,10 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.swedz.mi_tweaks.MITweaksText;
+import net.swedz.mi_tweaks.MITweaks;
 import net.swedz.tesseract.neoforge.compat.mi.helper.MachineTierHelper;
 import net.swedz.tesseract.neoforge.helper.CodecHelper;
 
@@ -41,21 +40,10 @@ public record MachineTierProcessCondition(MachineTierReference tier) implements 
 		return tier.tier() == MachineTierHelper.getMachineTier(context.getBlockEntity());
 	}
 	
-	private MutableComponent tierComponent()
-	{
-		return (switch (tier)
-		{
-			case BRONZE -> MITweaksText.MACHINE_TIER_BRONZE;
-			case STEEL -> MITweaksText.MACHINE_TIER_STEEL;
-			case SINGLEBLOCK_ELECTRIC -> MITweaksText.MACHINE_TIER_SINGLEBLOCK_ELECTRIC;
-			case MULTIBLOCK_ELECTRIC -> MITweaksText.MACHINE_TIER_MULTIBLOCK_ELECTRIC;
-		}).text();
-	}
-	
 	@Override
-	public void appendDescription(List<Component> list)
+	public void appendDescription(List<Component> lines)
 	{
-		list.add(MITweaksText.RECIPE_REQUIRES_MACHINE_TIER.text(this.tierComponent()));
+		lines.add(MITweaks.text().recipeRequiresMachineTier(tier.tier()));
 	}
 	
 	@Override

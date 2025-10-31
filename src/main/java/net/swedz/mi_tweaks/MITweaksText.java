@@ -1,56 +1,120 @@
 package net.swedz.mi_tweaks;
 
-import net.swedz.tesseract.neoforge.tooltip.TranslatableTextEnum;
+import aztech.modern_industrialization.api.energy.CableTier;
+import aztech.modern_industrialization.machines.blockentities.multiblocks.ElectricBlastFurnaceBlockEntity;
+import aztech.modern_industrialization.machines.init.MachineTier;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.block.Block;
+import net.swedz.mi_tweaks.machine.processcondition.SurroundingArea;
+import net.swedz.tesseract.neoforge.lang.annotation.LangKey;
+import net.swedz.tesseract.neoforge.lang.annotation.Parsed;
+import net.swedz.tesseract.neoforge.lang.annotation.WithStyle;
 
-public enum MITweaksText implements TranslatableTextEnum
+public interface MITweaksText
 {
-	ATTRIBUTE_HEAT_PROTECTION("Heat Protection"),
-	ATTRIBUTE_VALUE_GIVES("Gives"),
-	BLUEPRINT_LEARN("Press %s to learn this blueprint"),
-	BLUEPRINT_LEARNED("You have learned the blueprints for %s"),
-	BLUEPRINT_MACHINE("%s"),
-	BLUEPRINT_MISSING_INVENTORY("You do not have the blueprints for this machine"),
-	BLUEPRINT_MISSING_LEARN("You have not learned the blueprints for this machine"),
-	ENERGY_BAR_CURRENT_CONSUMPTION("Current consumption : %d EU/t"),
-	EU_TRANSFORMER_HELP("Converts FE to EU at a rate of %d EU per FE"),
-	FLUX_TRANSFORMER_HELP("Converts EU to FE at a rate of %d FE per EU"),
-	LEARNING_DISABLED_BUT_REQUIRING_LEARNING("WARNING: Your config is set to require learning for some machine blueprint requirement options but you do not have learning enabled. Be sure to enable learning or else you may be unable to use machines."),
-	MACHINE_HULL_AND_HATCH_MAX_OVERCLOCK("Allows machines to run up to %s"),
-	MACHINE_MENU_VOLTAGE_PREFIX("(%s) "),
-	MACHINE_TIER_BRONZE("Bronze"),
-	MACHINE_TIER_MULTIBLOCK_ELECTRIC("Electric (Multiblock)"),
-	MACHINE_TIER_SINGLEBLOCK_ELECTRIC("Electric (Singleblock)"),
-	MACHINE_TIER_STEEL("Steel"),
-	MACHINE_VOLTAGE_RECIPES("Allows machines to run %s recipes"),
-	RECIPE_REQUIRES_COIL("Requires coil: %s"),
-	RECIPE_REQUIRES_MACHINE_TIER("Requires tier: %s"),
-	RECIPE_REQUIRES_NEARBY_ENTITY("Requires %s %s(s) %swithin %d blocks"),
-	RECIPE_REQUIRES_OPEN_WATER("Requires %s water %swithin %d blocks"),
-	RECIPE_REQUIRES_SURROUNDING_AREA_ABOVE("above "),
-	RECIPE_REQUIRES_SURROUNDING_AREA_ALL(""),
-	RECIPE_REQUIRES_SURROUNDING_AREA_AT_AND_ABOVE("at and above "),
-	RECIPE_REQUIRES_SURROUNDING_AREA_AT_AND_BELOW("at and below "),
-	RECIPE_REQUIRES_SURROUNDING_AREA_BELOW("below "),
-	RECIPE_REQUIRES_VOLTAGE("Requires voltage: %s"),
-	WATER_PUMP_ENVIRONMENT_1("Invalid Pump Environment"),
-	WATER_PUMP_ENVIRONMENT_2("Must be in Ocean or River biome.");
+	@LangKey(text = "Heat Protection")
+	MutableComponent attributeHeatProtection();
 	
-	private final String englishText;
+	@LangKey(text = "Gives")
+	MutableComponent attributeValueGives();
 	
-	MITweaksText(String englishText)
-	{
-		this.englishText = englishText;
-	}
+	@LangKey(text = "Press %s to learn this blueprint")
+	@WithStyle("tooltip")
+	MutableComponent blueprintLearn(@Parsed("keybind") @WithStyle("highlighted") String keybind);
 	
-	@Override
-	public String englishText()
-	{
-		return englishText;
-	}
+	@LangKey(text = "You have learned the blueprints for %s")
+	@WithStyle("green")
+	MutableComponent blueprintLearned(Block machine);
 	
-	@Override
-	public String getTranslationKey()
-	{
-		return "text.%s.%s".formatted(MITweaks.ID, this.name().toLowerCase());
-	}
+	@LangKey(text = "%s")
+	@WithStyle("tooltip")
+	MutableComponent blueprintMachine(Block machine);
+	
+	@LangKey(text = "You do not have the blueprints for this machine")
+	@WithStyle("red")
+	MutableComponent blueprintMissingInventory();
+	
+	@LangKey(text = "You have not learned the blueprints for this machine")
+	@WithStyle("red")
+	MutableComponent blueprintMissingLearn();
+	
+	@LangKey(text = "Current consumption : %s EU/t")
+	MutableComponent energyBarCurrentConsumption(long eu);
+	
+	@LangKey(text = "Converts FE to EU at a rate of %s EU per FE")
+	@WithStyle("tooltip")
+	MutableComponent euTransformerHelp(@WithStyle("highlighted") double eu);
+	
+	@LangKey(text = "Converts EU to FE at a rate of %s FE per EU")
+	@WithStyle("tooltip")
+	MutableComponent fluxTransformerHelp(@WithStyle("highlighted") double fe);
+	
+	@LangKey(text = "WARNING: Your config is set to require learning for some machine blueprint requirement options but you do not have learning enabled. Be sure to enable learning or else you may be unable to use machines.")
+	@WithStyle("gold")
+	MutableComponent learningDisabledButRequiringLearning();
+	
+	@LangKey(text = "Allows machines to run up to %s")
+	@WithStyle("tooltip")
+	MutableComponent machineHullAndHatchMaxOverclock(@Parsed("eu_per_tick") @WithStyle("highlighted") long euPerTick);
+	
+	@LangKey(text = "(%s) ")
+	MutableComponent machineMenuVoltagePrefix(@Parsed("short") CableTier tier);
+	
+	@LangKey(text = "Bronze")
+	MutableComponent machineTierBronze();
+	
+	@LangKey(text = "Electric (Multiblock)")
+	MutableComponent machineTierMultiblockElectric();
+	
+	@LangKey(text = "Electric (Singleblock)")
+	MutableComponent machineTierSingleblockElectric();
+	
+	@LangKey(text = "Steel")
+	MutableComponent machineTierSteel();
+	
+	@LangKey(text = "Unlimited")
+	MutableComponent machineTierUnlimited();
+	
+	@LangKey(text = "Allows machines to run %s recipes")
+	@WithStyle("tooltip")
+	MutableComponent machineVoltageRecipes(@Parsed("short") @WithStyle("highlighted") CableTier tier);
+	
+	@LangKey(text = "Requires coil: %s")
+	MutableComponent recipeRequiresCoil(ElectricBlastFurnaceBlockEntity.Tier tier);
+	
+	@LangKey(text = "Requires tier: %s")
+	MutableComponent recipeRequiresMachineTier(MachineTier tier);
+	
+	@LangKey(text = "Requires %s %s(s) %swithin %s blocks")
+	MutableComponent recipeRequiresNearbyEntity(int count, EntityType<?> entityType, SurroundingArea area, int range);
+	
+	@LangKey(text = "Requires %s water %swithin %s blocks")
+	MutableComponent recipeRequiresOpenWater(@Parsed("percentage.1") float fillPercentage, SurroundingArea area, int range);
+	
+	@LangKey(text = "above ")
+	MutableComponent recipeRequiresSurroundingAreaAbove();
+	
+	@LangKey(text = "")
+	MutableComponent recipeRequiresSurroundingAreaAll();
+	
+	@LangKey(text = "at and above ")
+	MutableComponent recipeRequiresSurroundingAreaAtAndAbove();
+	
+	@LangKey(text = "at and below ")
+	MutableComponent recipeRequiresSurroundingAreaAtAndBelow();
+	
+	@LangKey(text = "below ")
+	MutableComponent recipeRequiresSurroundingAreaBelow();
+	
+	@LangKey(text = "Requires voltage: %s")
+	MutableComponent recipeRequiresVoltage(@Parsed("short") CableTier tier);
+	
+	@LangKey(text = "Invalid Pump Environment")
+	@WithStyle("red")
+	MutableComponent waterPumpEnvironment1();
+	
+	@LangKey(text = "Must be in Ocean or River biome.")
+	@WithStyle("red")
+	MutableComponent waterPumpEnvironment2();
 }
