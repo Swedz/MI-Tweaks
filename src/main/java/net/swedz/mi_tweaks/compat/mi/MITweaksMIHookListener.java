@@ -41,7 +41,7 @@ public final class MITweaksMIHookListener implements MIHookListener
 		if(MITweaks.config().machineNamespace().equals(MITweaks.ID))
 		{
 			var kubejs = Proxies.get(KubeJSProxy.class);
-			kubejs.fireRegisterPowerlessMachines(hook);
+			kubejs.fireRegisterPowerlessSingleblocks(hook);
 		}
 	}
 	
@@ -52,6 +52,7 @@ public final class MITweaksMIHookListener implements MIHookListener
 		{
 			var kubejs = Proxies.get(KubeJSProxy.class);
 			kubejs.fireRegisterBatchMultiblocks(hook);
+			kubejs.fireRegisterPowerlessMultiblocks(hook);
 			kubejs.fireRegisterTieredMultiblocks(hook);
 		}
 	}

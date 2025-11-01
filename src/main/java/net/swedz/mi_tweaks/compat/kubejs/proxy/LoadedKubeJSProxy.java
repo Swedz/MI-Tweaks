@@ -25,7 +25,13 @@ public class LoadedKubeJSProxy extends KubeJSProxy
 	}
 	
 	@Override
-	public void fireRegisterPowerlessMachines(SingleBlockSpecialMachinesMIHookContext hook)
+	public void fireRegisterPowerlessSingleblocks(SingleBlockSpecialMachinesMIHookContext hook)
+	{
+		MITweaksMachineKubeJSEvents.REGISTER_POWERLESS_MACHINES.post(new RegisterPowerlessMachinesEventJS(hook));
+	}
+	
+	@Override
+	public void fireRegisterPowerlessMultiblocks(MultiblockMachinesMIHookContext hook)
 	{
 		MITweaksMachineKubeJSEvents.REGISTER_POWERLESS_MACHINES.post(new RegisterPowerlessMachinesEventJS(hook));
 	}

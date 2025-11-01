@@ -17,7 +17,11 @@ public class KubeJSProxy implements Proxy
 	{
 	}
 	
-	public void fireRegisterPowerlessMachines(SingleBlockSpecialMachinesMIHookContext hook)
+	public void fireRegisterPowerlessSingleblocks(SingleBlockSpecialMachinesMIHookContext hook)
+	{
+	}
+	
+	public void fireRegisterPowerlessMultiblocks(MultiblockMachinesMIHookContext hook)
 	{
 	}
 	

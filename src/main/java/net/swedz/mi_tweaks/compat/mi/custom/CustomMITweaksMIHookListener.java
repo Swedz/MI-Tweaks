@@ -27,7 +27,7 @@ public final class CustomMITweaksMIHookListener implements MIHookListener
 	public void singleBlockSpecialMachines(SingleBlockSpecialMachinesMIHookContext hook)
 	{
 		var kubejs = Proxies.get(KubeJSProxy.class);
-		kubejs.fireRegisterPowerlessMachines(hook);
+		kubejs.fireRegisterPowerlessSingleblocks(hook);
 	}
 	
 	@Override
