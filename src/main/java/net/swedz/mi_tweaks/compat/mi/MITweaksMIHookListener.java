@@ -28,18 +28,15 @@ public final class MITweaksMIHookListener implements MIHookListener
 	@Override
 	public void singleBlockSpecialMachines(SingleBlockSpecialMachinesMIHookContext hook)
 	{
-		hook.register(
-				"Flux Transformer", "flux_transformer", "flux_transformer",
-				CableTier.LV.casing, false, true, true, false,
-				FluxTransformerBlockEntity::new,
-				FluxTransformerBlockEntity::registerEnergyApi
-		);
-		hook.register(
-				"EU Transformer", "eu_transformer", "eu_transformer",
-				CableTier.LV.casing, false, true, true, false,
-				EUTransformerBlockEntity::new,
-				EUTransformerBlockEntity::registerEnergyApi
-		);
+		hook.builder("flux_transformer", "Flux Transformer", FluxTransformerBlockEntity::new)
+				.builtinModel(CableTier.LV.casing, "flux_transformer", (b) -> b.front(false).top().side().active(false))
+				.registerMachine()
+				.registrator(FluxTransformerBlockEntity::registerEnergyApi);
+		
+		hook.builder("eu_transformer", "EU Transformer", EUTransformerBlockEntity::new)
+				.builtinModel(CableTier.LV.casing, "eu_transformer", (b) -> b.front(false).top().side().active(false))
+				.registerMachine()
+				.registrator(EUTransformerBlockEntity::registerEnergyApi);
 		
 		if(MITweaks.config().machineNamespace().equals(MITweaks.ID))
 		{

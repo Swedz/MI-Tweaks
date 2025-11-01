@@ -72,7 +72,9 @@ public final class RegisterTieredMultiblocksEventJS implements KubeEvent, ShapeT
 		var tierAdder = new TierAdder();
 		tiers.accept(tierAdder);
 		
-		hook.register(englishName, name, overlayFolder, casing, frontOverlay, topOverlay, sideOverlay, (bep) -> factory.apply(bep, tierAdder.get().toArray(CustomMultiblockTier[]::new)));
+		hook.builder(name, englishName, (bep) -> factory.apply(bep, tierAdder.get().toArray(CustomMultiblockTier[]::new)))
+				.builtinModel(casing, overlayFolder, (b) -> b.front(frontOverlay).top(topOverlay).side(sideOverlay))
+				.registerMachine();
 		
 		for(int index = 0; index < tierAdder.get().size(); index++)
 		{

@@ -57,15 +57,13 @@ public final class RegisterPowerlessMachinesEventJS implements KubeEvent, ShapeT
 		var itemPositions = new SlotPositions.Builder().buildWithConsumer(itemSlotPositions);
 		var fluidPositions = new SlotPositions.Builder().buildWithConsumer(fluidSlotPositions);
 		
-		hook.register(
-				englishName, name,
-				overlayFolder, casing, frontOverlay, topOverlay, sideOverlay,
-				(bep) -> new PowerlessMachineBlockEntity(
+		hook.builder(name, englishName, (bep) -> new PowerlessMachineBlockEntity(
 						bep, guiParams, progressBar,
 						MachineInventoryHelper.buildInventoryComponent(itemInputs, itemOutputs, fluidInputs, fluidOutputs, itemPositions, fluidPositions, 0, bucketCapacity),
 						recipeType, baseRecipeEU, hasRedstoneControl
-				),
-				(bet) ->
+				))
+				.builtinModel(casing, overlayFolder, (b) -> b.front(frontOverlay).top(topOverlay).side(sideOverlay))
+				.registrator((bet) ->
 				{
 					if(itemInputs + itemOutputs > 0)
 					{
@@ -75,8 +73,8 @@ public final class RegisterPowerlessMachinesEventJS implements KubeEvent, ShapeT
 					{
 						MachineBlockEntity.registerFluidApi(bet);
 					}
-				}
-		);
+				})
+				.registerMachine();
 		
 		MachineCategoryParams category = new MachineCategoryParams(
 				englishName, id,
@@ -110,15 +108,13 @@ public final class RegisterPowerlessMachinesEventJS implements KubeEvent, ShapeT
 		
 		MachineGuiParameters guiParams = new MachineGuiParameters.Builder(id, false).backgroundHeight(200).build();
 		
-		hook.register(
-				englishName, name,
-				overlayFolder, casing, frontOverlay, topOverlay, sideOverlay,
-				(bep) -> new PowerlessMultiblockMachineBlockEntity(
+		hook.builder(name, englishName, (bep) -> new PowerlessMultiblockMachineBlockEntity(
 						bep, guiParams, shape,
 						recipeType, baseRecipeEU, hasRedstoneControl
-				)
-		);
-		ReiMachineRecipes.registerMultiblockShape(id, shape);
+				))
+				.builtinModel(casing, overlayFolder, (b) -> b.front(frontOverlay).top(topOverlay).side(sideOverlay))
+				.registerMachine()
+				.registerMultiblockShape(shape);
 		
 		MachineCategoryParams category = new MachineCategoryParams(
 				englishName, id,
