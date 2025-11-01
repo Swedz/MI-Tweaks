@@ -1,13 +1,11 @@
 package net.swedz.mi_tweaks;
 
-import aztech.modern_industrialization.MITooltips;
 import aztech.modern_industrialization.api.energy.CableTier;
 import aztech.modern_industrialization.api.energy.CableTierHolder;
 import aztech.modern_industrialization.machines.MachineBlock;
 import aztech.modern_industrialization.machines.components.CasingComponent;
 import aztech.modern_industrialization.machines.multiblocks.HatchBlockEntity;
 import com.google.common.collect.Lists;
-import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
@@ -18,8 +16,6 @@ import net.swedz.tesseract.neoforge.tooltip.TooltipAttachment;
 
 import java.util.List;
 import java.util.Optional;
-
-import static net.swedz.tesseract.neoforge.compat.mi.tooltip.MICompatibleTextLine.*;
 
 public final class MITweaksTooltips
 {
@@ -41,11 +37,11 @@ public final class MITweaksTooltips
 				{
 					if(MITweaks.config().tweaks().displayMachineVoltage())
 					{
-						lines.add(line(MITweaksText.MACHINE_VOLTAGE_RECIPES).arg(Component.translatable(tier.shortEnglishKey())));
+						lines.add(MITweaks.text().machineVoltageRecipes(tier));
 					}
 					if(MITweaks.config().efficiency().useCasingMaxOverclockOverrides())
 					{
-						lines.add(line(MITweaksText.MACHINE_HULL_AND_HATCH_MAX_OVERCLOCK).arg(MITweaks.config().efficiency().casingMaxOverclockOverrides().get(tier), MITooltips.EU_PER_TICK_PARSER));
+						lines.add(MITweaks.text().machineHullAndHatchMaxOverclock(MITweaks.config().efficiency().casingMaxOverclockOverrides().get(tier)));
 					}
 				}
 				
@@ -67,25 +63,21 @@ public final class MITweaksTooltips
 					{
 						return MachineBlueprintItem.hasBlueprint(player, machineBlock, MITweaks.config().machineBlueprints().required().tooltip()) ?
 								Optional.empty() :
-								Optional.of(MITweaks.config().machineBlueprints().required().tooltip().tooltip().text().withStyle(ChatFormatting.RED));
+								Optional.of(MITweaks.config().machineBlueprints().required().tooltip().tooltip());
 					}
 				}
 				return Optional.empty();
 			}
 	).noShiftRequired();
 	
-	public static final TooltipAttachment FLUX_TRANSFORMER = TooltipAttachment.multilines(
+	public static final TooltipAttachment FLUX_TRANSFORMER = TooltipAttachment.singleLine(
 			List.of(MITweaks.id("flux_transformer")),
-			List.of(
-					line(MITweaksText.FLUX_TRANSFORMER_HELP).arg(MITweaks.config().fluxTransformer().conversionRate())
-			)
+			MITweaks.text().fluxTransformerHelp(MITweaks.config().fluxTransformer().conversionRate())
 	);
 	
-	public static final TooltipAttachment EU_TRANSFORMER = TooltipAttachment.multilines(
+	public static final TooltipAttachment EU_TRANSFORMER = TooltipAttachment.singleLine(
 			List.of(MITweaks.id("eu_transformer")),
-			List.of(
-					line(MITweaksText.EU_TRANSFORMER_HELP).arg(MITweaks.config().euTransformer().conversionRate())
-			)
+			MITweaks.text().euTransformerHelp(MITweaks.config().euTransformer().conversionRate())
 	);
 	
 	public static void init()

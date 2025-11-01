@@ -4,7 +4,6 @@ import aztech.modern_industrialization.machines.MachineBlock;
 import aztech.modern_industrialization.machines.multiblocks.MultiblockMachineBlockEntity;
 import aztech.modern_industrialization.machines.multiblocks.ShapeMatcher;
 import aztech.modern_industrialization.machines.multiblocks.SimpleMember;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -25,7 +24,6 @@ import net.swedz.mi_tweaks.MITweaksComponents;
 import net.swedz.mi_tweaks.MITweaksConfig;
 import net.swedz.mi_tweaks.MITweaksItems;
 import net.swedz.mi_tweaks.MITweaksOtherRegistries;
-import net.swedz.mi_tweaks.MITweaksText;
 import net.swedz.mi_tweaks.blueprint.BlueprintsLearned;
 import net.swedz.mi_tweaks.network.packet.UpdateBlueprintsLearnedPacket;
 import net.swedz.tesseract.neoforge.proxy.Proxies;
@@ -36,8 +34,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
-
-import static aztech.modern_industrialization.MITooltips.*;
 
 public final class MachineBlueprintItem extends Item
 {
@@ -60,7 +56,7 @@ public final class MachineBlueprintItem extends Item
 	}
 	
 	@Override
-	public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag isAdvanced)
+	public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> lines, TooltipFlag isAdvanced)
 	{
 		TesseractProxy proxy = Proxies.get(TesseractProxy.class);
 		if(proxy.isClient())
@@ -69,13 +65,13 @@ public final class MachineBlueprintItem extends Item
 			
 			getMachineBlock(stack).ifPresent((machineBlock) ->
 			{
-				tooltipComponents.add(MITweaksText.BLUEPRINT_MACHINE.text(ITEM_PARSER.parse(machineBlock.asItem())));
+				lines.add(MITweaks.text().blueprintMachine(machineBlock));
 				
 				if(player != null &&
 				   MITweaks.config().machineBlueprints().learning() &&
 				   !hasBlueprintLearned(player, machineBlock))
 				{
-					tooltipComponents.add(MITweaksText.BLUEPRINT_LEARN.text(Component.keybind("key.use")).withStyle(DEFAULT_STYLE));
+					lines.add(MITweaks.text().blueprintLearn("use"));
 				}
 			});
 		}
@@ -114,7 +110,7 @@ public final class MachineBlueprintItem extends Item
 				{
 					blueprintsLearned.learn(machineBlock);
 					new UpdateBlueprintsLearnedPacket(blueprintsLearned).sendToClient((ServerPlayer) player);
-					player.displayClientMessage(MITweaksText.BLUEPRINT_LEARNED.text(ITEM_PARSER.parse(machineBlock.asItem())).withStyle(ChatFormatting.GREEN), true);
+					player.displayClientMessage(MITweaks.text().blueprintLearned(machineBlock), true);
 					player.swing(usedHand, true);
 				}
 				return InteractionResultHolder.consume(stack);

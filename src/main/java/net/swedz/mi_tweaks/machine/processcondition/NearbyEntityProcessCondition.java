@@ -16,7 +16,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SpawnEggItem;
-import net.swedz.mi_tweaks.MITweaksText;
+import net.swedz.mi_tweaks.MITweaks;
 import net.swedz.tesseract.neoforge.api.WorldPos;
 import net.swedz.tesseract.neoforge.helper.CodecHelper;
 
@@ -61,7 +61,7 @@ public record NearbyEntityProcessCondition(
 		if(value == null)
 		{
 			var area = relative.bounds(pos.pos(), range);
-			var entities = level.getEntities((Entity) null, area, (e) -> e.getType() == entity);
+			var entities = level.getEntities((Entity) null, area, (entity) -> entity.getType() == this.entity);
 			value = entities.size() >= count;
 			NEARBY_ENTITY_CACHE.put(pos, value);
 		}
@@ -69,9 +69,9 @@ public record NearbyEntityProcessCondition(
 	}
 	
 	@Override
-	public void appendDescription(List<Component> list)
+	public void appendDescription(List<Component> lines)
 	{
-		list.add(MITweaksText.RECIPE_REQUIRES_NEARBY_ENTITY.text(count, entity.getDescription(), relative.text(), range));
+		lines.add(MITweaks.text().recipeRequiresNearbyEntity(count, entity, relative, range));
 	}
 	
 	@Override

@@ -4,6 +4,7 @@ import aztech.modern_industrialization.api.energy.CableTier;
 import aztech.modern_industrialization.machines.MachineBlock;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.swedz.mi_tweaks.constantefficiency.hack.MachineEfficiencyHackOption;
@@ -18,6 +19,7 @@ import net.swedz.tesseract.neoforge.helper.CodecHelper;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
@@ -340,14 +342,14 @@ public interface MITweaksConfig
 	enum MachineBlueprintRequiredMode
 	{
 		DISABLED(null, false),
-		INVENTORY(MITweaksText.BLUEPRINT_MISSING_INVENTORY, false),
-		LEARN(MITweaksText.BLUEPRINT_MISSING_LEARN, true),
-		INVENTORY_OR_LEARN(MITweaksText.BLUEPRINT_MISSING_INVENTORY, true);
+		INVENTORY(() -> MITweaks.text().blueprintMissingInventory(), false),
+		LEARN(() -> MITweaks.text().blueprintMissingLearn(), true),
+		INVENTORY_OR_LEARN(() -> MITweaks.text().blueprintMissingInventory(), true);
 		
-		private final MITweaksText tooltip;
-		private final boolean      learning;
+		private final Supplier<MutableComponent> tooltip;
+		private final boolean                    learning;
 		
-		MachineBlueprintRequiredMode(MITweaksText tooltip, boolean learning)
+		MachineBlueprintRequiredMode(Supplier<MutableComponent> tooltip, boolean learning)
 		{
 			this.tooltip = tooltip;
 			this.learning = learning;
@@ -368,13 +370,13 @@ public interface MITweaksConfig
 			return learning;
 		}
 		
-		public MITweaksText tooltip()
+		public MutableComponent tooltip()
 		{
 			if(tooltip == null)
 			{
 				throw new UnsupportedOperationException("There is no tooltip for this machine blueprint requirement mode");
 			}
-			return tooltip;
+			return tooltip.get();
 		}
 	}
 }

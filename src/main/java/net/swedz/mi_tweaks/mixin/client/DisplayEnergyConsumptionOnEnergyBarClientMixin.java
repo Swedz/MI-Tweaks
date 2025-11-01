@@ -9,7 +9,6 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.swedz.mi_tweaks.MITweaks;
-import net.swedz.mi_tweaks.MITweaksText;
 import net.swedz.mi_tweaks.mixin.client.accessor.RecipeEfficiencyBarClientAccessor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -34,9 +33,9 @@ public class DisplayEnergyConsumptionOnEnergyBarClientMixin
 	private void tooltipLines(GuiGraphics graphics, Font font, List<Component> originalTooltipLines, Optional<TooltipComponent> visualTooltipComponent, int mouseX, int mouseY,
 							  MachineScreen screen)
 	{
-		List<Component> tooltipLines = Lists.newArrayList();
+		List<Component> lines = Lists.newArrayList();
 		
-		tooltipLines.addAll(originalTooltipLines);
+		lines.addAll(originalTooltipLines);
 		
 		if(MITweaks.config().tweaks().displayEnergyConsumptionOnEnergyBar())
 		{
@@ -46,11 +45,11 @@ public class DisplayEnergyConsumptionOnEnergyBarClientMixin
 				long currentRecipeEu = ((RecipeEfficiencyBarClientAccessor) efficiencyBar).getCurrentRecipeEu();
 				if(currentRecipeEu > 0)
 				{
-					tooltipLines.add(MITweaksText.ENERGY_BAR_CURRENT_CONSUMPTION.text(currentRecipeEu));
+					lines.add(MITweaks.text().energyBarCurrentConsumption(currentRecipeEu));
 				}
 			}
 		}
 		
-		graphics.renderTooltip(font, List.copyOf(tooltipLines), visualTooltipComponent, mouseX, mouseY);
+		graphics.renderTooltip(font, List.copyOf(lines), visualTooltipComponent, mouseX, mouseY);
 	}
 }

@@ -1,7 +1,6 @@
 package net.swedz.mi_tweaks.blueprint;
 
 import aztech.modern_industrialization.machines.MachineBlock;
-import net.minecraft.ChatFormatting;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -39,7 +38,7 @@ public final class MachineBlueprintsListener
 		   !MachineBlueprintItem.hasBlueprint(player, machineBlock, MITweaks.config().machineBlueprints().required().placing()))
 		{
 			event.cancelWithResult(ItemInteractionResult.CONSUME);
-			player.displayClientMessage(MITweaks.config().machineBlueprints().required().placing().tooltip().text().withStyle(ChatFormatting.RED), true);
+			player.displayClientMessage(MITweaks.config().machineBlueprints().required().placing().tooltip(), true);
 		}
 	}
 }

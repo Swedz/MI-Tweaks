@@ -5,7 +5,6 @@ import aztech.modern_industrialization.machines.MachineBlockEntity;
 import aztech.modern_industrialization.machines.MachineBlockEntityRenderer;
 import aztech.modern_industrialization.machines.multiblocks.MultiblockMachineBER;
 import aztech.modern_industrialization.machines.multiblocks.MultiblockMachineBlockEntity;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
@@ -39,8 +38,8 @@ public final class MITweaksClient
 	
 	public MITweaksClient(IEventBus bus)
 	{
-		bus.addListener(RegisterClientExtensionsEvent.class, (e) ->
-				e.registerItem(
+		bus.addListener(RegisterClientExtensionsEvent.class, (event) ->
+				event.registerItem(
 						new IClientItemExtensions()
 						{
 							@Override
@@ -76,14 +75,14 @@ public final class MITweaksClient
 	@SubscribeEvent
 	private static void init(FMLConstructModEvent __)
 	{
-		NeoForge.EVENT_BUS.addListener(ClientPlayerNetworkEvent.LoggingIn.class, (e) ->
+		NeoForge.EVENT_BUS.addListener(ClientPlayerNetworkEvent.LoggingIn.class, (event) ->
 		{
 			if(!MITweaks.config().machineBlueprints().learning() &&
 			   (MITweaks.config().machineBlueprints().required().tooltip().isLearning() ||
 				MITweaks.config().machineBlueprints().required().placing().isLearning() ||
 				MITweaks.config().machineBlueprints().required().renderingHatches().isLearning()))
 			{
-				e.getPlayer().displayClientMessage(MITweaksText.LEARNING_DISABLED_BUT_REQUIRING_LEARNING.text().withStyle(ChatFormatting.GOLD), false);
+				event.getPlayer().displayClientMessage(MITweaks.text().learningDisabledButRequiringLearning(), false);
 			}
 		});
 	}

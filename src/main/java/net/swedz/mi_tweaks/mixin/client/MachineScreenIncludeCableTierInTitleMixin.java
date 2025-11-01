@@ -7,7 +7,6 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.swedz.mi_tweaks.MITweaks;
-import net.swedz.mi_tweaks.MITweaksText;
 import net.swedz.mi_tweaks.machine.guicomponent.exposecabletier.ExposeCableTierGuiClient;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -28,7 +27,7 @@ public abstract class MachineScreenIncludeCableTierInTitleMixin extends MIHandle
 			ExposeCableTierGuiClient exposeCableTier = menu.getComponent(ExposeCableTierGuiClient.class);
 			if(exposeCableTier != null)
 			{
-				return MITweaksText.MACHINE_MENU_VOLTAGE_PREFIX.text(Component.translatable(exposeCableTier.getCableTier().shortEnglishKey())).append(title);
+				return MITweaks.text().machineMenuVoltagePrefix(exposeCableTier.getCableTier()).append(title);
 			}
 		}
 		return title;

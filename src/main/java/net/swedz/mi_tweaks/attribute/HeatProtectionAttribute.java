@@ -6,19 +6,19 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.TooltipFlag;
-import net.swedz.mi_tweaks.MITweaksText;
+import net.swedz.mi_tweaks.MITweaks;
 
 public final class HeatProtectionAttribute extends Attribute
 {
 	public HeatProtectionAttribute()
 	{
-		super(MITweaksText.ATTRIBUTE_HEAT_PROTECTION.getTranslationKey(), 0);
+		super("text.%s.attribute_heat_protection".formatted(MITweaks.ID), 0);
 	}
 	
 	@Override
 	public MutableComponent toValueComponent(AttributeModifier.Operation op, double value, TooltipFlag flag)
 	{
-		return MITweaksText.ATTRIBUTE_VALUE_GIVES.text();
+		return MITweaks.text().attributeValueGives();
 	}
 	
 	@Override

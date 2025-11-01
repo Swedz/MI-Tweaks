@@ -4,14 +4,14 @@ import aztech.modern_industrialization.machines.gui.ClientComponentRenderer;
 import aztech.modern_industrialization.machines.gui.GuiComponentClient;
 import aztech.modern_industrialization.machines.gui.MachineScreen;
 import aztech.modern_industrialization.util.RenderHelper;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.util.FormattedCharSequence;
-import net.swedz.mi_tweaks.MITweaksText;
+import net.minecraft.network.chat.Component;
+import net.swedz.mi_tweaks.MITweaks;
 
 import java.util.List;
+import java.util.Optional;
 
 public final class WaterPumpEnvironmentGuiClient implements GuiComponentClient
 {
@@ -57,11 +57,11 @@ public final class WaterPumpEnvironmentGuiClient implements GuiComponentClient
 			{
 				if(RenderHelper.isPointWithinRectangle(params.renderX(), params.renderY(), 20, 20, cursorX - x, cursorY - y))
 				{
-					List<FormattedCharSequence> lines = List.of(
-							MITweaksText.WATER_PUMP_ENVIRONMENT_1.text().withStyle(ChatFormatting.RED).getVisualOrderText(),
-							MITweaksText.WATER_PUMP_ENVIRONMENT_2.text().withStyle(ChatFormatting.RED).getVisualOrderText()
+					List<Component> lines = List.of(
+							MITweaks.text().waterPumpEnvironment1(),
+							MITweaks.text().waterPumpEnvironment2()
 					);
-					guiGraphics.renderTooltip(font, lines, cursorX, cursorY);
+					guiGraphics.renderTooltip(font, lines, Optional.empty(), cursorX, cursorY);
 				}
 			}
 		}

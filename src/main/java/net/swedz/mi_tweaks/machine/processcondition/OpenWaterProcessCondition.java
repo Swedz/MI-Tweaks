@@ -16,9 +16,8 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.swedz.mi_tweaks.MITweaksText;
+import net.swedz.mi_tweaks.MITweaks;
 import net.swedz.tesseract.neoforge.api.WorldPos;
-import net.swedz.tesseract.neoforge.tooltip.Parser;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -96,9 +95,9 @@ public record OpenWaterProcessCondition(
 	}
 	
 	@Override
-	public void appendDescription(List<Component> list)
+	public void appendDescription(List<Component> lines)
 	{
-		list.add(MITweaksText.RECIPE_REQUIRES_OPEN_WATER.text(Parser.FLOAT_PERCENTAGE.parse(fill, 1), relative.text(), range));
+		lines.add(MITweaks.text().recipeRequiresOpenWater(fill, relative, range));
 	}
 	
 	@Override
