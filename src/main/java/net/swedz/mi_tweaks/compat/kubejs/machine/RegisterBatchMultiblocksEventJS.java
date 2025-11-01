@@ -1,16 +1,11 @@
 package net.swedz.mi_tweaks.compat.kubejs.machine;
 
-import aztech.modern_industrialization.compat.kubejs.machine.ExtraMachineConfig;
 import aztech.modern_industrialization.compat.kubejs.machine.ShapeTemplateHelper;
-import aztech.modern_industrialization.compat.rei.machines.ReiMachineRecipes;
+import aztech.modern_industrialization.compat.rei.machines.SteamMode;
 import aztech.modern_industrialization.inventory.SlotPositions;
-import aztech.modern_industrialization.machines.BEP;
-import aztech.modern_industrialization.machines.MachineBlockEntity;
 import aztech.modern_industrialization.machines.components.OverclockComponent;
 import aztech.modern_industrialization.machines.guicomponents.ProgressBar;
 import aztech.modern_industrialization.machines.init.MachineTier;
-import aztech.modern_industrialization.machines.init.MultiblockMachines;
-import aztech.modern_industrialization.machines.models.MachineCasing;
 import aztech.modern_industrialization.machines.models.MachineCasings;
 import aztech.modern_industrialization.machines.multiblocks.ShapeTemplate;
 import aztech.modern_industrialization.machines.recipe.MachineRecipeType;
@@ -21,10 +16,10 @@ import net.swedz.tesseract.neoforge.compat.mi.component.craft.multiplied.EuCostT
 import net.swedz.tesseract.neoforge.compat.mi.hook.context.listener.MultiblockMachinesMIHookContext;
 import net.swedz.tesseract.neoforge.compat.mi.machine.blockentity.multiblock.multiplied.ElectricMultipliedCraftingMultiblockBlockEntity;
 import net.swedz.tesseract.neoforge.compat.mi.machine.blockentity.multiblock.multiplied.SteamMultipliedCraftingMultiblockBlockEntity;
+import net.swedz.tesseract.neoforge.compat.mi.machine.builder.MachineGuiConfiguration;
+import net.swedz.tesseract.neoforge.compat.mi.machine.builder.function.MachineBlockEntityFactory;
 
-import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 public final class RegisterBatchMultiblocksEventJS implements KubeEvent, ShapeTemplateHelper, RecipeTypeHelper, BarHelper
 {
@@ -42,22 +37,19 @@ public final class RegisterBatchMultiblocksEventJS implements KubeEvent, ShapeTe
 			
 			String controllerCasingId, String overlayFolder, boolean frontOverlay, boolean topOverlay, boolean sideOverlay,
 			
-			Function<BEP, MachineBlockEntity> factory
+			MachineBlockEntityFactory factory
 	)
 	{
-		ResourceLocation id = MITweaks.machineId(name);
-		MachineCasing casing = MachineCasings.get(controllerCasingId);
+		var casing = MachineCasings.get(controllerCasingId);
 		
-		hook.register(englishName, name, overlayFolder, casing, frontOverlay, topOverlay, sideOverlay, factory);
-		
-		ReiMachineRecipes.registerMultiblockShape(id, shape);
-		
-		WorkstationAdder workstationAdder = new WorkstationAdder();
+		var workstationAdder = new WorkstationAdder();
 		workstations.accept(workstationAdder);
-		for(ResourceLocation workstation : workstationAdder.get())
-		{
-			ReiMachineRecipes.registerWorkstation(workstation, id);
-		}
+		
+		hook.builder(name, englishName, factory)
+				.builtinModel(casing, overlayFolder, (m) -> m.front(frontOverlay).top(topOverlay).side(sideOverlay))
+				.registerMachine()
+				.registerMultiblockShape(shape)
+				.registerExtraWorkstations(workstationAdder.get().toArray(ResourceLocation[]::new));
 	}
 	
 	public void steam(
@@ -123,7 +115,7 @@ public final class RegisterBatchMultiblocksEventJS implements KubeEvent, ShapeTe
 	}
 	
 	private void createStandalone(
-			String englishName, String name, MachineRecipeType recipeType, ShapeTemplate shape,
+			String englishName, String name, MachineRecipeType recipeType, ShapeTemplate shape, SteamMode steamMode,
 			
 			ProgressBar.Parameters progressBar,
 			
@@ -132,59 +124,25 @@ public final class RegisterBatchMultiblocksEventJS implements KubeEvent, ShapeTe
 			
 			String controllerCasingId, String overlayFolder, boolean frontOverlay, boolean topOverlay, boolean sideOverlay,
 			
-			Function<BEP, MachineBlockEntity> factory,
-			List<Consumer<MultiblockMachines.Rei>> reiConfigs
+			MachineBlockEntityFactory factory,
+			Consumer<MachineGuiConfiguration> guiConfig
 	)
 	{
-		ResourceLocation id = MITweaks.machineId(name);
-		MachineCasing casing = MachineCasings.get(controllerCasingId);
+		var casing = MachineCasings.get(controllerCasingId);
 		
-		hook.register(englishName, name, overlayFolder, casing, frontOverlay, topOverlay, sideOverlay, factory);
-		
-		ReiMachineRecipes.registerMultiblockShape(id, shape);
-		
-		var rei = new MultiblockMachines.Rei(englishName, id, recipeType, progressBar)
-				.items(itemInputPositions, itemOutputPositions)
-				.fluids(fluidInputPositions, fluidOutputPositions);
-		for(var reiConfig : reiConfigs)
-		{
-			reiConfig.accept(rei);
-		}
-		rei.register();
-	}
-	
-	public void steamStandalone(
-			String englishName, String name, MachineRecipeType recipeType, ShapeTemplate shape,
-			
-			ProgressBar.Parameters progressBar,
-			
-			Consumer<SlotPositions.Builder> itemInputPositions, Consumer<SlotPositions.Builder> itemOutputPositions,
-			Consumer<SlotPositions.Builder> fluidInputPositions, Consumer<SlotPositions.Builder> fluidOutputPositions,
-			
-			String controllerCasingId, String overlayFolder, boolean frontOverlay, boolean topOverlay, boolean sideOverlay,
-			
-			int batchSize, float euCostMultiplier,
-			
-			Consumer<ExtraMachineConfig.CraftingMultiBlock> extraConfig
-	)
-	{
-		var config = new ExtraMachineConfig.CraftingMultiBlock();
-		config.reiConfigs.add((rei) -> rei.steam(true).extraTest((recipe) -> recipe.eu <= 4));
-		extraConfig.accept(config);
-		
-		this.createStandalone(
-				englishName, name, recipeType, shape,
-				progressBar,
-				itemInputPositions, itemOutputPositions,
-				fluidInputPositions, fluidOutputPositions,
-				controllerCasingId, overlayFolder, frontOverlay, topOverlay, sideOverlay,
-				(bep) -> new SteamMultipliedCraftingMultiblockBlockEntity(
-						bep, MITweaks.machineId(name), new ShapeTemplate[]{shape},
-						config.steamOverclockCatalysts,
-						recipeType, batchSize, EuCostTransformers.percentage(() -> euCostMultiplier)
-				),
-				config.reiConfigs
-		);
+		hook.builder(name, englishName, factory)
+				.builtinModel(casing, overlayFolder, (m) -> m.front(frontOverlay).top(topOverlay).side(sideOverlay))
+				.gui(steamMode, recipeType, (gui) ->
+				{
+					gui = gui
+							.progressBar(progressBar.renderX, progressBar.renderY, progressBar.progressBarType)
+							.slots((slots) -> slots
+									.append(itemInputPositions, itemOutputPositions, fluidInputPositions, fluidOutputPositions));
+					guiConfig.accept(gui);
+				})
+				.registerMachine()
+				.registerMultiblockShape(shape)
+				.registerRecipeCategory();
 	}
 	
 	public void steamStandalone(
@@ -200,75 +158,19 @@ public final class RegisterBatchMultiblocksEventJS implements KubeEvent, ShapeTe
 			int batchSize, float euCostMultiplier
 	)
 	{
-		this.steamStandalone(
-				englishName, name, recipeType, shape,
-				progressBar,
-				itemInputPositions, itemOutputPositions,
-				fluidInputPositions, fluidOutputPositions,
-				controllerCasingId, overlayFolder, frontOverlay, topOverlay, sideOverlay,
-				batchSize, euCostMultiplier,
-				(config) ->
-				{
-				}
-		);
-	}
-	
-	public void electricStandalone(
-			String englishName, String name, MachineRecipeType recipeType, ShapeTemplate shape,
-			
-			ProgressBar.Parameters progressBar,
-			
-			Consumer<SlotPositions.Builder> itemInputPositions, Consumer<SlotPositions.Builder> itemOutputPositions,
-			Consumer<SlotPositions.Builder> fluidInputPositions, Consumer<SlotPositions.Builder> fluidOutputPositions,
-			
-			String controllerCasingId, String overlayFolder, boolean frontOverlay, boolean topOverlay, boolean sideOverlay,
-			
-			int batchSize, float euCostMultiplier, boolean multiblockTier,
-			
-			Consumer<ExtraMachineConfig.CraftingMultiBlock> extraConfig
-	)
-	{
-		var config = new ExtraMachineConfig.CraftingMultiBlock();
-		extraConfig.accept(config);
-		
 		this.createStandalone(
-				englishName, name, recipeType, shape,
+				englishName, name, recipeType, shape, SteamMode.STEAM_ONLY,
 				progressBar,
 				itemInputPositions, itemOutputPositions,
 				fluidInputPositions, fluidOutputPositions,
 				controllerCasingId, overlayFolder, frontOverlay, topOverlay, sideOverlay,
-				(bep) -> new ElectricMultipliedCraftingMultiblockBlockEntity(
+				(bep) -> new SteamMultipliedCraftingMultiblockBlockEntity(
 						bep, MITweaks.machineId(name), new ShapeTemplate[]{shape},
-						multiblockTier ? MachineTier.MULTIBLOCK : MachineTier.LV,
+						OverclockComponent.getDefaultCatalysts(),
 						recipeType, batchSize, EuCostTransformers.percentage(() -> euCostMultiplier)
 				),
-				config.reiConfigs
-		);
-	}
-	
-	public void electricStandalone(
-			String englishName, String name, MachineRecipeType recipeType, ShapeTemplate shape,
-			
-			ProgressBar.Parameters progressBar,
-			
-			Consumer<SlotPositions.Builder> itemInputPositions, Consumer<SlotPositions.Builder> itemOutputPositions,
-			Consumer<SlotPositions.Builder> fluidInputPositions, Consumer<SlotPositions.Builder> fluidOutputPositions,
-			
-			String controllerCasingId, String overlayFolder, boolean frontOverlay, boolean topOverlay, boolean sideOverlay,
-			
-			int batchSize, float euCostMultiplier,
-			
-			Consumer<ExtraMachineConfig.CraftingMultiBlock> extraConfig
-	)
-	{
-		this.electricStandalone(
-				englishName, name, recipeType, shape,
-				progressBar,
-				itemInputPositions, itemOutputPositions,
-				fluidInputPositions, fluidOutputPositions,
-				controllerCasingId, overlayFolder, frontOverlay, topOverlay, sideOverlay,
-				batchSize, euCostMultiplier, false,
-				extraConfig
+				(gui) -> gui
+						.predicate((recipe) -> recipe.eu <= 4)
 		);
 	}
 	
@@ -285,14 +187,18 @@ public final class RegisterBatchMultiblocksEventJS implements KubeEvent, ShapeTe
 			int batchSize, float euCostMultiplier, boolean multiblockTier
 	)
 	{
-		this.electricStandalone(
-				englishName, name, recipeType, shape,
+		this.createStandalone(
+				englishName, name, recipeType, shape, SteamMode.ELECTRIC_ONLY,
 				progressBar,
 				itemInputPositions, itemOutputPositions,
 				fluidInputPositions, fluidOutputPositions,
 				controllerCasingId, overlayFolder, frontOverlay, topOverlay, sideOverlay,
-				batchSize, euCostMultiplier, multiblockTier,
-				(config) ->
+				(bep) -> new ElectricMultipliedCraftingMultiblockBlockEntity(
+						bep, MITweaks.machineId(name), new ShapeTemplate[]{shape},
+						multiblockTier ? MachineTier.MULTIBLOCK : MachineTier.LV,
+						recipeType, batchSize, EuCostTransformers.percentage(() -> euCostMultiplier)
+				),
+				(gui) ->
 				{
 				}
 		);
