@@ -4,6 +4,7 @@ import net.swedz.mi_tweaks.compat.kubejs.machine.MITweaksMachineKubeJSEvents;
 import net.swedz.mi_tweaks.compat.kubejs.machine.RegisterBatchMultiblocksEventJS;
 import net.swedz.mi_tweaks.compat.kubejs.machine.RegisterPowerlessMachinesEventJS;
 import net.swedz.mi_tweaks.compat.kubejs.machine.RegisterTieredMultiblocksEventJS;
+import net.swedz.mi_tweaks.compat.kubejs.machine.RegisterExternalBlockCableTiersEventJS;
 import net.swedz.tesseract.neoforge.compat.mi.hook.context.listener.MultiblockMachinesMIHookContext;
 import net.swedz.tesseract.neoforge.compat.mi.hook.context.listener.SingleBlockSpecialMachinesMIHookContext;
 import net.swedz.tesseract.neoforge.proxy.ProxyEntrypoint;
@@ -40,5 +41,11 @@ public class LoadedKubeJSProxy extends KubeJSProxy
 	public void fireRegisterTieredMultiblocks(MultiblockMachinesMIHookContext hook)
 	{
 		MITweaksMachineKubeJSEvents.REGISTER_TIERED_MULTIBLOCKS.post(new RegisterTieredMultiblocksEventJS(hook));
+	}
+
+	@Override
+	public void fireRegisterExternalBlockCableTiers()
+	{
+		MITweaksMachineKubeJSEvents.REGISTER_EXTERNAL_BLOCK_CABLE_TIERS.post(new RegisterExternalBlockCableTiersEventJS());
 	}
 }

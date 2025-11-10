@@ -12,20 +12,24 @@ public class KubeJSProxy implements Proxy
 	{
 		return false;
 	}
-	
+
 	public void fireRegisterBatchMultiblocks(MultiblockMachinesMIHookContext hook)
 	{
 	}
-	
+
 	public void fireRegisterPowerlessSingleblocks(SingleBlockSpecialMachinesMIHookContext hook)
 	{
 	}
-	
+
 	public void fireRegisterPowerlessMultiblocks(MultiblockMachinesMIHookContext hook)
 	{
 	}
-	
+
 	public void fireRegisterTieredMultiblocks(MultiblockMachinesMIHookContext hook)
+	{
+	}
+
+	public void fireRegisterExternalBlockCableTiers()
 	{
 	}
 }

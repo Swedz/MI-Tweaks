@@ -1,30 +1,31 @@
 {
-    "required": true,
-    "minVersion": "0.8",
-    "package": "net.swedz.mi_tweaks.mixin",
-    "compatibilityLevel": "JAVA_21",
-    "mixins": [
-        "DisableItemFuelBoilerMultiblockMixin",
-        "EBFReiCategoriesIncludeCoilProcessConditionMixin",
-        "MakeWaterPumpsRequireWaterBiomeMixin",
-        "RedstoneLocksEfficiencyCrafterComponentMixin",
-        "WaterExplosiveMixin",
-        "accessor.AbstractCraftingMultiblockBlockEntityAccessor",
-        "constantefficiency.ConstantEfficiencyPreventUpgradeInsertionMixin",
-        "constantefficiency.ConstantEfficiencyPreventUpgradeSlotMixin",
-        "machinecabletier.ElectricCraftingMultiblockCableTierGetterMixin",
-        "machinecabletier.ElectricCraftingSingleblockCableTierGetterMixin"
-    ],
-    "client": [
-        "client.DisplayEnergyConsumptionOnEnergyBarClientMixin",
-        "client.HideEfficiencyBarClientMixin",
-        "client.HideEfficiencyInModularMultiblockClientMixin",
-        "client.HideEfficiencyInMultiblockClientMixin",
-        "client.MachineScreenIncludeCableTierInTitleMixin",
-        "client.MultiblockRendersWithBlueprintClientMixin",
-        "client.accessor.RecipeEfficiencyBarClientAccessor"
-    ],
-    "injectors": {
-        "defaultRequire": 1
-    }
+	"required": true,
+	"minVersion": "0.8",
+	"package": "net.swedz.mi_tweaks.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+		"DisableItemFuelBoilerMultiblockMixin",
+		"EBFReiCategoriesIncludeCoilProcessConditionMixin",
+		"MakeWaterPumpsRequireWaterBiomeMixin",
+		"RedstoneLocksEfficiencyCrafterComponentMixin",
+		"RegisterCapabilitiesEventMixin",
+		"WaterExplosiveMixin",
+		"accessor.AbstractCraftingMultiblockBlockEntityAccessor",
+		"constantefficiency.ConstantEfficiencyPreventUpgradeInsertionMixin",
+		"constantefficiency.ConstantEfficiencyPreventUpgradeSlotMixin",
+		"machinecabletier.ElectricCraftingMultiblockCableTierGetterMixin",
+		"machinecabletier.ElectricCraftingSingleblockCableTierGetterMixin"
+	],
+	"client": [
+		"client.DisplayEnergyConsumptionOnEnergyBarClientMixin",
+		"client.HideEfficiencyBarClientMixin",
+		"client.HideEfficiencyInModularMultiblockClientMixin",
+		"client.HideEfficiencyInMultiblockClientMixin",
+		"client.MachineScreenIncludeCableTierInTitleMixin",
+		"client.MultiblockRendersWithBlueprintClientMixin",
+		"client.accessor.RecipeEfficiencyBarClientAccessor"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
 }
