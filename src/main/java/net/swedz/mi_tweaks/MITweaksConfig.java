@@ -25,54 +25,54 @@ import java.util.stream.Stream;
 
 public interface MITweaksConfig
 {
-	@ConfigKey("machine_namespace")
+	@ConfigKey
 	default String machineNamespace()
 	{
 		return MITweaks.ID;
 	}
 	
-	@ConfigKey("tweaks")
+	@ConfigKey
 	@SubSection
 	Tweaks tweaks();
 	
 	interface Tweaks
 	{
-		@ConfigKey("require_water_biome_for_pump")
+		@ConfigKey
 		@ConfigComment("Whether water pumps require a water biome (river or ocean) to operate")
 		default boolean requireWaterBiomeForPump()
 		{
 			return false;
 		}
 		
-		@ConfigKey("display_machine_voltage")
+		@ConfigKey
 		@ConfigComment("Whether the voltage of a machine should be displayed. This includes displaying voltage of hatches and hulls")
 		default boolean displayMachineVoltage()
 		{
 			return false;
 		}
 		
-		@ConfigKey("lock_efficiency_with_redstone")
+		@ConfigKey
 		@ConfigComment("Whether efficiency should be locked when a redstone module locks a machine, rather than just the crafting operation")
 		default boolean lockEfficiencyWithRedstone()
 		{
 			return false;
 		}
 		
-		@ConfigKey("wrenches_render_multiblock_shapes")
+		@ConfigKey
 		@ConfigComment("Whether wrenches should render multiblock shapes in world. If false, then only blueprints will be able to render multiblock shapes in world")
 		default boolean wrenchesRenderMultiblockShapes()
 		{
 			return true;
 		}
 		
-		@ConfigKey("display_energy_consumption_on_energy_bar")
+		@ConfigKey
 		@ConfigComment("Whether the tooltip on the energy bar should display the current energy consumption of the machine")
 		default boolean displayEnergyConsumptionOnEnergyBar()
 		{
 			return false;
 		}
 		
-		@ConfigKey("very_hot_items_burn_time")
+		@ConfigKey
 		@ConfigComment("The duration in ticks of burn time to apply when holding an item tagged mi_tweaks:very_hot")
 		@Range.Integer(min = 1, max = Integer.MAX_VALUE)
 		default int veryHotItemsBurnTime()
@@ -80,7 +80,7 @@ public interface MITweaksConfig
 			return 5 * 20;
 		}
 		
-		@ConfigKey("disable_item_fuel_in_multiblock_boilers")
+		@ConfigKey
 		@ConfigComment("Whether item fuels should be blocked in multiblock boilers")
 		default boolean disableItemFuelInMultiblockBoilers()
 		{
@@ -88,13 +88,13 @@ public interface MITweaksConfig
 		}
 	}
 	
-	@ConfigKey("flux_transformer")
+	@ConfigKey
 	@SubSection
 	FluxTransformer fluxTransformer();
 	
 	interface FluxTransformer
 	{
-		@ConfigKey("capacity")
+		@ConfigKey
 		@ConfigComment("The EU capacity of the Flux Transformer")
 		@Range.Long(min = 1, max = Long.MAX_VALUE)
 		default long capacity()
@@ -102,7 +102,7 @@ public interface MITweaksConfig
 			return 200 * CableTier.HV.getEu();
 		}
 		
-		@ConfigKey("max_extract")
+		@ConfigKey
 		@ConfigComment("The max FE extractable at a time for the Flux Transformer")
 		@Range.Long(min = 1, max = Long.MAX_VALUE)
 		default long maxExtract()
@@ -110,7 +110,7 @@ public interface MITweaksConfig
 			return Long.MAX_VALUE;
 		}
 		
-		@ConfigKey("conversion_rate")
+		@ConfigKey
 		@ConfigComment("The multiplier to apply on the EU to get FE")
 		@Range.Double(min = 0.1, max = Double.MAX_VALUE)
 		default double conversionRate()
@@ -119,13 +119,13 @@ public interface MITweaksConfig
 		}
 	}
 	
-	@ConfigKey("eu_transformer")
+	@ConfigKey
 	@SubSection
 	EUTransformer euTransformer();
 	
 	interface EUTransformer
 	{
-		@ConfigKey("capacity")
+		@ConfigKey
 		@ConfigComment("The EU capacity of the EU Transformer")
 		@Range.Long(min = 1, max = Long.MAX_VALUE)
 		default long capacity()
@@ -133,7 +133,7 @@ public interface MITweaksConfig
 			return 200 * CableTier.HV.getEu();
 		}
 		
-		@ConfigKey("max_insert")
+		@ConfigKey
 		@ConfigComment("The max FE insertable at a time for the EU Transformer")
 		@Range.Long(min = 1, max = Long.MAX_VALUE)
 		default long maxInsert()
@@ -141,7 +141,7 @@ public interface MITweaksConfig
 			return Long.MAX_VALUE;
 		}
 		
-		@ConfigKey("conversion_rate")
+		@ConfigKey
 		@ConfigComment("The multiplier to apply on the FE to get EU")
 		@Range.Double(min = 0.1, max = Double.MAX_VALUE)
 		default double conversionRate()
@@ -150,13 +150,13 @@ public interface MITweaksConfig
 		}
 	}
 	
-	@ConfigKey("efficiency")
+	@ConfigKey
 	@SubSection
 	Efficiency efficiency();
 	
 	interface Efficiency
 	{
-		@ConfigKey("hack")
+		@ConfigKey
 		@ConfigComment({
 				"The machine efficiency hack mode to use. Only applies to electric machines",
 				"DISABLED = No change will be made to MI's efficiency behavior",
@@ -168,14 +168,14 @@ public interface MITweaksConfig
 			return MachineEfficiencyHackOption.DISABLED;
 		}
 		
-		@ConfigKey("hide")
+		@ConfigKey
 		@ConfigComment("Whether efficiency bar and multiblock efficiency data should be hidden or not")
 		default boolean hide()
 		{
 			return false;
 		}
 		
-		@ConfigKey("use_casing_max_overclock_overrides")
+		@ConfigKey
 		@ConfigComment({
 				"Whether the casing max overclock overrides (as per `casing_max_overclock_overrides`) should be used",
 				"This only applies to electric machines. Also applies to multiblocks but uses the highest tier energy hatch's casing",
@@ -186,7 +186,7 @@ public interface MITweaksConfig
 			return false;
 		}
 		
-		@ConfigKey("casing_max_overclock_overrides")
+		@ConfigKey
 		@ConfigComment({
 				"The base max EU/t a machine can run at for a given casing",
 				"Range: > 0"
@@ -225,20 +225,20 @@ public interface MITweaksConfig
 		}
 	}
 	
-	@ConfigKey("machine_blueprints")
+	@ConfigKey
 	@SubSection
 	MachineBlueprints machineBlueprints();
 	
 	interface MachineBlueprints
 	{
-		@ConfigKey("learning")
+		@ConfigKey
 		@ConfigComment("Whether the learning system for blueprints is enabled or not. If true, then blueprints can be right-clicked to become learned")
 		default boolean learning()
 		{
 			return false;
 		}
 		
-		@ConfigKey("machines")
+		@ConfigKey
 		@ConfigComment({
 				"The list of machine ids (accepts regex) that require blueprints to place",
 				"This is only used if any type of machine blueprint requirement is enabled"
@@ -248,7 +248,7 @@ public interface MITweaksConfig
 			return new MachineList(List.of());
 		}
 		
-		@ConfigKey("required")
+		@ConfigKey
 		@ConfigComment({
 				"This section's options use the following values:",
 				"DISABLED = Machine blueprints are not required at all",
@@ -261,21 +261,21 @@ public interface MITweaksConfig
 		
 		interface Required
 		{
-			@ConfigKey("tooltip")
+			@ConfigKey
 			@ConfigComment("The machine blueprint requirement mode to use for displaying the tooltip warning")
 			default MachineBlueprintRequiredMode tooltip()
 			{
 				return MachineBlueprintRequiredMode.DISABLED;
 			}
 			
-			@ConfigKey("placing")
+			@ConfigKey
 			@ConfigComment("The machine blueprint requirement mode to use for placing machines")
 			default MachineBlueprintRequiredMode placing()
 			{
 				return MachineBlueprintRequiredMode.DISABLED;
 			}
 			
-			@ConfigKey("rendering_hatches")
+			@ConfigKey
 			@ConfigComment("The machine blueprint requirement mode to use for rendering hatch positions when holding hatches")
 			default MachineBlueprintRequiredMode renderingHatches()
 			{
