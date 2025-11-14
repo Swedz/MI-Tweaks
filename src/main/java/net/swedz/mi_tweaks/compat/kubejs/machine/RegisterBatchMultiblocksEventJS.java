@@ -125,6 +125,7 @@ public final class RegisterBatchMultiblocksEventJS implements KubeEvent, ShapeTe
 			String controllerCasingId, String overlayFolder, boolean frontOverlay, boolean topOverlay, boolean sideOverlay,
 			
 			MachineBlockEntityFactory factory,
+			boolean recipeCategoryIsMultiblock,
 			Consumer<MachineGuiConfiguration> guiConfig
 	)
 	{
@@ -132,7 +133,7 @@ public final class RegisterBatchMultiblocksEventJS implements KubeEvent, ShapeTe
 		
 		hook.builder(name, englishName, factory)
 				.builtinModel(casing, overlayFolder, (m) -> m.front(frontOverlay).top(topOverlay).side(sideOverlay))
-				.gui(steamMode, recipeType, (gui) ->
+				.gui(recipeCategoryIsMultiblock, steamMode, recipeType, (gui) ->
 				{
 					gui = gui
 							.progressBar(progressBar.renderX, progressBar.renderY, progressBar.progressBarType)
@@ -169,6 +170,7 @@ public final class RegisterBatchMultiblocksEventJS implements KubeEvent, ShapeTe
 						OverclockComponent.getDefaultCatalysts(),
 						recipeType, batchSize, EuCostTransformers.percentage(() -> euCostMultiplier)
 				),
+				true,
 				(gui) -> gui
 						.predicate((recipe) -> recipe.eu <= 4)
 		);
@@ -198,6 +200,7 @@ public final class RegisterBatchMultiblocksEventJS implements KubeEvent, ShapeTe
 						multiblockTier ? MachineTier.MULTIBLOCK : MachineTier.LV,
 						recipeType, batchSize, EuCostTransformers.percentage(() -> euCostMultiplier)
 				),
+				multiblockTier,
 				(gui) ->
 				{
 				}
