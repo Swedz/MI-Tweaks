@@ -59,6 +59,13 @@ public interface MITweaksConfig
 		}
 		
 		@ConfigKey
+		@ConfigComment("Whether temperature and fuel consumption should be locked when a redstone module locks a multiblock boiler, rather than losing fuel and heat")
+		default boolean lockBoilerTemperatureWithRedstone()
+		{
+			return false;
+		}
+		
+		@ConfigKey
 		@ConfigComment("Whether wrenches should render multiblock shapes in world. If false, then only blueprints will be able to render multiblock shapes in world")
 		default boolean wrenchesRenderMultiblockShapes()
 		{

@@ -8,6 +8,7 @@
         "EBFReiCategoriesIncludeCoilProcessConditionMixin",
         "MakeWaterPumpsRequireWaterBiomeMixin",
         "RedstoneLocksEfficiencyCrafterComponentMixin",
+        "RedstoneLocksTemperatureBoilerMultiblockMixin",
         "WaterExplosiveMixin",
         "accessor.AbstractCraftingMultiblockBlockEntityAccessor",
         "constantefficiency.ConstantEfficiencyPreventUpgradeInsertionMixin",
