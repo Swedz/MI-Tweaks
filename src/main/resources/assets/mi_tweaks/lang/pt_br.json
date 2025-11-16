@@ -22,6 +22,7 @@
   "text.mi_tweaks.machine_tier_multiblock_electric": "Elétrica (Multibloco)",
   "text.mi_tweaks.machine_tier_singleblock_electric": "Elétrica (Bloco Único)",
   "text.mi_tweaks.machine_tier_steel": "Aço",
+  "text.mi_tweaks.machine_tier_unlimited": "Ilimitado",
   "text.mi_tweaks.machine_voltage_recipes": "Permite que as máquinas processem receitas de %s",
   "text.mi_tweaks.recipe_requires_coil": "Requer bobina: %s",
   "text.mi_tweaks.recipe_requires_machine_tier": "Requer nível: %s",
