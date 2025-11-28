@@ -6,18 +6,18 @@ import aztech.modern_industrialization.machines.guicomponents.RecipeEfficiencyBa
 
 public interface BarHelper
 {
-	default ProgressBar.Parameters progressBar(int renderX, int renderY, String type)
+	default ProgressBar.Params progressBar(int renderX, int renderY, String type)
 	{
-		return new ProgressBar.Parameters(renderX, renderY, type);
+		return new ProgressBar.Params(renderX, renderY, type);
 	}
 	
-	default RecipeEfficiencyBar.Parameters efficiencyBar(int renderX, int renderY)
+	default RecipeEfficiencyBar.Params efficiencyBar(int renderX, int renderY)
 	{
-		return new RecipeEfficiencyBar.Parameters(renderX, renderY);
+		return new RecipeEfficiencyBar.Params(renderX, renderY);
 	}
 	
-	default EnergyBar.Parameters energyBar(int renderX, int renderY)
+	default EnergyBar.Params energyBar(int renderX, int renderY)
 	{
-		return new EnergyBar.Parameters(renderX, renderY);
+		return new EnergyBar.Params(renderX, renderY);
 	}
 }

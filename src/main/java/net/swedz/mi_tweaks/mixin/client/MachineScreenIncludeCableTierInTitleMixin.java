@@ -1,8 +1,8 @@
 package net.swedz.mi_tweaks.mixin.client;
 
+import aztech.modern_industrialization.client.machines.gui.MachineMenuClient;
+import aztech.modern_industrialization.client.machines.gui.MachineScreen;
 import aztech.modern_industrialization.client.screen.MIHandledScreen;
-import aztech.modern_industrialization.machines.gui.MachineMenuClient;
-import aztech.modern_industrialization.machines.gui.MachineScreen;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -11,7 +11,10 @@ import net.swedz.mi_tweaks.machine.guicomponent.exposecabletier.ExposeCableTierG
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
-@Mixin(MachineScreen.class)
+@Mixin(
+		value = MachineScreen.class,
+		remap = false
+)
 public abstract class MachineScreenIncludeCableTierInTitleMixin extends MIHandledScreen<MachineMenuClient>
 {
 	public MachineScreenIncludeCableTierInTitleMixin(MachineMenuClient handler, Inventory inventory, Component title)

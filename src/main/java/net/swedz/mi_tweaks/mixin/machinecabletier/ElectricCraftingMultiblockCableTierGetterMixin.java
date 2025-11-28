@@ -47,7 +47,7 @@ public abstract class ElectricCraftingMultiblockCableTierGetterMixin extends Mac
 	)
 	private void init(CallbackInfo callback)
 	{
-		this.registerGuiComponent(new ExposeCableTierGui.Server(this));
+		this.registerGuiComponent(new ExposeCableTierGui(this));
 	}
 	
 	@Inject(

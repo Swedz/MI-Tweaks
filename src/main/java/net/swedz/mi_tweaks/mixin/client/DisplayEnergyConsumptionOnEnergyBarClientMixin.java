@@ -1,15 +1,16 @@
 package net.swedz.mi_tweaks.mixin.client;
 
-import aztech.modern_industrialization.machines.gui.MachineScreen;
-import aztech.modern_industrialization.machines.guicomponents.EnergyBarClient;
-import aztech.modern_industrialization.machines.guicomponents.RecipeEfficiencyBarClient;
+import aztech.modern_industrialization.client.machines.gui.MachineScreen;
+import aztech.modern_industrialization.client.machines.guicomponents.EnergyBarClient;
+import aztech.modern_industrialization.client.machines.guicomponents.RecipeEfficiencyBarClient;
+import aztech.modern_industrialization.machines.guicomponents.RecipeEfficiencyBar;
 import com.google.common.collect.Lists;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.swedz.mi_tweaks.MITweaks;
-import net.swedz.mi_tweaks.mixin.client.accessor.RecipeEfficiencyBarClientAccessor;
+import net.swedz.mi_tweaks.mixin.client.accessor.GuiComponentClientAccessor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -42,7 +43,7 @@ public class DisplayEnergyConsumptionOnEnergyBarClientMixin
 			RecipeEfficiencyBarClient efficiencyBar = screen.getMenu().getComponent(RecipeEfficiencyBarClient.class);
 			if(efficiencyBar != null)
 			{
-				long currentRecipeEu = ((RecipeEfficiencyBarClientAccessor) efficiencyBar).getCurrentRecipeEu();
+				long currentRecipeEu = ((RecipeEfficiencyBar.Data) ((GuiComponentClientAccessor) efficiencyBar).getData()).currentRecipeEu();
 				if(currentRecipeEu > 0)
 				{
 					lines.add(MITweaks.text().energyBarCurrentConsumption(currentRecipeEu));

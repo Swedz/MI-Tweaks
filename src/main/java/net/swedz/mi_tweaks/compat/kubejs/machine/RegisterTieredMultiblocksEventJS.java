@@ -54,7 +54,7 @@ public final class RegisterTieredMultiblocksEventJS implements KubeEvent, ShapeT
 			
 			Consumer<TierAdder> tiers,
 			
-			ProgressBar.Parameters progressBar,
+			ProgressBar.Params progressBar,
 			
 			Consumer<SlotPositions.Builder> itemInputPositions, Consumer<SlotPositions.Builder> itemOutputPositions,
 			Consumer<SlotPositions.Builder> fluidInputPositions, Consumer<SlotPositions.Builder> fluidOutputPositions,
@@ -109,7 +109,7 @@ public final class RegisterTieredMultiblocksEventJS implements KubeEvent, ShapeT
 			
 			Consumer<TierAdder> tiers,
 			
-			ProgressBar.Parameters progressBar,
+			ProgressBar.Params progressBar,
 			
 			Consumer<SlotPositions.Builder> itemInputPositions, Consumer<SlotPositions.Builder> itemOutputPositions,
 			Consumer<SlotPositions.Builder> fluidInputPositions, Consumer<SlotPositions.Builder> fluidOutputPositions,
@@ -140,7 +140,7 @@ public final class RegisterTieredMultiblocksEventJS implements KubeEvent, ShapeT
 			
 			Consumer<TierAdder> tiers,
 			
-			ProgressBar.Parameters progressBar,
+			ProgressBar.Params progressBar,
 			
 			Consumer<SlotPositions.Builder> itemInputPositions, Consumer<SlotPositions.Builder> itemOutputPositions,
 			Consumer<SlotPositions.Builder> fluidInputPositions, Consumer<SlotPositions.Builder> fluidOutputPositions,
@@ -164,7 +164,7 @@ public final class RegisterTieredMultiblocksEventJS implements KubeEvent, ShapeT
 			
 			Consumer<TierAdder> tiers,
 			
-			ProgressBar.Parameters progressBar,
+			ProgressBar.Params progressBar,
 			
 			Consumer<SlotPositions.Builder> itemInputPositions, Consumer<SlotPositions.Builder> itemOutputPositions,
 			Consumer<SlotPositions.Builder> fluidInputPositions, Consumer<SlotPositions.Builder> fluidOutputPositions,
@@ -194,7 +194,7 @@ public final class RegisterTieredMultiblocksEventJS implements KubeEvent, ShapeT
 			
 			Consumer<TierAdder> tiers,
 			
-			ProgressBar.Parameters progressBar,
+			ProgressBar.Params progressBar,
 			
 			Consumer<SlotPositions.Builder> itemInputPositions, Consumer<SlotPositions.Builder> itemOutputPositions,
 			Consumer<SlotPositions.Builder> fluidInputPositions, Consumer<SlotPositions.Builder> fluidOutputPositions,

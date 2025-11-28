@@ -117,7 +117,7 @@ public final class RegisterBatchMultiblocksEventJS implements KubeEvent, ShapeTe
 	private void createStandalone(
 			String englishName, String name, MachineRecipeType recipeType, ShapeTemplate shape, SteamMode steamMode,
 			
-			ProgressBar.Parameters progressBar,
+			ProgressBar.Params progressBar,
 			
 			Consumer<SlotPositions.Builder> itemInputPositions, Consumer<SlotPositions.Builder> itemOutputPositions,
 			Consumer<SlotPositions.Builder> fluidInputPositions, Consumer<SlotPositions.Builder> fluidOutputPositions,
@@ -136,7 +136,7 @@ public final class RegisterBatchMultiblocksEventJS implements KubeEvent, ShapeTe
 				.gui(recipeCategoryIsMultiblock, steamMode, recipeType, (gui) ->
 				{
 					gui = gui
-							.progressBar(progressBar.renderX, progressBar.renderY, progressBar.progressBarType)
+							.progressBar(progressBar.renderX(), progressBar.renderY(), progressBar.progressBarType())
 							.slots((slots) -> slots
 									.append(itemInputPositions, itemOutputPositions, fluidInputPositions, fluidOutputPositions));
 					guiConfig.accept(gui);
@@ -149,7 +149,7 @@ public final class RegisterBatchMultiblocksEventJS implements KubeEvent, ShapeTe
 	public void steamStandalone(
 			String englishName, String name, MachineRecipeType recipeType, ShapeTemplate shape,
 			
-			ProgressBar.Parameters progressBar,
+			ProgressBar.Params progressBar,
 			
 			Consumer<SlotPositions.Builder> itemInputPositions, Consumer<SlotPositions.Builder> itemOutputPositions,
 			Consumer<SlotPositions.Builder> fluidInputPositions, Consumer<SlotPositions.Builder> fluidOutputPositions,
@@ -179,7 +179,7 @@ public final class RegisterBatchMultiblocksEventJS implements KubeEvent, ShapeTe
 	public void electricStandalone(
 			String englishName, String name, MachineRecipeType recipeType, ShapeTemplate shape,
 			
-			ProgressBar.Parameters progressBar,
+			ProgressBar.Params progressBar,
 			
 			Consumer<SlotPositions.Builder> itemInputPositions, Consumer<SlotPositions.Builder> itemOutputPositions,
 			Consumer<SlotPositions.Builder> fluidInputPositions, Consumer<SlotPositions.Builder> fluidOutputPositions,
@@ -210,7 +210,7 @@ public final class RegisterBatchMultiblocksEventJS implements KubeEvent, ShapeTe
 	public void electricStandalone(
 			String englishName, String name, MachineRecipeType recipeType, ShapeTemplate shape,
 			
-			ProgressBar.Parameters progressBar,
+			ProgressBar.Params progressBar,
 			
 			Consumer<SlotPositions.Builder> itemInputPositions, Consumer<SlotPositions.Builder> itemOutputPositions,
 			Consumer<SlotPositions.Builder> fluidInputPositions, Consumer<SlotPositions.Builder> fluidOutputPositions,

@@ -31,7 +31,7 @@ public final class SteamTieredCraftingMultiblockBlockEntity extends TieredCrafti
 		
 		this.registerComponents(overclock);
 		
-		this.registerGuiComponent(new CraftingMultiblockGui.Server(() -> shapeValid.shapeValid, crafter::getProgress, crafter, overclock::getTicks));
+		this.registerGuiComponent(new CraftingMultiblockGui(() -> shapeValid.shapeValid, crafter::getProgress, crafter, overclock::getTicks));
 	}
 	
 	@Override

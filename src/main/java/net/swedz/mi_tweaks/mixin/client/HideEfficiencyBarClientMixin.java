@@ -1,8 +1,8 @@
 package net.swedz.mi_tweaks.mixin.client;
 
-import aztech.modern_industrialization.machines.gui.ClientComponentRenderer;
-import aztech.modern_industrialization.machines.gui.MachineScreen;
-import aztech.modern_industrialization.machines.guicomponents.RecipeEfficiencyBarClient;
+import aztech.modern_industrialization.client.machines.gui.ClientComponentRenderer;
+import aztech.modern_industrialization.client.machines.gui.MachineScreen;
+import aztech.modern_industrialization.client.machines.guicomponents.RecipeEfficiencyBarClient;
 import net.swedz.mi_tweaks.MITweaks;
 import net.swedz.tesseract.neoforge.compat.mi.guicomponent.recipeefficiency.ModularRecipeEfficiencyBarClient;
 import org.spongepowered.asm.mixin.Mixin;

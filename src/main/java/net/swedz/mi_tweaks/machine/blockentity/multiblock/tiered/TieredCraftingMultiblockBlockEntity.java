@@ -45,7 +45,7 @@ public abstract class TieredCraftingMultiblockBlockEntity extends BasicMultibloc
 		
 		this.registerComponents(crafter);
 		
-		this.registerGuiComponent(new ReiSlotLocking.Server(crafter::lockRecipe, () -> operatingState != OperatingState.NOT_MATCHED));
+		this.registerGuiComponent(new ReiSlotLocking(crafter::lockRecipe, () -> operatingState != OperatingState.NOT_MATCHED));
 		
 		List<Component> tierTranslations = Arrays.stream(tiers).map(CustomMultiblockTier::getDisplayName).toList();
 		this.registerGuiComponent(CommonGuiComponents.rangedShapeSelection(this, activeShape, tierTranslations, true));

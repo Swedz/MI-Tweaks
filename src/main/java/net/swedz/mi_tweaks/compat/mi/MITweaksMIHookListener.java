@@ -1,7 +1,6 @@
 package net.swedz.mi_tweaks.compat.mi;
 
 import aztech.modern_industrialization.api.energy.CableTier;
-import aztech.modern_industrialization.machines.GuiComponentsClient;
 import net.swedz.mi_tweaks.MITweaks;
 import net.swedz.mi_tweaks.MITweaksTooltips;
 import net.swedz.mi_tweaks.compat.kubejs.proxy.KubeJSProxy;
@@ -9,6 +8,8 @@ import net.swedz.mi_tweaks.machine.blockentity.EUTransformerBlockEntity;
 import net.swedz.mi_tweaks.machine.blockentity.FluxTransformerBlockEntity;
 import net.swedz.mi_tweaks.machine.guicomponent.exposecabletier.ExposeCableTierGui;
 import net.swedz.mi_tweaks.machine.guicomponent.exposecabletier.ExposeCableTierGuiClient;
+import net.swedz.mi_tweaks.machine.guicomponent.waterpumpenvironment.WaterPumpEnvironmentGui;
+import net.swedz.mi_tweaks.machine.guicomponent.waterpumpenvironment.WaterPumpEnvironmentGuiClient;
 import net.swedz.mi_tweaks.machine.processcondition.EBFCoilProcessCondition;
 import net.swedz.mi_tweaks.machine.processcondition.MachineTierProcessCondition;
 import net.swedz.mi_tweaks.machine.processcondition.NearbyEntityProcessCondition;
@@ -60,7 +61,8 @@ public final class MITweaksMIHookListener implements MIHookListener
 	@Override
 	public void clientGuiComponents(ClientGuiComponentsMIHookContext hook)
 	{
-		GuiComponentsClient.register(ExposeCableTierGui.ID, ExposeCableTierGuiClient::new);
+		hook.register(ExposeCableTierGui.TYPE, ExposeCableTierGuiClient::new);
+		hook.register(WaterPumpEnvironmentGui.TYPE, WaterPumpEnvironmentGuiClient::new);
 	}
 	
 	@Override

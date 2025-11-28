@@ -37,8 +37,8 @@ public abstract class MakeWaterPumpsRequireWaterBiomeMixin extends MachineBlockE
 	{
 		if(MITweaks.config().tweaks().requireWaterBiomeForPump())
 		{
-			this.registerGuiComponent(new WaterPumpEnvironmentGui.Server(
-					new WaterPumpEnvironmentGui.Parameters(57, 29),
+			this.registerGuiComponent(new WaterPumpEnvironmentGui(
+					new WaterPumpEnvironmentGui.Params(57, 29),
 					() -> this.isWaterBiome(level.getBiome(worldPosition))
 			));
 		}

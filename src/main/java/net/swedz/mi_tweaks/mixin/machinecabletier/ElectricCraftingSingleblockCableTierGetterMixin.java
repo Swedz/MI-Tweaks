@@ -23,7 +23,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 )
 public abstract class ElectricCraftingSingleblockCableTierGetterMixin extends AbstractCraftingMachineBlockEntity
 {
-	public ElectricCraftingSingleblockCableTierGetterMixin(BEP bep, MachineRecipeType recipeType, MachineInventoryComponent inventory, MachineGuiParameters guiParams, ProgressBar.Parameters progressBarParams, MachineTier tier)
+	public ElectricCraftingSingleblockCableTierGetterMixin(BEP bep, MachineRecipeType recipeType, MachineInventoryComponent inventory, MachineGuiParameters guiParams, ProgressBar.Params progressBarParams, MachineTier tier)
 	{
 		super(bep, recipeType, inventory, guiParams, progressBarParams, tier);
 	}
@@ -32,8 +32,8 @@ public abstract class ElectricCraftingSingleblockCableTierGetterMixin extends Ab
 			method = "<init>",
 			at = @At("RETURN")
 	)
-	private void init(BEP bep, MachineRecipeType recipeType, MachineInventoryComponent inventory, MachineGuiParameters guiParams, EnergyBar.Parameters energyBarParams, ProgressBar.Parameters progressBarParams, RecipeEfficiencyBar.Parameters efficiencyBarParams, MachineTier tier, long euCapacity, CallbackInfo callback)
+	private void init(BEP bep, MachineRecipeType recipeType, MachineInventoryComponent inventory, MachineGuiParameters guiParams, EnergyBar.Params energyBarParams, ProgressBar.Params progressBarParams, RecipeEfficiencyBar.Params efficiencyBarParams, MachineTier tier, long euCapacity, CallbackInfo callback)
 	{
-		this.registerGuiComponent(new ExposeCableTierGui.Server((CableTierHolder) this));
+		this.registerGuiComponent(new ExposeCableTierGui((CableTierHolder) this));
 	}
 }

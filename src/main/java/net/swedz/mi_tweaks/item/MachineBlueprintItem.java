@@ -149,7 +149,7 @@ public final class MachineBlueprintItem extends Item
 				for(BlockPos pos : sortedPositions)
 				{
 					SimpleMember member = matcher.getSimpleMember(pos);
-					if(!matcher.matches(pos, level, null) &&
+					if(!matcher.matches(pos, level) &&
 					   level.getBlockState(pos).isAir())
 					{
 						Optional<ItemStack> memberStackOptional = getItemStackMatchingFromInventory(member, player);

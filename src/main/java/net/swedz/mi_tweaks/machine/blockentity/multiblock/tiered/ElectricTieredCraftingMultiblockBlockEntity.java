@@ -40,12 +40,12 @@ public final class ElectricTieredCraftingMultiblockBlockEntity extends TieredCra
 		overdrive = new OverdriveComponent();
 		
 		this.registerComponents(redstoneControl, upgrades, overdrive);
-		this.registerGuiComponent(new SlotPanel.Server(this)
+		this.registerGuiComponent(new SlotPanel(this)
 				.withRedstoneControl(redstoneControl)
 				.withUpgrades(upgrades)
 				.withOverdrive(overdrive));
 		
-		registerGuiComponent(new CraftingMultiblockGui.Server(() -> shapeValid.shapeValid, crafter::getProgress, crafter, () -> 0));
+		this.registerGuiComponent(new CraftingMultiblockGui(() -> shapeValid.shapeValid, crafter::getProgress, crafter, () -> 0));
 	}
 	
 	@Override

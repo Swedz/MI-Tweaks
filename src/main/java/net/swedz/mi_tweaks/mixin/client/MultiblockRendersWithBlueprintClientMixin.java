@@ -1,7 +1,7 @@
 package net.swedz.mi_tweaks.mixin.client;
 
+import aztech.modern_industrialization.client.machines.multiblocks.MultiblockMachineBER;
 import aztech.modern_industrialization.machines.multiblocks.HatchType;
-import aztech.modern_industrialization.machines.multiblocks.MultiblockMachineBER;
 import aztech.modern_industrialization.machines.multiblocks.MultiblockMachineBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
@@ -19,7 +19,10 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 import java.util.Optional;
 
-@Mixin(MultiblockMachineBER.class)
+@Mixin(
+		value = MultiblockMachineBER.class,
+		remap = false
+)
 public class MultiblockRendersWithBlueprintClientMixin
 {
 	@Shadow
@@ -38,7 +41,7 @@ public class MultiblockRendersWithBlueprintClientMixin
 			method = "render(Laztech/modern_industrialization/machines/multiblocks/MultiblockMachineBlockEntity;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
 			at = @At(
 					value = "INVOKE",
-					target = "Laztech/modern_industrialization/machines/multiblocks/MultiblockMachineBER;isHoldingWrench()Z"
+					target = "Laztech/modern_industrialization/client/machines/multiblocks/MultiblockMachineBER;isHoldingWrench()Z"
 			)
 	)
 	private boolean isHoldingBlueprint(MultiblockMachineBlockEntity be, float tickDelta, PoseStack matrices, MultiBufferSource vcp, int light, int overlay)
@@ -71,7 +74,7 @@ public class MultiblockRendersWithBlueprintClientMixin
 			method = "render(Laztech/modern_industrialization/machines/multiblocks/MultiblockMachineBlockEntity;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
 			at = @At(
 					value = "INVOKE",
-					target = "Laztech/modern_industrialization/machines/multiblocks/MultiblockMachineBER;getHeldHatchType()Laztech/modern_industrialization/machines/multiblocks/HatchType;"
+					target = "Laztech/modern_industrialization/client/machines/multiblocks/MultiblockMachineBER;getHeldHatchType()Laztech/modern_industrialization/machines/multiblocks/HatchType;"
 			)
 	)
 	private HatchType getHeldHatchType(MultiblockMachineBlockEntity be, float tickDelta, PoseStack matrices, MultiBufferSource vcp, int light, int overlay)
