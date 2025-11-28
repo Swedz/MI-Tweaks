@@ -1,36 +1,40 @@
 package net.swedz.mi_tweaks.mixin.client;
 
-import aztech.modern_industrialization.machines.guicomponents.CraftingMultiblockGuiClient;
-import net.minecraft.network.RegistryFriendlyByteBuf;
+import aztech.modern_industrialization.client.machines.guicomponents.CraftingMultiblockGuiClient;
+import aztech.modern_industrialization.machines.guicomponents.CraftingMultiblockGui;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.swedz.mi_tweaks.MITweaks;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.Optional;
 
 @Mixin(
-		value = CraftingMultiblockGuiClient.class,
+		value = CraftingMultiblockGuiClient.Renderer.class,
 		remap = false
 )
 public class HideEfficiencyInMultiblockClientMixin
 {
-	@Shadow
-	int efficiencyTicks;
-	
-	@Shadow
-	int maxEfficiencyTicks;
-	
-	@Inject(
-			method = "readCurrentData",
-			at = @At("RETURN")
+	@ModifyExpressionValue(
+			method = "renderBackground",
+			at = @At(
+					value = "INVOKE",
+					target = "Laztech/modern_industrialization/machines/guicomponents/CraftingMultiblockGui$Data;activeRecipe()Ljava/util/Optional;"
+			)
 	)
-	private void readCurrentData(RegistryFriendlyByteBuf buf, CallbackInfo callback)
+	private Optional<CraftingMultiblockGui.RecipeData> renderBackground(Optional<CraftingMultiblockGui.RecipeData> original)
 	{
-		if(MITweaks.config().efficiency().hide())
+		if(MITweaks.config().efficiency().hide() && original.isPresent())
 		{
-			efficiencyTicks = 0;
-			maxEfficiencyTicks = 0;
+			var recipeData = original.get();
+			return Optional.of(new CraftingMultiblockGui.RecipeData(
+					recipeData.progress(),
+					0,
+					0,
+					recipeData.currentRecipeEu(),
+					recipeData.baseRecipeEu()
+			));
 		}
+		return original;
 	}
 }

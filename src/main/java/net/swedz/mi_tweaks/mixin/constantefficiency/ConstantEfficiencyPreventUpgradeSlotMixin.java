@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(
-		value = SlotPanel.Server.class,
+		value = SlotPanel.class,
 		remap = false
 )
 public class ConstantEfficiencyPreventUpgradeSlotMixin
@@ -27,11 +27,11 @@ public class ConstantEfficiencyPreventUpgradeSlotMixin
 			at = @At("HEAD"),
 			cancellable = true
 	)
-	private void withUpgrades(UpgradeComponent upgradeComponent, CallbackInfoReturnable<SlotPanel.Server> callback)
+	private void withUpgrades(UpgradeComponent upgradeComponent, CallbackInfoReturnable<SlotPanel> callback)
 	{
 		if(MITweaks.config().efficiency().hack().instance().preventsUpgrades(new MachineMIHookContext(machine)))
 		{
-			callback.setReturnValue((SlotPanel.Server) (Object) this);
+			callback.setReturnValue((SlotPanel) (Object) this);
 		}
 	}
 }

@@ -98,10 +98,10 @@ public final class FluxTransformerBlockEntity extends MachineBlockEntity impleme
 		
 		this.registerComponents(redstoneControl, casing, energy);
 		
-		EnergyBar.Parameters energyBarParams = new EnergyBar.Parameters(76, 39);
-		this.registerGuiComponent(new EnergyBar.Server(energyBarParams, energy::getEu, energy::getCapacity));
+		var energyBarParams = new EnergyBar.Params(76, 39);
+		this.registerGuiComponent(new EnergyBar(energyBarParams, energy::getEu, energy::getCapacity));
 		
-		this.registerGuiComponent(new SlotPanel.Server(this)
+		this.registerGuiComponent(new SlotPanel(this)
 				.withRedstoneControl(redstoneControl)
 				.withCasing(casing));
 	}
@@ -119,7 +119,7 @@ public final class FluxTransformerBlockEntity extends MachineBlockEntity impleme
 	}
 	
 	@Override
-	protected MachineModelClientData getMachineModelData()
+	public MachineModelClientData getMachineModelData()
 	{
 		MachineModelClientData data = new MachineModelClientData(casing.getCasing());
 		orientation.writeModelData(data);

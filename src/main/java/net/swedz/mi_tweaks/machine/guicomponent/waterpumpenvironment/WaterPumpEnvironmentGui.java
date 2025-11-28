@@ -1,61 +1,50 @@
 package net.swedz.mi_tweaks.machine.guicomponent.waterpumpenvironment;
 
-import aztech.modern_industrialization.machines.gui.GuiComponent;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import aztech.modern_industrialization.machines.gui.GuiComponentServer;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.swedz.mi_tweaks.MITweaks;
 
 import java.util.function.Supplier;
 
-public final class WaterPumpEnvironmentGui
+public final class WaterPumpEnvironmentGui implements GuiComponentServer<WaterPumpEnvironmentGui.Params, Boolean>
 {
-	public static ResourceLocation ID = MITweaks.id("water_pump_environment");
+	public static final Type<Params, Boolean> TYPE = new Type<>(MITweaks.id("water_pump_environment"), Params.STREAM_CODEC, ByteBufCodecs.BOOL);
 	
-	public static final class Server implements GuiComponent.Server<Boolean>
+	private final Params params;
+	private final Supplier<Boolean> validEnvironmentSupplier;
+	
+	public WaterPumpEnvironmentGui(Params params, Supplier<Boolean> validEnvironmentSupplier)
 	{
-		public final Parameters        params;
-		public final Supplier<Boolean> validEnvironmentSupplier;
-		
-		public Server(Parameters params, Supplier<Boolean> validEnvironmentSupplier)
-		{
-			this.params = params;
-			this.validEnvironmentSupplier = validEnvironmentSupplier;
-		}
-		
-		@Override
-		public Boolean copyData()
-		{
-			return validEnvironmentSupplier.get();
-		}
-		
-		@Override
-		public boolean needsSync(Boolean cachedData)
-		{
-			return !cachedData.equals(validEnvironmentSupplier.get());
-		}
-		
-		@Override
-		public void writeInitialData(RegistryFriendlyByteBuf buf)
-		{
-			buf.writeInt(params.renderX);
-			buf.writeInt(params.renderY);
-			this.writeCurrentData(buf);
-		}
-		
-		@Override
-		public void writeCurrentData(RegistryFriendlyByteBuf buf)
-		{
-			buf.writeBoolean(validEnvironmentSupplier.get());
-		}
-		
-		@Override
-		public ResourceLocation getId()
-		{
-			return ID;
-		}
+		this.params = params;
+		this.validEnvironmentSupplier = validEnvironmentSupplier;
 	}
 	
-	public record Parameters(int renderX, int renderY)
+	@Override
+	public Params getParams()
 	{
+		return params;
+	}
+	
+	@Override
+	public Boolean extractData()
+	{
+		return validEnvironmentSupplier.get();
+	}
+	
+	@Override
+	public Type<Params, Boolean> getType()
+	{
+		return TYPE;
+	}
+	
+	public record Params(int renderX, int renderY)
+	{
+		public static final StreamCodec<ByteBuf, Params> STREAM_CODEC = StreamCodec.composite(
+				ByteBufCodecs.VAR_INT, Params::renderX,
+				ByteBufCodecs.VAR_INT, Params::renderY,
+				Params::new
+		);
 	}
 }

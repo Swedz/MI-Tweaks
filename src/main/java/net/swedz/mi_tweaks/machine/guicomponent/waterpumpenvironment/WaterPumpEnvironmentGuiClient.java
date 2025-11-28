@@ -1,34 +1,27 @@
 package net.swedz.mi_tweaks.machine.guicomponent.waterpumpenvironment;
 
-import aztech.modern_industrialization.machines.gui.ClientComponentRenderer;
-import aztech.modern_industrialization.machines.gui.GuiComponentClient;
-import aztech.modern_industrialization.machines.gui.MachineScreen;
-import aztech.modern_industrialization.util.RenderHelper;
+import aztech.modern_industrialization.client.machines.gui.ClientComponentRenderer;
+import aztech.modern_industrialization.client.machines.gui.GuiComponentClient;
+import aztech.modern_industrialization.client.machines.gui.MachineScreen;
+import aztech.modern_industrialization.client.util.RenderHelper;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.swedz.mi_tweaks.MITweaks;
 
 import java.util.List;
 import java.util.Optional;
 
-public final class WaterPumpEnvironmentGuiClient implements GuiComponentClient
+public final class WaterPumpEnvironmentGuiClient extends GuiComponentClient<WaterPumpEnvironmentGui.Params, Boolean>
 {
-	private final WaterPumpEnvironmentGui.Parameters params;
-	
-	private boolean validEnvironment;
-	
-	public WaterPumpEnvironmentGuiClient(RegistryFriendlyByteBuf buf)
+	public WaterPumpEnvironmentGuiClient(WaterPumpEnvironmentGui.Params params, Boolean data)
 	{
-		this.params = new WaterPumpEnvironmentGui.Parameters(buf.readInt(), buf.readInt());
-		this.readCurrentData(buf);
+		super(params, data);
 	}
 	
-	@Override
-	public void readCurrentData(RegistryFriendlyByteBuf buf)
+	public boolean isValidEnvironment()
 	{
-		validEnvironment = buf.readBoolean();
+		return data;
 	}
 	
 	@Override
@@ -42,7 +35,7 @@ public final class WaterPumpEnvironmentGuiClient implements GuiComponentClient
 		@Override
 		public void renderBackground(GuiGraphics guiGraphics, int x, int y)
 		{
-			if(!validEnvironment)
+			if(!WaterPumpEnvironmentGuiClient.this.isValidEnvironment())
 			{
 				int px = x + params.renderX();
 				int py = y + params.renderY();
@@ -53,7 +46,7 @@ public final class WaterPumpEnvironmentGuiClient implements GuiComponentClient
 		@Override
 		public void renderTooltip(MachineScreen screen, Font font, GuiGraphics guiGraphics, int x, int y, int cursorX, int cursorY)
 		{
-			if(!validEnvironment)
+			if(!WaterPumpEnvironmentGuiClient.this.isValidEnvironment())
 			{
 				if(RenderHelper.isPointWithinRectangle(params.renderX(), params.renderY(), 20, 20, cursorX - x, cursorY - y))
 				{

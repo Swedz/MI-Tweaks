@@ -1,29 +1,21 @@
 package net.swedz.mi_tweaks.machine.guicomponent.exposecabletier;
 
 import aztech.modern_industrialization.api.energy.CableTier;
-import aztech.modern_industrialization.machines.gui.ClientComponentRenderer;
-import aztech.modern_industrialization.machines.gui.GuiComponentClient;
-import aztech.modern_industrialization.machines.gui.MachineScreen;
-import net.minecraft.network.RegistryFriendlyByteBuf;
+import aztech.modern_industrialization.client.machines.gui.ClientComponentRenderer;
+import aztech.modern_industrialization.client.machines.gui.GuiComponentClient;
+import aztech.modern_industrialization.client.machines.gui.MachineScreen;
+import net.minecraft.util.Unit;
 
-public class ExposeCableTierGuiClient implements GuiComponentClient
+public class ExposeCableTierGuiClient extends GuiComponentClient<Unit, CableTier>
 {
-	private CableTier cableTier;
-	
-	public ExposeCableTierGuiClient(RegistryFriendlyByteBuf buf)
+	public ExposeCableTierGuiClient(Unit params, CableTier data)
 	{
-		this.readCurrentData(buf);
+		super(params, data);
 	}
 	
 	public CableTier getCableTier()
 	{
-		return cableTier;
-	}
-	
-	@Override
-	public void readCurrentData(RegistryFriendlyByteBuf buf)
-	{
-		cableTier = CableTier.getTier(new String(buf.readByteArray()));
+		return data;
 	}
 	
 	@Override

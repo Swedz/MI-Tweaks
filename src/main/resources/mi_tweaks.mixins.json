@@ -23,7 +23,7 @@
         "client.HideEfficiencyInMultiblockClientMixin",
         "client.MachineScreenIncludeCableTierInTitleMixin",
         "client.MultiblockRendersWithBlueprintClientMixin",
-        "client.accessor.RecipeEfficiencyBarClientAccessor"
+        "client.accessor.GuiComponentClientAccessor"
     ],
     "injectors": {
         "defaultRequire": 1

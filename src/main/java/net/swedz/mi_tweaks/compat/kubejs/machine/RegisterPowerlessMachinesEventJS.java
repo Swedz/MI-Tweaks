@@ -41,7 +41,7 @@ public final class RegisterPowerlessMachinesEventJS implements KubeEvent, ShapeT
 	public void singleblock(
 			String englishName, String name, MachineRecipeType recipeType,
 			
-			int backgroundHeight, ProgressBar.Parameters progressBar,
+			int backgroundHeight, ProgressBar.Params progressBar,
 			
 			int itemInputs, int itemOutputs, int fluidInputs, int fluidOutputs, int bucketCapacity,
 			Consumer<SlotPositions.Builder> itemSlotPositions, Consumer<SlotPositions.Builder> fluidSlotPositions,
@@ -105,7 +105,7 @@ public final class RegisterPowerlessMachinesEventJS implements KubeEvent, ShapeT
 	public void multiblock(
 			String englishName, String name, MachineRecipeType recipeType, ShapeTemplate shape,
 			
-			ProgressBar.Parameters progressBar,
+			ProgressBar.Params progressBar,
 			
 			Consumer<SlotPositions.Builder> itemInputPositions, Consumer<SlotPositions.Builder> itemOutputPositions,
 			Consumer<SlotPositions.Builder> fluidInputPositions, Consumer<SlotPositions.Builder> fluidOutputPositions,
