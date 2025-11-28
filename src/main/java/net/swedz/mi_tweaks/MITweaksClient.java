@@ -31,7 +31,7 @@ import net.swedz.mi_tweaks.item.renderer.BlockOverlayingItemRenderer;
 import java.util.stream.Stream;
 
 @Mod(value = MITweaks.ID, dist = Dist.CLIENT)
-@EventBusSubscriber(value = Dist.CLIENT, modid = MITweaks.ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = MITweaks.ID, value = Dist.CLIENT)
 public final class MITweaksClient
 {
 	private static final ModelResourceLocation RAW_ITEM_MODEL_LOCATION = ModelResourceLocation.standalone(MITweaks.id("item/machine_blueprint_raw"));

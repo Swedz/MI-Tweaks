@@ -7,7 +7,7 @@ import net.swedz.mi_tweaks.MITweaks;
 import net.swedz.mi_tweaks.datagen.client.DatagenDelegatorClient;
 import net.swedz.mi_tweaks.datagen.server.DatagenDelegatorServer;
 
-@EventBusSubscriber(modid = MITweaks.ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = MITweaks.ID)
 public final class DatagenDelegator
 {
 	@SubscribeEvent
