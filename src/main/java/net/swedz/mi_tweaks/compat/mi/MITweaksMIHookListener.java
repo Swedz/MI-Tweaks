@@ -31,13 +31,13 @@ public final class MITweaksMIHookListener implements MIHookListener
 	{
 		hook.builder("flux_transformer", "Flux Transformer", FluxTransformerBlockEntity::new)
 				.builtinModel(CableTier.LV.casing, "flux_transformer", (b) -> b.front(false).top().side().active(false))
-				.registerMachine()
-				.registrator(FluxTransformerBlockEntity::registerEnergyApi);
+				.registrator(FluxTransformerBlockEntity::registerEnergyApi)
+				.registerMachine();
 		
 		hook.builder("eu_transformer", "EU Transformer", EUTransformerBlockEntity::new)
 				.builtinModel(CableTier.LV.casing, "eu_transformer", (b) -> b.front(false).top().side().active(false))
-				.registerMachine()
-				.registrator(EUTransformerBlockEntity::registerEnergyApi);
+				.registrator(EUTransformerBlockEntity::registerEnergyApi)
+				.registerMachine();
 		
 		if(MITweaks.config().machineNamespace().equals(MITweaks.ID))
 		{
