@@ -16,6 +16,7 @@ out
 # gradle
 build
 .gradle
+lib
 
 # other
 .env
@@ -28,6 +29,3 @@ repo
 
 # datagen
 src/generated/resources/.cache/
-
-# testing stuff
-src/main/resources/data/mi_tweaks/recipe/test.json
