@@ -35,7 +35,15 @@ repositories {
 		url = "https://maven.latvian.dev/releases"
 		content {
 			// KubeJS & Rhino
+			includeGroup "dev.latvian.apps"
 			includeGroup "dev.latvian.mods"
+		}
+	}
+	maven {
+		url = "https://jitpack.io"
+		content {
+			// KubeJS
+			includeGroup "com.github.rtyley"
 		}
 	}
 }
