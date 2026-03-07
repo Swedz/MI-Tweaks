@@ -10,7 +10,6 @@ import aztech.modern_industrialization.machines.models.MachineCasings;
 import aztech.modern_industrialization.machines.multiblocks.ShapeTemplate;
 import aztech.modern_industrialization.machines.recipe.MachineRecipeType;
 import dev.latvian.mods.kubejs.event.KubeEvent;
-import net.minecraft.resources.ResourceLocation;
 import net.swedz.mi_tweaks.MITweaks;
 import net.swedz.tesseract.neoforge.compat.mi.component.craft.multiplied.EuCostTransformers;
 import net.swedz.tesseract.neoforge.compat.mi.hook.context.listener.MultiblockMachinesMIHookContext;
@@ -45,11 +44,14 @@ public final class RegisterBatchMultiblocksEventJS implements KubeEvent, ShapeTe
 		var workstationAdder = new WorkstationAdder();
 		workstations.accept(workstationAdder);
 		
-		hook.builder(name, englishName, factory)
+		var builder = hook.builder(name, englishName, factory)
 				.builtinModel(casing, overlayFolder, (m) -> m.front(frontOverlay).top(topOverlay).side(sideOverlay))
 				.registerMachine()
-				.registerMultiblockShape(shape)
-				.registerExtraWorkstations(workstationAdder.get().toArray(ResourceLocation[]::new));
+				.registerMultiblockShape(shape);
+		for(var workstation : workstationAdder.get())
+		{
+			builder.registerAsWorkstationFor(workstation);
+		}
 	}
 	
 	public void steam(
