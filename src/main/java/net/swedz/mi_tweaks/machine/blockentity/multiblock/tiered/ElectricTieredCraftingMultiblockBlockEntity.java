@@ -4,11 +4,9 @@ import aztech.modern_industrialization.api.machine.component.EnergyAccess;
 import aztech.modern_industrialization.api.machine.holder.EnergyListComponentHolder;
 import aztech.modern_industrialization.machines.BEP;
 import aztech.modern_industrialization.machines.components.EnergyComponent;
-import aztech.modern_industrialization.machines.components.LubricantHelper;
 import aztech.modern_industrialization.machines.components.OverdriveComponent;
 import aztech.modern_industrialization.machines.components.RedstoneControlComponent;
 import aztech.modern_industrialization.machines.components.UpgradeComponent;
-import aztech.modern_industrialization.machines.guicomponents.CraftingMultiblockGui;
 import aztech.modern_industrialization.machines.guicomponents.SlotPanel;
 import aztech.modern_industrialization.machines.init.MachineTier;
 import aztech.modern_industrialization.machines.multiblocks.ShapeMatcher;
@@ -19,6 +17,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.swedz.tesseract.neoforge.compat.mi.helper.CommonGuiComponents;
+import net.swedz.tesseract.neoforge.compat.mi.helper.ModularLubricantHelper;
 
 import java.util.List;
 
@@ -31,9 +31,9 @@ public final class ElectricTieredCraftingMultiblockBlockEntity extends TieredCra
 	private final List<EnergyComponent> energyInputs = Lists.newArrayList();
 	
 	public ElectricTieredCraftingMultiblockBlockEntity(BEP bep, ResourceLocation name,
-													   CustomMultiblockTier[] tiers, long maxRecipeEu)
+													   CustomMultiblockTier[] tiers)
 	{
-		super(bep, name, tiers, maxRecipeEu);
+		super(bep, name, tiers);
 		
 		redstoneControl = new RedstoneControlComponent();
 		upgrades = new UpgradeComponent();
@@ -45,7 +45,7 @@ public final class ElectricTieredCraftingMultiblockBlockEntity extends TieredCra
 				.withUpgrades(upgrades)
 				.withOverdrive(overdrive));
 		
-		this.registerGuiComponent(new CraftingMultiblockGui(() -> shapeValid.shapeValid, crafter::getProgress, crafter, () -> 0));
+		this.registerGuiComponent(CommonGuiComponents.standardMultiblockScreen(this, crafter, isActive));
 	}
 	
 	@Override
@@ -110,7 +110,7 @@ public final class ElectricTieredCraftingMultiblockBlockEntity extends TieredCra
 		var result = super.useItemOn(player, hand, face);
 		if(!result.consumesAction())
 		{
-			result = LubricantHelper.onUse(crafter, player, hand);
+			result = ModularLubricantHelper.onUse(crafter, player, hand);
 		}
 		if(!result.consumesAction())
 		{

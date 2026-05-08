@@ -2,7 +2,6 @@ package net.swedz.mi_tweaks.machine.blockentity.multiblock.tiered;
 
 import aztech.modern_industrialization.machines.BEP;
 import aztech.modern_industrialization.machines.components.OverclockComponent;
-import aztech.modern_industrialization.machines.guicomponents.CraftingMultiblockGui;
 import aztech.modern_industrialization.machines.helper.SteamHelper;
 import aztech.modern_industrialization.machines.multiblocks.ShapeMatcher;
 import aztech.modern_industrialization.util.Simulation;
@@ -12,6 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.swedz.tesseract.neoforge.compat.mi.helper.CommonGuiComponents;
 
 import java.util.List;
 
@@ -22,16 +22,16 @@ public final class SteamTieredCraftingMultiblockBlockEntity extends TieredCrafti
 	private boolean steelTier;
 	
 	public SteamTieredCraftingMultiblockBlockEntity(BEP bep, ResourceLocation name,
-													CustomMultiblockTier[] tiers, long maxRecipeEu,
+													CustomMultiblockTier[] tiers,
 													List<OverclockComponent.Catalyst> overclockCatalysts)
 	{
-		super(bep, name, tiers, maxRecipeEu);
+		super(bep, name, tiers);
 		
 		overclock = new OverclockComponent(overclockCatalysts);
 		
 		this.registerComponents(overclock);
 		
-		this.registerGuiComponent(new CraftingMultiblockGui(() -> shapeValid.shapeValid, crafter::getProgress, crafter, overclock::getTicks));
+		this.registerGuiComponent(CommonGuiComponents.standardMultiblockScreen(this, crafter, isActive));
 	}
 	
 	@Override

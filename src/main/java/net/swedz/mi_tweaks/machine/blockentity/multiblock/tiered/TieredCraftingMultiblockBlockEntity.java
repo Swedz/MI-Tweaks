@@ -1,16 +1,16 @@
 package net.swedz.mi_tweaks.machine.blockentity.multiblock.tiered;
 
 import aztech.modern_industrialization.machines.BEP;
-import aztech.modern_industrialization.machines.components.CrafterComponent;
 import aztech.modern_industrialization.machines.gui.MachineGuiParameters;
 import aztech.modern_industrialization.machines.guicomponents.ReiSlotLocking;
 import aztech.modern_industrialization.machines.multiblocks.ShapeMatcher;
 import aztech.modern_industrialization.machines.multiblocks.ShapeTemplate;
-import aztech.modern_industrialization.machines.recipe.MachineRecipe;
-import aztech.modern_industrialization.machines.recipe.MachineRecipeType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.swedz.tesseract.neoforge.compat.mi.component.craft.ModularCrafterAccessBehavior;
+import net.swedz.tesseract.neoforge.compat.mi.component.craft.multiplied.EuCostTransformers;
+import net.swedz.tesseract.neoforge.compat.mi.component.craft.multiplied.MultipliedCrafterComponent;
 import net.swedz.tesseract.neoforge.compat.mi.helper.CommonGuiComponents;
 import net.swedz.tesseract.neoforge.compat.mi.machine.blockentity.multiblock.BasicMultiblockMachineBlockEntity;
 
@@ -18,18 +18,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-public abstract class TieredCraftingMultiblockBlockEntity extends BasicMultiblockMachineBlockEntity implements CrafterComponent.Behavior
+public abstract class TieredCraftingMultiblockBlockEntity extends BasicMultiblockMachineBlockEntity implements ModularCrafterAccessBehavior
 {
 	protected final CustomMultiblockTier[] tiers;
 	
-	protected final long maxRecipeEu;
-	
-	protected final CrafterComponent crafter;
+	protected final MultipliedCrafterComponent crafter;
 	
 	private OperatingState operatingState = OperatingState.NOT_MATCHED;
 	
 	public TieredCraftingMultiblockBlockEntity(BEP bep, ResourceLocation name,
-											   CustomMultiblockTier[] tiers, long maxRecipeEu)
+											   CustomMultiblockTier[] tiers)
 	{
 		super(
 				bep,
@@ -39,9 +37,14 @@ public abstract class TieredCraftingMultiblockBlockEntity extends BasicMultibloc
 		
 		this.tiers = tiers;
 		
-		this.maxRecipeEu = maxRecipeEu;
-		
-		this.crafter = new CrafterComponent(this, inventory, this);
+		this.crafter = new MultipliedCrafterComponent(
+				this,
+				inventory,
+				this,
+				() -> this.getActiveTier().recipeType(),
+				() -> this.getActiveTier().multiplier(),
+				() -> EuCostTransformers.percentage(() -> this.getActiveTier().euCostMultiplier())
+		);
 		
 		this.registerComponents(crafter);
 		
@@ -57,22 +60,15 @@ public abstract class TieredCraftingMultiblockBlockEntity extends BasicMultibloc
 	}
 	
 	@Override
-	public MachineRecipeType recipeType()
+	public long getBaseMaxRecipeEu()
 	{
-		return this.getActiveTier().recipeType();
+		return this.getActiveTier().maxBaseEu();
 	}
 	
 	@Override
-	public long getMaxRecipeEu()
+	public boolean isRecipeBanned(long recipeEu)
 	{
-		return maxRecipeEu;
-	}
-	
-	@Override
-	public boolean banRecipe(MachineRecipe recipe)
-	{
-		return CrafterComponent.Behavior.super.banRecipe(recipe) ||
-			   recipe.eu > this.getActiveTier().maxBaseEu();
+		return recipeEu > this.getActiveTier().maxBaseEu();
 	}
 	
 	@Override

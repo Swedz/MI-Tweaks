@@ -38,15 +38,32 @@ public final class RegisterTieredMultiblocksEventJS implements KubeEvent, ShapeT
 	
 	public CustomMultiblockTier createTier(String id, MachineRecipeType recipeType, ShapeTemplate shape,
 										   Consumer<WorkstationAdder> workstations,
+										   long maxBaseEu,
+										   int multiplier,
+										   float euCostMultiplier)
+	{
+		return new CustomMultiblockTier(id, recipeType, shape, workstations, maxBaseEu, multiplier, euCostMultiplier);
+	}
+	
+	public CustomMultiblockTier createTier(String id, MachineRecipeType recipeType, ShapeTemplate shape,
+										   Consumer<WorkstationAdder> workstations,
 										   long maxBaseEu)
 	{
-		return new CustomMultiblockTier(id, recipeType, shape, workstations, maxBaseEu);
+		return new CustomMultiblockTier(id, recipeType, shape, workstations, maxBaseEu, 1, 1);
+	}
+	
+	public CustomMultiblockTier createTier(String id, MachineRecipeType recipeType, ShapeTemplate shape,
+										   Consumer<WorkstationAdder> workstations,
+										   int multiplier,
+										   float euCostMultiplier)
+	{
+		return this.createTier(id, recipeType, shape, workstations, MachineTier.MULTIBLOCK.getMaxEu(), multiplier, euCostMultiplier);
 	}
 	
 	public CustomMultiblockTier createTier(String id, MachineRecipeType recipeType, ShapeTemplate shape,
 										   Consumer<WorkstationAdder> workstations)
 	{
-		return this.createTier(id, recipeType, shape, workstations, MachineTier.MULTIBLOCK.getMaxEu());
+		return this.createTier(id, recipeType, shape, workstations, MachineTier.MULTIBLOCK.getMaxEu(), 1, 1);
 	}
 	
 	private void create(
@@ -114,9 +131,7 @@ public final class RegisterTieredMultiblocksEventJS implements KubeEvent, ShapeT
 			Consumer<SlotPositions.Builder> itemInputPositions, Consumer<SlotPositions.Builder> itemOutputPositions,
 			Consumer<SlotPositions.Builder> fluidInputPositions, Consumer<SlotPositions.Builder> fluidOutputPositions,
 			
-			String controllerCasingId, String overlayFolder, boolean frontOverlay, boolean topOverlay, boolean sideOverlay,
-			
-			long maxRecipeEu
+			String controllerCasingId, String overlayFolder, boolean frontOverlay, boolean topOverlay, boolean sideOverlay
 	)
 	{
 		this.create(
@@ -129,33 +144,8 @@ public final class RegisterTieredMultiblocksEventJS implements KubeEvent, ShapeT
 				SteamMode.STEAM_ONLY,
 				(bep, t) -> new SteamTieredCraftingMultiblockBlockEntity(
 						bep, MITweaks.machineId(name), t,
-						maxRecipeEu,
 						OverclockComponent.getDefaultCatalysts()
 				)
-		);
-	}
-	
-	public void steam(
-			String englishName, String name,
-			
-			Consumer<TierAdder> tiers,
-			
-			ProgressBar.Params progressBar,
-			
-			Consumer<SlotPositions.Builder> itemInputPositions, Consumer<SlotPositions.Builder> itemOutputPositions,
-			Consumer<SlotPositions.Builder> fluidInputPositions, Consumer<SlotPositions.Builder> fluidOutputPositions,
-			
-			String controllerCasingId, String overlayFolder, boolean frontOverlay, boolean topOverlay, boolean sideOverlay
-	)
-	{
-		this.steam(
-				englishName, name,
-				tiers,
-				progressBar,
-				itemInputPositions, itemOutputPositions,
-				fluidInputPositions, fluidOutputPositions,
-				controllerCasingId, overlayFolder, frontOverlay, topOverlay, sideOverlay,
-				MachineTier.MULTIBLOCK.getMaxEu()
 		);
 	}
 	
@@ -169,9 +159,7 @@ public final class RegisterTieredMultiblocksEventJS implements KubeEvent, ShapeT
 			Consumer<SlotPositions.Builder> itemInputPositions, Consumer<SlotPositions.Builder> itemOutputPositions,
 			Consumer<SlotPositions.Builder> fluidInputPositions, Consumer<SlotPositions.Builder> fluidOutputPositions,
 			
-			String controllerCasingId, String overlayFolder, boolean frontOverlay, boolean topOverlay, boolean sideOverlay,
-			
-			long maxRecipeEu
+			String controllerCasingId, String overlayFolder, boolean frontOverlay, boolean topOverlay, boolean sideOverlay
 	)
 	{
 		this.create(
@@ -183,33 +171,8 @@ public final class RegisterTieredMultiblocksEventJS implements KubeEvent, ShapeT
 				controllerCasingId, overlayFolder, frontOverlay, topOverlay, sideOverlay,
 				SteamMode.ELECTRIC_ONLY,
 				(bep, t) -> new ElectricTieredCraftingMultiblockBlockEntity(
-						bep, MITweaks.machineId(name), t,
-						maxRecipeEu
+						bep, MITweaks.machineId(name), t
 				)
-		);
-	}
-	
-	public void electric(
-			String englishName, String name,
-			
-			Consumer<TierAdder> tiers,
-			
-			ProgressBar.Params progressBar,
-			
-			Consumer<SlotPositions.Builder> itemInputPositions, Consumer<SlotPositions.Builder> itemOutputPositions,
-			Consumer<SlotPositions.Builder> fluidInputPositions, Consumer<SlotPositions.Builder> fluidOutputPositions,
-			
-			String controllerCasingId, String overlayFolder, boolean frontOverlay, boolean topOverlay, boolean sideOverlay
-	)
-	{
-		this.electric(
-				englishName, name,
-				tiers,
-				progressBar,
-				itemInputPositions, itemOutputPositions,
-				fluidInputPositions, fluidOutputPositions,
-				controllerCasingId, overlayFolder, frontOverlay, topOverlay, sideOverlay,
-				MachineTier.MULTIBLOCK.getMaxEu()
 		);
 	}
 	
