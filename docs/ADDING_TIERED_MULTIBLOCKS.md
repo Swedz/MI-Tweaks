@@ -55,6 +55,9 @@ function createPyrolyseTier(event, id, coilBlockId, maxBaseEu, multiplier, euCos
 		// Defines the additional workstations to display for this tier (aside from the machine block itself)
 		// You can provide as many workstations as you would like for your tier
 		// Here this just mimics what MI does with the EBF by adding the coil block as a workstation
+		// Do note that when using the non-standalone functions to create a machine, the IDs added to this workstation
+		//  list are the IDs of the machines to add this machine to its workstations. This is the same as how the batch
+		//  multiblock registering works for workstations.
 		(workstations) => workstations.add(coilBlockId),
 		// The max EU/t recipe the tier can run
 		// Optional: defaults to 128
@@ -74,10 +77,14 @@ MITweaksMachineEvents.registerTieredMultiblocks((event) =>
 	const cupronickel = createPyrolyseTier(event, "pyrolyse_oven_cupronickel", "modern_industrialization:cupronickel_coil", 32, 1, 1);
 	const kanthal = createPyrolyseTier(event, "pyrolyse_oven_kanthal", "modern_industrialization:kanthal_coil", 128, 10, 0.5);
 	// Register the machine
-	// You can also use `event.steam(...)` for a steam machine
-	event.electric(
+	// You can also use `event.steamStandalone(...)` for a steam machine
+	// If you want to make a machine that uses existing recipe types and don't want to make your own recipe
+	//  categories, you can use `event.electric(...)` or `event.steam(...)` instead. When using these functions, you
+	//  must exclude the REI params.
+	event.electricStandalone(
 		// English name, internal name
 		"Pyrolyse Oven", "pyrolyse_oven",
+		// The tiers for your machine
 		(tiers) => tiers.add(cupronickel).add(kanthal),
 		// REI progress bar
 		event.progressBar(77, 33, "arrow"),

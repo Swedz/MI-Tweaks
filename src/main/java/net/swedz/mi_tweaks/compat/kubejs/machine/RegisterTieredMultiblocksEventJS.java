@@ -71,6 +71,75 @@ public final class RegisterTieredMultiblocksEventJS implements KubeEvent, ShapeT
 			
 			Consumer<TierAdder> tiers,
 			
+			String controllerCasingId, String overlayFolder, boolean frontOverlay, boolean topOverlay, boolean sideOverlay,
+			
+			BiFunction<BEP, CustomMultiblockTier[], MachineBlockEntity> factory
+	)
+	{
+		var machineId = MITweaks.machineId(name);
+		var casing = MachineCasings.get(controllerCasingId);
+		
+		var tierAdder = new TierAdder();
+		tiers.accept(tierAdder);
+		var multiblockTiers = tierAdder.get();
+		
+		var builder = hook.builder(name, englishName, (bep) -> factory.apply(bep, multiblockTiers.toArray(CustomMultiblockTier[]::new)))
+				.builtinModel(casing, overlayFolder, (b) -> b.front(frontOverlay).top(topOverlay).side(sideOverlay))
+				.registerMachine();
+		
+		for(var tier : multiblockTiers)
+		{
+			ReiMachineRecipes.registerMultiblockShape(machineId, tier.shape(), tier.id());
+			
+			for(var workstation : tier.getWorkstations())
+			{
+				builder.registerAsWorkstationFor(workstation);
+			}
+		}
+	}
+	
+	public void steam(
+			String englishName, String name,
+			
+			Consumer<TierAdder> tiers,
+			
+			String controllerCasingId, String overlayFolder, boolean frontOverlay, boolean topOverlay, boolean sideOverlay
+	)
+	{
+		this.create(
+				englishName, name,
+				tiers,
+				controllerCasingId, overlayFolder, frontOverlay, topOverlay, sideOverlay,
+				(bep, t) -> new SteamTieredCraftingMultiblockBlockEntity(
+						bep, MITweaks.machineId(name), t,
+						OverclockComponent.getDefaultCatalysts()
+				)
+		);
+	}
+	
+	public void electric(
+			String englishName, String name,
+			
+			Consumer<TierAdder> tiers,
+			
+			String controllerCasingId, String overlayFolder, boolean frontOverlay, boolean topOverlay, boolean sideOverlay
+	)
+	{
+		this.create(
+				englishName, name,
+				tiers,
+				controllerCasingId, overlayFolder, frontOverlay, topOverlay, sideOverlay,
+				(bep, t) -> new ElectricTieredCraftingMultiblockBlockEntity(
+						bep, MITweaks.machineId(name), t
+				)
+		);
+	}
+	
+	private void createStandalone(
+			String englishName, String name,
+			
+			Consumer<TierAdder> tiers,
+			
 			ProgressBar.Params progressBar,
 			
 			Consumer<SlotPositions.Builder> itemInputPositions, Consumer<SlotPositions.Builder> itemOutputPositions,
@@ -121,7 +190,7 @@ public final class RegisterTieredMultiblocksEventJS implements KubeEvent, ShapeT
 		ReiMachineRecipes.registerMachineClickArea(machineId, progressBar.toRectangle());
 	}
 	
-	public void steam(
+	public void steamStandalone(
 			String englishName, String name,
 			
 			Consumer<TierAdder> tiers,
@@ -134,7 +203,7 @@ public final class RegisterTieredMultiblocksEventJS implements KubeEvent, ShapeT
 			String controllerCasingId, String overlayFolder, boolean frontOverlay, boolean topOverlay, boolean sideOverlay
 	)
 	{
-		this.create(
+		this.createStandalone(
 				englishName, name,
 				tiers,
 				progressBar,
@@ -149,7 +218,7 @@ public final class RegisterTieredMultiblocksEventJS implements KubeEvent, ShapeT
 		);
 	}
 	
-	public void electric(
+	public void electricStandalone(
 			String englishName, String name,
 			
 			Consumer<TierAdder> tiers,
@@ -162,7 +231,7 @@ public final class RegisterTieredMultiblocksEventJS implements KubeEvent, ShapeT
 			String controllerCasingId, String overlayFolder, boolean frontOverlay, boolean topOverlay, boolean sideOverlay
 	)
 	{
-		this.create(
+		this.createStandalone(
 				englishName, name,
 				tiers,
 				progressBar,
