@@ -15,7 +15,9 @@ public record CustomMultiblockTier(
 		MachineRecipeType recipeType,
 		ShapeTemplate shape,
 		Consumer<WorkstationAdder> workstations,
-		long maxBaseEu
+		long maxBaseEu,
+		int multiplier,
+		float euCostMultiplier
 )
 {
 	public String getTranslationKey()

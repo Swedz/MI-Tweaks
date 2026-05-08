@@ -29,7 +29,7 @@ MIMachineEvents.registerRecipeTypes((event) =>
 });
 
 // Create a shape for a specific tier
-function createPyrolyseTier(event, id, coilBlockId, maxBaseEu)
+function createPyrolyseTier(event, id, coilBlockId, maxBaseEu, multiplier, euCostMultiplier)
 {
 	// Build your multiblock shape as you normally would
 	const pyrolyseHatch = event.hatchOf("item_input", "item_output", "fluid_input", "fluid_output", "energy_input");
@@ -58,15 +58,21 @@ function createPyrolyseTier(event, id, coilBlockId, maxBaseEu)
 		(workstations) => workstations.add(coilBlockId),
 		// The max EU/t recipe the tier can run
 		// Optional: defaults to 128
-		maxBaseEu
+		maxBaseEu,
+		// The maximum amount of batches this tier can run in one cycle
+		// Optional (if present, euCostMultiplier must also be present): defaults to 1
+		multiplier,
+		// The EU cost multiplier to apply
+		// Optional: defaults to 1
+		euCostMultiplier
 	);
 }
 
 MITweaksMachineEvents.registerTieredMultiblocks((event) =>
 {
 	// Create your multiblock shapes
-	const cupronickel = createPyrolyseTier(event, "pyrolyse_oven_cupronickel", "modern_industrialization:cupronickel_coil", 32);
-	const kanthal = createPyrolyseTier(event, "pyrolyse_oven_kanthal", "modern_industrialization:kanthal_coil", 128);
+	const cupronickel = createPyrolyseTier(event, "pyrolyse_oven_cupronickel", "modern_industrialization:cupronickel_coil", 32, 1, 1);
+	const kanthal = createPyrolyseTier(event, "pyrolyse_oven_kanthal", "modern_industrialization:kanthal_coil", 128, 10, 0.5);
 	// Register the machine
 	// You can also use `event.steam(...)` for a steam machine
 	event.electric(
@@ -81,11 +87,7 @@ MITweaksMachineEvents.registerTieredMultiblocks((event) =>
 		(fluidInputs) => fluidInputs.addSlot(36, 35),
 		(fluidOutputs) => fluidOutputs.addSlot(122, 35),
 		// Casing of the controller, overlay folder, front overlay?, top overlay?, side overlay?
-		"heatproof_machine_casing", "pyrolyse_oven", true, false, false,
-		// The max recipe EU for the machine
-		// This value is the highest EU/t the machine can run (and overclock to) without installing upgrades
-		// Optional: defaults to 128 (same for all multiblocks)
-		128
+		"heatproof_machine_casing", "pyrolyse_oven", true, false, false
 	);
 });
 ```
