@@ -8,12 +8,12 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.swedz.mi_tweaks.constantefficiency.hack.MachineEfficiencyHackOption;
-import net.swedz.tesseract.neoforge.api.Assert;
+import net.swedz.tesseract.api.Assert;
 import net.swedz.tesseract.neoforge.compat.mi.serialization.MICodecs;
-import net.swedz.tesseract.neoforge.config.annotation.ConfigComment;
-import net.swedz.tesseract.neoforge.config.annotation.ConfigKey;
-import net.swedz.tesseract.neoforge.config.annotation.Range;
-import net.swedz.tesseract.neoforge.config.annotation.SubSection;
+import net.swedz.tesseract.config.annotation.ConfigComment;
+import net.swedz.tesseract.config.annotation.ConfigKey;
+import net.swedz.tesseract.config.annotation.Range;
+import net.swedz.tesseract.config.annotation.SubSection;
 import net.swedz.tesseract.neoforge.helper.CodecHelper;
 
 import java.util.Collections;

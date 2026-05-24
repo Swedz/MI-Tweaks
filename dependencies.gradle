@@ -53,8 +53,6 @@ dependencies {
 
 	implementation "dev.technici4n:GrandPower:${grandpower_version}"
 
-	implementation "me.shedaniel.cloth:cloth-config-neoforge:${cloth_config_version}"
-
 	if (project.runtime_include_emi.toBoolean()) {
 		localImplementation "dev.emi:emi-neoforge:${emi_version}"
 	} else {
