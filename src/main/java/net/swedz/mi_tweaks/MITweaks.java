@@ -11,6 +11,7 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
@@ -18,11 +19,12 @@ import net.swedz.mi_tweaks.compat.mi.custom.MITweaksMIRegistries;
 import net.swedz.mi_tweaks.datagen.client.provider.LanguageDatagenProvider;
 import net.swedz.mi_tweaks.machine.processcondition.SurroundingArea;
 import net.swedz.mi_tweaks.network.MITweaksPackets;
-import net.swedz.tesseract.neoforge.api.Assert;
+import net.swedz.tesseract.api.Assert;
 import net.swedz.tesseract.neoforge.capabilities.CapabilitiesListeners;
 import net.swedz.tesseract.neoforge.compat.mi.TesseractMI;
 import net.swedz.tesseract.neoforge.compat.mi.tooltip.MIParser;
-import net.swedz.tesseract.neoforge.config.ConfigManager;
+import net.swedz.tesseract.config.ConfigManager;
+import net.swedz.tesseract.neoforge.config.ModConfigFileAccess;
 import net.swedz.tesseract.neoforge.lang.LangManager;
 import net.swedz.tesseract.neoforge.tooltip.Parser;
 import org.slf4j.Logger;
@@ -84,17 +86,15 @@ public final class MITweaks
 		{
 			return;
 		}
-		var manager = new ConfigManager()
-				.includeDefaultValueComments();
-		manager.codecs()
+		var file = new ModConfigFileAccess(container, ModConfig.Type.STARTUP);
+		file.codecs()
 				.register(MITweaksConfig.Efficiency.CableTierMaxOverclockOverrides.class, MITweaksConfig.Efficiency.CableTierMaxOverclockOverrides.CODEC)
 				.register(MITweaksConfig.MachineList.class, MITweaksConfig.MachineList.CODEC);
-		CONFIG = manager
+		var instance = new ConfigManager(file)
 				.build(MITweaksConfig.class)
-				.register(container, ModConfig.Type.STARTUP)
-				.load()
-				.listenToLoad(bus)
-				.config();
+				.load();
+		bus.addListener(FMLCommonSetupEvent.class, (event) -> instance.load(false));
+		CONFIG = instance.config();
 	}
 	
 	private static MITweaksText TEXT;
