@@ -44,7 +44,7 @@ public final class WaterPumpEnvironmentGuiClient extends GuiComponentClient<Wate
 		}
 		
 		@Override
-		public void renderTooltip(MachineScreen screen, Font font, GuiGraphics guiGraphics, int x, int y, int cursorX, int cursorY)
+		public boolean renderTooltip(MachineScreen screen, Font font, GuiGraphics graphics, int x, int y, int cursorX, int cursorY)
 		{
 			if(!WaterPumpEnvironmentGuiClient.this.isValidEnvironment())
 			{
@@ -54,9 +54,11 @@ public final class WaterPumpEnvironmentGuiClient extends GuiComponentClient<Wate
 							MITweaks.text().waterPumpEnvironment1(),
 							MITweaks.text().waterPumpEnvironment2()
 					);
-					guiGraphics.renderTooltip(font, lines, Optional.empty(), cursorX, cursorY);
+					graphics.renderTooltip(font, lines, Optional.empty(), cursorX, cursorY);
+					return true;
 				}
 			}
+			return false;
 		}
 	}
 }

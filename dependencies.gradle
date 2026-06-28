@@ -59,13 +59,6 @@ dependencies {
 		compileOnly "dev.emi:emi-neoforge:${emi_version}"
 	}
 
-	jarJar(implementation("io.github.llamalad7:mixinextras-neoforge:${mixinextras_version}")) {
-		version {
-			strictly "[${mixinextras_version},)"
-			prefer mixinextras_version
-		}
-	}
-
 	implementation "net.swedz:tesseract-api-neoforge:${tesseract_version}"
 
 	if (project.runtime_include_kjs.toBoolean()) {
