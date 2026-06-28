@@ -86,7 +86,7 @@ public final class MachineBlueprintItem extends Item
 		for(ItemStack item : player.getInventory().items)
 		{
 			if(item.getItem() instanceof BlockItem blockItem &&
-			   member.matchesState(blockItem.getBlock().defaultBlockState()))
+			   member.matchesState(blockItem.getBlock().defaultBlockState(), null))
 			{
 				return Optional.of(item);
 			}
@@ -142,7 +142,8 @@ public final class MachineBlueprintItem extends Item
 						level,
 						multiblockMachine.getBlockPos(),
 						multiblockMachine.getOrientation().facingDirection,
-						multiblockMachine.getActiveShape()
+						multiblockMachine.getActiveShape(),
+						multiblockMachine.shapeValid
 				);
 				List<BlockPos> sortedPositions = new ArrayList<>(matcher.getPositions());
 				Collections.sort(sortedPositions);
