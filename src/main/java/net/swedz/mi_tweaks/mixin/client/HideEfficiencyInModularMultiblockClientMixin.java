@@ -20,13 +20,13 @@ import java.util.List;
 public class HideEfficiencyInModularMultiblockClientMixin
 {
 	@ModifyExpressionValue(
-			method = "renderInfoText",
+			method = "renderBackground",
 			at = @At(
 					value = "INVOKE",
 					target = "Lnet/swedz/tesseract/neoforge/compat/mi/guicomponent/modularmultiblock/ModularMultiblockGuiContent;lines()Ljava/util/List;"
 			)
 	)
-	private List<ModularMultiblockGuiLine> renderInfoText(List<ModularMultiblockGuiLine> original)
+	private List<ModularMultiblockGuiLine> renderBackground(List<ModularMultiblockGuiLine> original)
 	{
 		if(MITweaks.config().efficiency().hide())
 		{
