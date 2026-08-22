@@ -94,6 +94,7 @@ public final class MITweaks
 				.build(MITweaksConfig.class)
 				.load();
 		bus.addListener(FMLCommonSetupEvent.class, (event) -> instance.load(false));
+		file.registerReloadListeners(bus, instance);
 		CONFIG = instance.config();
 	}
 	
