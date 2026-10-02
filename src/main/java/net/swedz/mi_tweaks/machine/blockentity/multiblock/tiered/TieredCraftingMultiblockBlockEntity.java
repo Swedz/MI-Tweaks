@@ -1,5 +1,7 @@
 package net.swedz.mi_tweaks.machine.blockentity.multiblock.tiered;
 
+import aztech.modern_industrialization.api.machine.component.CrafterAccess;
+import aztech.modern_industrialization.api.machine.holder.CrafterComponentHolder;
 import aztech.modern_industrialization.machines.BEP;
 import aztech.modern_industrialization.machines.gui.MachineGuiParameters;
 import aztech.modern_industrialization.machines.guicomponents.ReiSlotLocking;
@@ -18,7 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-public abstract class TieredCraftingMultiblockBlockEntity extends BasicMultiblockMachineBlockEntity implements ModularCrafterAccessBehavior
+public abstract class TieredCraftingMultiblockBlockEntity extends BasicMultiblockMachineBlockEntity implements ModularCrafterAccessBehavior, CrafterComponentHolder
 {
 	protected final CustomMultiblockTier[] tiers;
 	
@@ -81,6 +83,12 @@ public abstract class TieredCraftingMultiblockBlockEntity extends BasicMultibloc
 	public UUID getOwnerUuid()
 	{
 		return placedBy.placerId;
+	}
+	
+	@Override
+	public CrafterAccess getCrafterComponent()
+	{
+		return crafter;
 	}
 	
 	@Override
