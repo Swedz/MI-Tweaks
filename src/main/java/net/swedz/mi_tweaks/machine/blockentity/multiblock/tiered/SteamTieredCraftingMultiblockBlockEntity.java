@@ -56,7 +56,7 @@ public final class SteamTieredCraftingMultiblockBlockEntity extends TieredCrafti
 	@Override
 	public long getBaseRecipeEu()
 	{
-		return steelTier ? 4 : 2;
+		return overclock.getRecipeEu(steelTier ? 4 : 2);
 	}
 	
 	@Override
